@@ -1,0 +1,36 @@
+{
+  "name": "subledger-js",
+  "title": "Subledger JS",
+  "description": "JavaScript library for Subledger",
+  "version": "1.0.0-alpha1",
+  "homepage": "http://subledger.com",
+  "author": {
+    "name": "Subledger and other contributors",
+    "url": "https://github.com/boocx2/Subledger_JS_Library/blob/master/AUTHORS.txt"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/boocx2/Subledger_JS_Library.git"
+  },
+  "bugs": {
+    "url": "https://github.com/boocx2/Subledger_JS_Library/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/boocx2/Subledger_JS_Library/blob/master/LICENSE.txt"
+    }
+  ],
+  "dependencies": {},
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-uglify": "~0.2.2",
+    "grunt-template": "~0.2.0",
+    "grunt-git-authors": "~1.2.0",
+    "grunt-contrib-jshint": "~0.6.0",
+    "grunt-contrib-concat": "~0.3.0",
+    "grunt-contrib-nodeunit": "~0.2.0",
+    "grunt-jsdoc": "~0.4.0"
+  },
+  "keywords": []
+}
