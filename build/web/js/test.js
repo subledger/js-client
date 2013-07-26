@@ -3287,7 +3287,7 @@ nodeunit.reporter = reporter;
 nodeunit.run = reporter.run;
 return nodeunit; })();
 
-var sandBoxAPI,subledger,book,account,journalEntry,journalEntryPosted,journEntryLine;
+var sandBoxAPI,subledger,book,account,journalEntry,journalEntryToPost,journalEntryLine;
 
 sandBoxAPI = 'https://fakt.api.boocx.com/v1';
 
@@ -3487,7 +3487,7 @@ exports['subledger.book().journalEntry()'] = {
     });
   },
   'Get Subledger Book Journal Entries with parameter' : function (test) {
-    subledger.book(book.active_book.id).journalEntry().get({'state':'archived'},function(e,d){
+    subledger.book(book.active_book.id).journalEntry().get({'state':'archived','before':new Date().toISOString()},function(e,d){
       test.ifError(e);
       test.ok(d.archived_journal_entries !== undefined,'"archived_journal_entries" property exist');
       test.deepEqual(_.isArray(d.archived_journal_entries),true,'"archived_journal_entries" property contain array');
@@ -3504,20 +3504,27 @@ exports['subledger.book().journalEntry()'] = {
       test.done();
     });
   },
+  'Create Subledger Book Journal Entry to be posted' : function (test) {
+    subledger.book(book.active_book.id).journalEntry().create({"effective_at": new Date().toISOString(),"description": "foo","reference": "http://www.bar.com"},function(e,d){
+      test.ifError(e);
+      test.ok(d.active_journal_entry !== undefined,'"active_journal_entry" property exist');
+      test.ok(d.active_journal_entry.id !== undefined,'"active_journal_entry.id" property exist');
+      test.deepEqual(d.active_journal_entry.description,'foo','"active_account.description" property equal "foo"')
+      journalEntryToPost = d;
+      test.done();
+    });
+  },
   'Create and Post Subledger Book Journal Entry' : function (test) {
-    //TODO : Complete this UT when able to create line;
     var data = {
       "effective_at": new Date().toISOString(),
       "description": "foo",
       "reference": "http://www.bar.com",
       "lines": [
         {
-          "account": "1",
+          "account": account.active_account.id,
           "description": "foo",
           "reference": "http://www.bar.com",
-          "value": {
-            "zero": "0"
-          },
+          "value": [ "z", "0" ],
           "order": "1"
         }
       ]
@@ -3525,10 +3532,9 @@ exports['subledger.book().journalEntry()'] = {
 
     subledger.book(book.active_book.id).journalEntry().createAndPost(data,function(e,d){
       test.ifError(e);
-      test.ok(d.active_journal_entry !== undefined,'"active_journal_entry" property exist');
-      test.ok(d.active_journal_entry.id !== undefined,'"active_journal_entry.id" property exist');
-      test.deepEqual(d.active_journal_entry.description,'foo','"active_account.description" property equal "foo"')
-      journalEntry = d;
+      test.ok(d.posting_journal_entry !== undefined,'"posting_journal_entry" property exist');
+      test.ok(d.posting_journal_entry.id !== undefined,'"posting_journal_entry.id" property exist');
+      test.deepEqual(d.posting_journal_entry.description,'foo','"posting_journal_entry.description" property equal "foo"')
       test.done();
     });
   },
@@ -3553,18 +3559,6 @@ exports['subledger.book().journalEntry()'] = {
       test.ok(d.active_journal_entry !== undefined,'"active_account" property exist');
       test.ok(d.active_journal_entry.id !== undefined,'"active_account.id" property exist');
       test.deepEqual(d.active_journal_entry.description,'baz','"active_account.description" property equal "baz"')
-      account = d;
-      test.done();
-    });
-  },
-  'Post Subledger Book Journal Entry' : function (test) {
-    //TODO : Complete this UT when able to create line;
-    //Cannot post a journal entry with no lines
-    subledger.book(book.active_book.id).journalEntry(journalEntry.active_journal_entry.id).post(function(e,d){
-      test.ifError(e);
-      test.ok(d.active_journal_entry !== undefined,'"active_journal_entry" property exist');
-      test.ok(d.active_journal_entry.id !== undefined,'"active_journal_entry.id" property exist');
-      test.deepEqual(d.active_journal_entry.description,'foo','"active_account.description" property equal "foo"')
       journalEntry = d;
       test.done();
     });
@@ -3624,39 +3618,89 @@ exports['subledger.book().journalEntry().line()'] = {
     });
   },
   'Create Subledger Book Journal Entry Line' : function (test) {
-    //TODO : Complete this UT when able to create line;
     var data = {
-      "account": "accountName",
+      "account": account.active_account.id,
       "description": "foo",
       "reference": "http://www.bar.com",
-      "value": {
-        "zero": "0"
-      },
+      "value": ["z","0"],
       "order": "1"
     };
-    subledger.book(book.active_book.id).journalEntry(journalEntry.active_journal_entry.id).line().get(data,function(e,d){
+    subledger.book(book.active_book.id).journalEntry(journalEntry.active_journal_entry.id).line().create(data,function(e,d){
       test.ifError(e);
+      test.ok(d.active_line !== undefined,'"active_line" property exist');
+      test.ok(d.active_line.id !== undefined,'"active_line.id" property exist');
+      test.deepEqual(d.active_line.description,'foo','"active_line.description" property equal "foo"');
+      journalEntryLine = d;
+      test.done();
+    });
+  },
+  'Create Subledger Book Journal Entry Line in other journal entry' : function (test) {
+    var data = {
+      "account": account.active_account.id,
+      "description": "foo",
+      "reference": "http://www.bar.com",
+      "value": [ "z", "0" ],
+      "order": "1"
+    };
+    subledger.book(book.active_book.id).journalEntry(journalEntryToPost.active_journal_entry.id).line().create(data,function(e,d){
+      test.ifError(e);
+      test.ok(d.active_line !== undefined,'"active_line" property exist');
+      test.ok(d.active_line.id !== undefined,'"active_line.id" property exist');
+      test.deepEqual(d.active_line.description,'foo','"active_line.description" property equal "foo"');
+      test.done();
+    });
+  },
+  'Post Subledger Book Journal Entry' : function (test) {
+    subledger.book(book.active_book.id).journalEntry(journalEntryToPost.active_journal_entry.id).post(function(e,d){
+      test.ifError(e);
+      test.ok(d.posting_journal_entry !== undefined,'"posting_journal_entry" property exist');
+      test.ok(d.posting_journal_entry.id !== undefined,'"posting_journal_entry.id" property exist');
+      journalEntryToPost = d;
       test.done();
     });
   },
   'Get Subledger Book Journal Entry Line' : function (test) {
-    //TODO : Complete this UT when able to create line;
-    subledger.book(book.active_book.id).journalEntry(journalEntry.active_journal_entry.id).line(journEntryLine.active_journal_entry.id).get(data,function(e,d){
+    subledger.book(book.active_book.id).journalEntry(journalEntry.active_journal_entry.id).line(journalEntryLine.active_line.id).get(function(e,d){
       test.ifError(e);
+      test.ok(d.active_line !== undefined,'"active_line" property exist');
+      test.ok(d.active_line.id !== undefined,'"active_line.id" property exist');
+      test.done();
+    });
+  },
+  'Update Subledger Book Journal Entry Line' : function (test) {
+    var data = {
+      "account": journalEntryLine.active_line.account,
+      "description": "baz",
+      "reference": journalEntryLine.active_line.reference,
+      "value": journalEntryLine.active_line.value,
+      "order": journalEntryLine.active_line.order,
+      "version": journalEntryLine.active_line.version + 1
+    };
+
+    subledger.book(book.active_book.id).journalEntry(journalEntry.active_journal_entry.id).line(journalEntryLine.active_line.id).update(data,function(e,d){
+      test.ifError(e);
+      test.ok(d.active_line !== undefined,'"active_line" property exist');
+      test.ok(d.active_line.id !== undefined,'"active_line.id" property exist');
+      test.deepEqual(d.active_line.description,'baz','"active_line.description" property equal "baz"');
+      journalEntryLine = d;
       test.done();
     });
   },
   'Archive Subledger Book Journal Entry Line' : function (test) {
-    //TODO : Complete this UT when able to create line;
-    subledger.book(book.active_book.id).journalEntry(journalEntry.active_journal_entry.id).line(journEntryLine.active_journal_entry.id).archive(data,function(e,d){
+    subledger.book(book.active_book.id).journalEntry(journalEntry.active_journal_entry.id).line(journalEntryLine.active_line.id).archive(function(e,d){
       test.ifError(e);
+      test.ok(d.archived_line !== undefined,'"archived_line" property exist');
+      test.ok(d.archived_line.id !== undefined,'"archived_line.id" property exist');
+      journalEntryLine = d;
       test.done();
     });
   },
   'Activate Subledger Book Journal Entry Line' : function (test) {
-    //TODO : Complete this UT when able to create line;
-    subledger.book(book.active_book.id).journalEntry(journalEntry.active_journal_entry.id).line(journEntryLine.active_journal_entry.id).activate(data,function(e,d){
+    subledger.book(book.active_book.id).journalEntry(journalEntry.active_journal_entry.id).line(journalEntryLine.archived_line.id).activate(function(e,d){
       test.ifError(e);
+      test.ok(d.active_line !== undefined,'"active_line" property exist');
+      test.ok(d.active_line.id !== undefined,'"active_line.id" property exist');
+      journalEntryLine = d;
       test.done();
     });
   }

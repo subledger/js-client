@@ -435,7 +435,7 @@
            * @returns {*} Return the API Response
            */
           journalEntry.balance = function (callback) {
-            ajax.post(url + '/balance', callback);
+            ajax.get(url + '/balance', callback);
           };
 
 
@@ -508,7 +508,7 @@
             };
 
             if (line_id) {
-              url = url + '/lines' + line_id;
+              url = url + '/lines/' + line_id;
 
 
               /**
@@ -553,7 +553,7 @@
                 ajax.post(url + '/archive', callback);
               };
             }
-
+            return line;
           };
         }
 
