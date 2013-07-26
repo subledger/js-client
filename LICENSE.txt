@@ -1,4 +1,4 @@
-Copyright 2013 Subledger and other contributors
+Copyright 2013 Subledger
 http://subledger.com
 
 Permission is hereby granted, free of charge, to any person obtaining

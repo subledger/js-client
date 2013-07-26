@@ -1,16 +1,20 @@
-[<%= title %>](<%= homepage %>) - <%= description %>
-===
+# [<%= title %>](<%= homepage %>) - <%= description %>
+
 
 <%= title %> is JavaScript library that allow you to quickly build a front-end application using the Subledger powerful APIs.
 
+## JavaScript Documentation
 
-What you need to build your own <%= title %>
----
+<%= doc %>
+
+
+## What you need to build your own <%= title %>
+
 
 In order to build <%= title %>, you need to have Node.js/npm latest and git 1.7 or later.
 (Earlier versions might work OK, but are not tested.)
 
-Windows users have two options:
+**Windows users** have two options:
 
 1. Install [msysgit](https://code.google.com/p/msysgit/) (Full installer for official Git) and a
    [binary version of Node.js](http://nodejs.org). Make sure all two packages are installed to the same
@@ -18,52 +22,118 @@ Windows users have two options:
 2. Install [Cygwin](http://cygwin.com/) (make sure you install the git and which packages), and
    a [binary version of Node.js](http://nodejs.org/).
 
-Mac OS users should install Xcode (comes on your Mac OS install DVD, or downloadable from
+**Mac OS users** should install Xcode (comes on your Mac OS install DVD, or downloadable from
 [Apple's Xcode site](http://developer.apple.com/technologies/xcode.html)) and
 [Homebrew](http://mxcl.github.com/homebrew/). Once Homebrew is installed, run `brew install git` to install git,
 and `brew install node` to install Node.js.
 
-Linux/BSD users should use their appropriate package managers to install git and Node.js, or build from source
+**Linux/BSD users** should use their appropriate package managers to install git and Node.js, or build from source
 if you swing that way. Easy-peasy.
 
 
-How to build your own <%= title %>
----
+## How to build your own <%= title %>
 
-### TODO ###
+First, clone a copy of the main <%= title %> git repo by running:
+
+```bash
+git clone <%= repository %>
+```
+
+Install the [grunt-cli](http://gruntjs.com/getting-started#installing-the-cli) package if you haven't before. It should be done as global install:
+
+```bash
+npm install -g grunt-cli
+```
+
+Make sure you have `grunt` installed by testing:
+
+```bash
+grunt -version
+```
+
+Enter the <%= title %> directory and install the Node dependencies, this time *without* specifying a global(-g) install:
+
+```bash
+cd <%= title %> && npm install
+```
+
+###Regular Build
+To get a minified (w/ Uglify.js), linted (w/ JSHint) version of <%= title %>, type the following:
+
+```bash
+grunt
+```
+
+The built version of <%= title %> will be put in the `build/` subdirectory.
+
+###Complete Build
+To get a complete, minified (w/ Uglify.js), linted (w/ JSHint) version of <%= title %> with updated root files (`AUTHORS.txt`,`LICENSE.txt`,`README.txt`) and Web files (`build/web`), type the following:
+
+```bash
+grunt build
+```
+
+###Regular Auto-Build
+Then, to get a auto-build <%= title %> as you work, start `grunt watch` :
+
+```bash
+cd <%= title %> && grunt watch
+```
+
+##Running tests in the browser
 
 
-Running tests
----
-
-### TODO ###
+To running tests in the browser, open `build/web/test.html` into the browser you want to test. That's it!
 
 
-Running tests in the browser
----
+##[NodeUnit](https://github.com/caolan/nodeunit) Reference
 
-### TODO ###
+The <%= title %> JavaScript library use [NodeUnit](https://github.com/caolan/nodeunit) as unit testing tool.
 
+###Usage
 
-Building to a different directory
----
+Here is an example unit test module:
 
-### TODO ###
+    exports.testSomething = function(test){
+        test.expect(1);
+        test.ok(true, "this assertion should pass");
+        test.done();
+    };
 
+    exports.testSomethingElse = function(test){
+        test.ok(false, "this assertion should fail");
+        test.done();
+    };
 
-Updating Submodules
----
-
-### TODO ###
-
-
-Contributors
----
-
-### TODO ###
+###API Documentation
 
 
-License
----
+Nodeunit uses the functions available in the node.js [assert module](http://nodejs.org/docs/v0.4.2/api/assert.html):
+
+* __ok(value, [message])__ - Tests if value is a true value.
+* __equal(actual, expected, [message])__ - Tests shallow, coercive equality with the equal comparison operator ( == ).
+* __notEqual(actual, expected, [message])__ - Tests shallow, coercive non-equality with the not equal comparison operator ( != ).
+* __deepEqual(actual, expected, [message])__ - Tests for deep equality.
+* __notDeepEqual(actual, expected, [message])__ - Tests for any deep inequality.
+* __strictEqual(actual, expected, [message])__ - Tests strict equality, as determined by the strict equality operator ( === )
+* __notStrictEqual(actual, expected, [message])__ - Tests strict non-equality, as determined by the strict not equal operator ( !== )
+* __throws(block, [error], [message])__ - Expects block to throw an error.
+* __doesNotThrow(block, [error], [message])__ - Expects block not to throw an error.
+* __ifError(value)__ - Tests if value is not a false value, throws if it is a true value. Useful when testing the first argument, error in callbacks.
+
+Nodeunit also provides the following functions within tests:
+
+* __expect(amount)__ - Specify how many assertions are expected to run within a test. Very useful for ensuring that all your callbacks and assertions are run.
+* __done()__ - Finish the current test function, and move on to the next. ALL tests should call this!
+
+
+##Contributors
+
+Contributors ordered by first contribution.
+
+<%= contributors %>
+
+
+##License
 
 <%= license %>
