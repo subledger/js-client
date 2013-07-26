@@ -553,6 +553,7 @@ cd Subledger && grunt watch
 
 ##Running tests in the browser
 
+Subledger has been successfully tested in the following browsers : **IE6+**, **Chrome PC/Mac**, **Safari PC/Mac**, **Opera PC/Mac** and **Firefox PC/Mac**.
 
 To running tests in the browser, open `build/web/test.html` into the browser you want to test. That's it!
 

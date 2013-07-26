@@ -37,12 +37,21 @@ module.exports = function (grunt) {
 
     },
     'uglify': {
-      'options': {
-        'banner': '<%= banner.compact %>'
+      'build' : {
+        'options': {
+          'banner': '<%= banner.compact %>'
+        },
+        'files': {
+          'build/subledger.min.js' : 'build/subledger.js'
+        }
       },
-      'dist': {
-        'src': 'build/<%= pkg.name %>.js',
-        'dest': 'build/<%= pkg.name %>.min.js'
+      'web' : {
+        'options': {
+          'banner': '<%= banner.compact %>'
+        },
+        'files': {
+          'build/web/js/subledger.min.js' : 'build/subledger.js'
+        }
       }
     },
     'jshint':{
@@ -51,6 +60,10 @@ module.exports = function (grunt) {
         eqeqeq: true,
         eqnull: true,
         browser: true,
+        evil: true,
+        globals: {
+          'JSON': true
+        },
         ignores: ['src/web/js/**/*.js']
       },
       'files': ['src/*.js','src/**/*.js']

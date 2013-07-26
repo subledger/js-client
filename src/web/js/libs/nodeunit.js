@@ -1198,7 +1198,6 @@ assert.AssertionError.super_ = Error;
 
 
 // EDITED FOR BROWSER COMPATIBILITY: replaced Object.create call
-// TODO: test what effect this may have
 var ctor = function () { this.constructor = assert.AssertionError; };
 ctor.prototype = Error.prototype;
 assert.AssertionError.prototype = new ctor();
@@ -1802,7 +1801,6 @@ exports.runModule = function (name, mod, opt, callback) {
  * @api public
  */
 
-// TODO: add proper unit tests for this function
 exports.runModules = function (modules, opt) {
     var all_assertions = [];
     var options = types.options(opt);
