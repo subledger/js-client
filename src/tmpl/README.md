@@ -1,7 +1,7 @@
 # [<%= title %>](<%= homepage %>) - <%= description %>
 
 
-<%= title %> is JavaScript library that allow you to quickly build a front-end application using the Subledger powerful APIs.
+<%= title %> is a JavaScript library that allows you to quickly build a front-end application using the <%= title %> powerful APIs.
 
 ## JavaScript Documentation
 

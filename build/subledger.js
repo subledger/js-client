@@ -1,5 +1,5 @@
 /*!
- * Subledger v1.0.0-beta1 - JavaScript library for Subledger
+ * Subledger v1.0.0 - JavaScript library for Subledger
  * http://subledger.com
  *
  * Copyright (c) 2013 Subledger

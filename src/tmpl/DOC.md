@@ -1,4 +1,4 @@
-Using the Subledger JavaScript library is pretty easy! You just have to create a Subledger connector, use it to communicate with the API with easy chaining operations then retreive the callback results. That's it!
+The use of the Subledger JavaScript library is pretty easy! You just have to create an Subledger connector, use it to communicate with the API with easy chaining operations and then retrieve the callback results. Voilà!
 
 ### Callback result
 The callback always return **Error** (`error`) as first parameter and **API Response** (`apiRes`) as second parameter.
@@ -8,13 +8,13 @@ The callback always return **Error** (`error`) as first parameter and **API Resp
  * No error : `null`
 
 #### API Response
- * Error : Complete Error object send by the API
- * No error : Response send by the API
+ * Error : Complete Error object sent by the API
+ * No error : Response sent by the API
 
 Note than the Subledger JavaScript library doesn't manipulate the API Response and return it as received. Please, refer to the complete [API documentation](https://fakt.api.boocx.com/docs/#!) to know more about the returned API responses.
 
 ### Data and Parameters
-When ask by the method, **Data** (`data`) and **Parameters** (`param`) refer to a well formed object compliant with the API. Please, refer to the complete [API documentation](https://fakt.api.boocx.com/docs/#!) to know more about the compliant data and parameters for your API request.
+When asked by the method, **Data** (`data`) and **Parameters** (`param`) refer to a well-formed object compliant with the API. Please, refer to the complete [API documentation](https://fakt.api.boocx.com/docs/#!) to know more about the compliant data and parameters for your API request.
 
 
 ### Create a new Subledger connection
