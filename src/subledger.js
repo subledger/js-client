@@ -3,565 +3,810 @@
 
   /**
    * Create a new Subledger connection
-   * @param {String} url The account URL to connect to the Subledger API
    * @example
-   * var subledger = new Subledger('https://mySubledgerAccount.api.boocx.com/v1');
+   * var subledger = new Subledger();
    * @constructor
    */
-  var Subledger = function (url) {
-    this.url = url ? helpers.removeTrailingSlash(url) : '';
+  var Subledger = function () {
+    this.url = 'https://api.subledger.com/v1';
+    this.oauth_consumer_key = null;
+    this.oauth_consumer_secret = null;
+    this._ajax = new Ajax();
   };
 
 
   /**
-   * subledger.book()
-   * @param {String} [book_id]
-   * @returns {Object} Return Subledger Book Methods
+   * Sets the OAuth consumer key and secret
+   * @param {string} key
+   * @param {string} secret
+   * @return {void}
    */
-  Subledger.prototype.book = function (book_id) {
+  Subledger.prototype.setCredentials = function(key, secret){
+    var subledger = this;
+
+    subledger.oauth_consumer_key = key;
+    subledger.oauth_consumer_secret = secret;
+    subledger._ajax.setCredentials(subledger.oauth_consumer_key, subledger.oauth_consumer_secret);
+  };
+
+
+  /**
+   * subledger.identity()
+   * @returns {Object} Return Subledger Identity Methods
+   */
+  Subledger.prototype.identity = function(identity_id) {
     var subledger = this,
       url = subledger.url,
-      book = {};
+      identity = {},
+      ajax = subledger._ajax;
 
-    url = url + '/books';
-
-
-    /**
-     * Get Subledger Book by calling "/books/{book_id}" with GET HTTP method or get Subledger Books by calling "/books" with GET HTTP method
-     * @summary Get Subledger Book(s)
-     * @param {Object} [param]
-     * @param {String} [param.state=active]
-     * @param {Number} [param.starting=0]
-     * @param {Function} callback
-     * @example
-     * //Get a book
-     * subledger.book('myBookId').get(function (error,apiRes){...});
-     * //Get active books
-     * subledger.book().get({'state':'active'},function (error,apiRes){...});
-     * @returns {*} Return the API Response
-     */
-    book.get = function (param, callback) {
-      if (helpers.isFunction(param)) {
-        callback = param;
-        param = {};
-      }
-
-      if (!book_id) {
-        param.state = param.state ? param.state : 'active';
-        param.starting = param.starting ? param.starting : 0;
-
-        url = url + '?' + helpers.encodeQueryObj(param);
-      }
-
-      ajax.get(url, callback);
-    };
+    url = url + '/identities';
 
 
     /**
-     * Create Subledger Book by calling "/books" with POST HTTP method
-     * @summary Create Subledger Book
+     * Create Subledger Identity by calling "/identities" with POST HTTP method
+     * @summary Create Subledger Identity
      * @param {Object} data
      * @param {Function} callback
      * @example
-     * //Create a book
-     * subledger.book().create({'description':'foo','reference':'bar'},function (error,apiRes){...});
+     * //Create an identity
+     * subledger.identity().create({...},function (error,apiRes){...});
      * @returns {*} Return the API Response
      */
-    book.create = function (data, callback) {
+    identity.create = function(data, callback){
       ajax.post(url, data, callback);
     };
 
-    if (book_id) {
-      url = url + '/' + book_id;
+    if(identity_id && subledger.oauth_consumer_key !== null && subledger.oauth_consumer_secret !== null) {
+      url = url + '/' + identity_id;
+
+      /**
+       * Get Subledger Identity by calling "/identities/{identity_id}" with GET HTTP method
+       * @summary Get Subledger Identity
+       * @param {Function} callback
+       * @example
+       * //Get an identity
+       * subledger.identity('myIdentityId').get(function (error,apiRes){...});
+       * @returns {*} Return the API Response
+       */
+      identity.get = function(callback){
+        ajax.get(url, callback);
+      };
 
 
       /**
-       * Update Subledger Book by calling "/books/{book_id}" with PATCH HTTP method
-       * @summary Update Subledger Book
+       * Update Subledger Identity by calling "/identities/{identity_id}" with PATCH HTTP method
+       * @summary Update Subledger Identity
        * @param {Object} data
        * @param {Function} callback
        * @example
-       * //Update a book
-       * subledger.book('myBookId').update({'description':'baz'},function (error,apiRes){...});
+       * //Update an identity
+       * subledger.identity('myIdentityId').update({...},function (error,apiRes){...});
        * @returns {*} Return the API Response
        */
-      book.update = function (data, callback) {
+      identity.update = function(data, callback){
         ajax.patch(url, data, callback);
       };
 
 
       /**
-       * Activate Subledger Book by calling "/books/{book_id}/activate" with POST HTTP method
-       * @summary Activate Subledger Book
-       * @param {Function} callback
-       * @example
-       * //Activate a book
-       * subledger.book('myBookId').activate(function (error,apiRes){...});
-       * @returns {*} Return the API Response
+       * subledger.identity('identity_id').key('myKeyId')
+       * @param {String} [key_id]
+       * @returns {Object} Return Subledger Identity Key Methods
        */
-      book.activate = function (callback) {
-        ajax.post(url + '/activate', callback);
-      };
-
-
-      /**
-       * Archive Subledger Book by calling "/books/{book_id}/archive" with POST HTTP method
-       * @summary Archive Subledger Book
-       * @param {Function} callback
-       * @example
-       * //Archive a book
-       * subledger.book('myBookId').archive(function (error,apiRes){...});
-       * @returns {*} Return the API Response
-       */
-      book.archive = function (callback) {
-        ajax.post(url + '/archive', callback);
-      };
-
-
-      /**
-       * subledger.book('myBookId').account('myAccountId')
-       * @param {String} [account_id]
-       * @returns {Object} Return Subledger Book Account Methods
-       */
-      book.account = function (account_id) {
-        var account = {};
-        url = url + '/accounts';
+      identity.key = function(key_id){
+        var key = {};
+        url = url + '/keys';
 
 
         /**
-         * Get Subledger Book Account by calling "/books/{book_id}/accounts/{account_id}" with GET HTTP method or get Subledger Book Accounts by calling "/books/{book_id}/accounts" with GET HTTP method
-         * @summary Get Subledger Book Account(s)
-         * @param {Object} [param]
-         * @param {String} [param.state=active]
-         * @param {Number} [param.starting=0]
-         * @param {Function} callback
-         * @example
-         * //Get a book account
-         * subledger.book('myBookId').account('myAccountId').get(function (error,apiRes){...});
-         * //Get active book accounts
-         * subledger.book('myBookId').account().get({'state':'active'},function (error,apiRes){...});
-         * @returns {*} Return the API Response
-         */
-        account.get = function (param, callback) {
-          if (helpers.isFunction(param)) {
-            callback = param;
-            param = {};
-          }
-
-          if (!account_id) {
-            param.state = param.state ? param.state : 'active';
-            param.starting = param.starting ? param.starting : 0;
-
-            url = url + '?' + helpers.encodeQueryObj(param);
-          }
-
-          ajax.get(url, callback);
-        };
-
-
-        /**
-         * Create Subledger Book Account by calling "/books/{book_id}/accounts" with POST HTTP method
-         * @summary Create Subledger Book Account
+         * Create Subledger Identity Key by calling "/identities/{identity_id}/keys" with POST HTTP method
+         * @summary Create Subledger Identity Key
          * @param {Object} data
          * @param {Function} callback
          * @example
-         * //Create a book account
-         * subledger.book('myBookId').account().create({'description':'foo','reference':'bar'},function (error,apiRes){...});
+         * //Create an identity key
+         * subledger.identity('myIdentityId').key().create({...},function (error,apiRes){...});
          * @returns {*} Return the API Response
          */
-        account.create = function (data, callback) {
+        key.create = function(data, callback){
           ajax.post(url, data, callback);
         };
 
-        if (account_id) {
-          url = url + '/' + account_id;
+        if(key_id) {
+          url = url + '/' + key_id;
 
 
           /**
-           * Update Subledger Book Account by calling "/books/{book_id}/accounts/{account_id}" with PATCH HTTP method
-           * @summary Update Subledger Book Account
-           * @param {Object} data
+           * Get Subledger Identity Key by calling "/identities/{identity_id}/keys/{key_id}" with GET HTTP method
+           * @summary Get Subledger Identity Key
            * @param {Function} callback
            * @example
-           * //Update a book account
-           * subledger.book('myBookId').account('myAccountId').create({'description':'baz'},function (error,apiRes){...});
+           * //Get an identity key
+           * subledger.identity('myIdentityId').key('myKeyId').get(function (error,apiRes){...});
            * @returns {*} Return the API Response
            */
-          account.update = function (data, callback) {
-            ajax.patch(url, data, callback);
+          key.get = function(callback){
+            ajax.get(url, callback);
           };
 
 
           /**
-           * Activate Subledger Book Account by calling "/books/{book_id}/accounts/{account_id}/activate" with POST HTTP method
-           * @summary Activate Subledger Book Account
+           * Activate Subledger Identity Key by calling "/identities/{identity_id}/keys/{key_id}/activate" with POST HTTP method
+           * @summary Activate Identity Key
            * @param {Function} callback
            * @example
-           * //Activate a book account
-           * subledger.book('myBookId').account('myAccountId').activate(function (error,apiRes){...});
+           * //Activate an identity key
+           * subledger.identity('myIdentityId').key('myKeyId').activate(function (error,apiRes){...});
            * @returns {*} Return the API Response
            */
-          account.activate = function (callback) {
+          key.activate = function(callback){
             ajax.post(url + '/activate', callback);
           };
 
 
           /**
-           * Archive Subledger Book Account by calling "/books/{book_id}/accounts/{account_id}/archive" with POST HTTP method
-           * @summary Archive Subledger Book Account
+           * Archive Subledger Identity Key by calling "/identities/{identity_id}/keys/{key_id}/archive" with POST HTTP method
+           * @summary Archive Identity Key
            * @param {Function} callback
            * @example
-           * //Archive a book account
-           * subledger.book('myBookId').account('myAccountId').archive(function (error,apiRes){...});
+           * //Archive an identity key
+           * subledger.identity('myIdentityId').key('myKeyId').archive(function (error,apiRes){...});
            * @returns {*} Return the API Response
            */
-          account.archive = function (callback) {
+          key.archive = function(callback){
             ajax.post(url + '/archive', callback);
           };
+        }
+        return key;
+      };
+    }
+    return identity;
+  };
+
+
+  /**
+   * subledger.organization()
+   * @returns {Object} Return Subledger Organization Methods
+   */
+  Subledger.prototype.organization = function(org_id) {
+    var subledger = this,
+      url = subledger.url,
+      organization = {},
+      ajax = subledger._ajax;
+
+    url = url + '/orgs';
+
+    if(subledger.oauth_consumer_key !== null && subledger.oauth_consumer_secret !== null) {
+      /**
+       * Create Subledger Organization by calling "/orgs" with POST HTTP method
+       * @summary Create Subledger Organization
+       * @param {Object} data
+       * @param {Function} callback
+       * @example
+       * //Create an organization
+       * subledger.organization().create({...},function (error,apiRes){...});
+       * @returns {*} Return the API Response
+       */
+      organization.create = function(data, callback){
+        ajax.post(url, data, callback);
+      };
+
+      if(org_id) {
+        url = url + '/' + org_id;
+
+
+        /**
+         * Get Subledger Organization by calling "/orgs/{org_id}" with GET HTTP method
+         * @summary Get Subledger Organization
+         * @param {Function} callback
+         * @example
+         * //Get an organization
+         * subledger.organization('myOrganizationId').get(function (error,apiRes){...});
+         * @returns {*} Return the API Response
+         */
+        organization.get = function(callback){
+          ajax.get(url, callback);
+        };
+
+
+        /**
+         * Update Subledger Organization by calling "/orgs/{org_id}" with PATCH HTTP method
+         * @summary Update Subledger Organization
+         * @param {Object} data
+         * @param {Function} callback
+         * @example
+         * //Update an organization
+         * subledger.organization('myOrganizationId').update({...},function (error,apiRes){...});
+         * @returns {*} Return the API Response
+         */
+        organization.update = function(data, callback){
+          ajax.patch(url, data, callback);
+        };
+
+
+        /**
+         * Activate Subledger Organization by calling "/orgs/{org_id}/activate" with POST HTTP method
+         * @summary Activate Subledger Organization
+         * @param {Function} callback
+         * @example
+         * //Activate an organization
+         * subledger.organization('myOrganizationId').activate(function (error,apiRes){...});
+         * @returns {*} Return the API Response
+         */
+        organization.activate = function(callback){
+          ajax.post(url + '/activate', callback);
+        };
+
+
+        /**
+         * Archive Subledger Organization by calling "/orgs/{org_id}/archive" with POST HTTP method
+         * @summary Archive Subledger Organization
+         * @param {Function} callback
+         * @example
+         * //Archive an organization
+         * subledger.organization('myOrganizationId').archive(function (error,apiRes){...});
+         * @returns {*} Return the API Response
+         */
+        organization.archive = function(callback){
+          ajax.post(url + '/archive', callback);
+        };
+
+
+        /**
+         * subledger.organization(org_id).book()
+         * @param {String} [book_id]
+         * @returns {Object} Return Subledger Book Methods
+         */
+        organization.book = function (book_id) {
+          var book = {};
+          url = url + '/books';
 
 
           /**
-           * Get Subledger Book Account Balance by calling "/books/{book_id}/accounts/{account_id}/balance" with GET HTTP method
-           * @summary Get Subledger Book Account Balance
+           * Get Subledger Book by calling "/orgs/{org_id}/books/{book_id}" with GET HTTP method or get Subledger Books by calling "/books" with GET HTTP method
+           * @summary Get Subledger Book(s)
            * @param {Object} [param]
-           * @param {String} [param.at=new Date().toISOString()]
+           * @param {String} [param.state=active]
+           * @param {String} [param.action=before]
            * @param {Function} callback
            * @example
-           * //Get a book account balance at July 23, 2013, 20:00 (UTC)
-           * subledger.book('myBookId').account('myAccountId').balance({'at':'2013-07-23T22:00:26.111Z'},function (error,apiRes){...});
+           * //Get a book
+           * subledger.organization('myOrganizationId').book('myBookId').get(function (error,apiRes){...});
+           * //Get active books
+           * subledger.organization('myOrganizationId').book().get({'state':'active'},function (error,apiRes){...});
            * @returns {*} Return the API Response
            */
-          account.balance = function (param, callback) {
+          book.get = function (param, callback) {
             if (helpers.isFunction(param)) {
               callback = param;
               param = {};
             }
 
-            param.at = param.at ? param.at : new Date().toISOString();
+            if (!book_id) {
+              param.state = param.state ? param.state : 'active';
+              param.action = param.action ? param.action : 'before';
 
-            ajax.get(url + '/balance?' + helpers.encodeQueryObj(param), callback);
-          };
-
-
-          /**
-           * subledger.book('myBookId').account('myAccountId').line('myLineId')
-           * @param {String} [line_id]
-           * @returns {Object} Return Subledger Book Account Line Methods
-           */
-          account.line = function (line_id) {
-            var line = {};
-            url = url + '/lines';
-
-
-            /**
-             * Get Subledger Book Account Line or by calling "/books/{book_id}/accounts/{account_id}/lines/{line_id}" with GET HTTP method get Subledger Book Account Lines by calling "/books/{book_id}/accounts/{account_id}/lines" with GET HTTP method
-             * @summary Get Subledger Book Account Line(s)
-             * @param {Object} [param]
-             * @param {Number} [param.starting=0]
-             * @param {Function} callback
-             * @example
-             * //Get a book account line
-             * subledger.book('myBookId').account('myAccountId').line('myLineId').get(function (error,apiRes){...});
-             * //Get book account lines starting at 0
-             * subledger.book('myBookId').account('myAccountId').line().get({'starting':0},function (error,apiRes){...});
-             * @returns {*} Return the API Response
-             */
-            line.get = function (param, callback) {
-              if (helpers.isFunction(param)) {
-                callback = param;
-                param = {};
-              }
-
-              if (!line_id) {
-                param.before = param.before ? param.before : new Date().toISOString();
-
-                url = url + '?' + helpers.encodeQueryObj(param);
-              }
-
-              ajax.get(url, callback);
-            };
-
-            if (line_id) {
-              url = url + '/' + line_id;
+              url = url + '?' + helpers.encodeQueryObj(param);
             }
 
-            return line;
-          };
-        }
-
-        return account;
-      };
-
-
-      /**
-       * subledger.book('myBookId').journalEntry('myJournalEntryId')
-       * @param {String} [journal_entry_id]
-       * @returns {Object} Return Subledger Book Journal-Entry Methods
-       */
-      book.journalEntry = function (journal_entry_id) {
-        var journalEntry = {};
-        url = url + '/journal_entries';
-
-
-        /**
-         * Get Subledger Book Journal-Entry by calling "/books/{book_id}/journal_entries/{journal_entry_id}" with GET HTTP method or get Subledger Book Journal-Entries by calling "/books/{book_id}/journal_entries" with GET HTTP method
-         * @summary Get Subledger Book Journal-Entry(ies)
-         * @param {Object} [param]
-         * @param {String} [param.before=new Date().toISOString()]
-         * @param {String} [param.state=active]
-         * @param {Function} callback
-         * @example
-         * //Get a book journal-entry
-         * subledger.book('myBookId').journalEntry('myJournalEntryId').get(function (error,apiRes){...});
-         * //Get book journal-entries before July 23, 2013, 20:00 (UTC)
-         * subledger.book('myBookId').journalEntry().get({'before':'2013-07-23T22:00:26.111Z'},function (error,apiRes){...});
-         * @returns {*} Return the API Response
-         */
-        journalEntry.get = function (param, callback) {
-          if (helpers.isFunction(param)) {
-            callback = param;
-            param = {};
-            param.before = new Date().toISOString();
-          }
-
-          if (!journal_entry_id) {
-            param.state = param.state ? param.state : 'active';
-
-            url = url + '?' + helpers.encodeQueryObj(param);
-          }
-
-          ajax.get(url, callback);
-        };
-
-
-        /**
-         * Create Subledger Book Journal-Entry by calling "/books/{book_id}/journal_entries" with POST HTTP method
-         * @summary Create Subledger Book Journal-Entry
-         * @param {Object} data
-         * @param {Function} callback
-         * @example
-         * //Create a book journal-entry
-         * subledger.book('myBookId').journalEntry().create({'description':'foo','reference':'bar'},function (error,apiRes){...});
-         * @returns {*} Return the API Response
-         */
-        journalEntry.create = function (data, callback) {
-          ajax.post(url, data, callback);
-        };
-
-
-        /**
-         * Create and Post Subledger Book Journal-Entry by calling "/books/{book_id}/journal_entries/create_and_post" with POST HTTP method
-         * @summary Create and Post Subledger Book Journal-Entry
-         * @param {Object} data
-         * @param {Function} callback
-         * @example
-         * //Create and post a book journal-entry
-         * subledger.book('myBookId').journalEntry().createAndPost({...},function (error,apiRes){...});
-         * @returns {*} Return the API Response
-         */
-        journalEntry.createAndPost = function (data, callback) {
-          ajax.post(url + '/create_and_post', data, callback);
-        };
-
-
-        if (journal_entry_id) {
-          url = url + '/' + journal_entry_id;
-
-
-          /**
-           * Post Subledger Book Journal-Entry by calling "/books/{book_id}/journal_entries/{journal_entry_id}" with POST HTTP method
-           * @summary Post Subledger Book Journal-Entry
-           * @param {Function} callback
-           * @example
-           * //Post a book journal-entry
-           * subledger.book('myBookId').journalEntry('myJournalEntryId').post(function (error,apiRes){...});
-           * @returns {*} Return the API Response
-           */
-          journalEntry.post = function (callback) {
-            ajax.post(url, callback);
+            ajax.get(url, callback);
           };
 
 
           /**
-           * Update Subledger Book Journal-Entry by calling "/books/{book_id}/journal_entries/{journal_entry_id}" with PATCH HTTP method
-           * @summary Update Subledger Book Journal-Entry
+           * Create Subledger Book by calling "/books" with POST HTTP method
+           * @summary Create Subledger Book
            * @param {Object} data
            * @param {Function} callback
            * @example
-           * //Update a book journal-entry
-           * subledger.book('myBookId').journalEntry('myJournalEntryId').update({'description':'baz'},function (error,apiRes){...});
+           * //Create a book
+           * subledger.organization('myOrganizationId').book().create({...},function (error,apiRes){...});
            * @returns {*} Return the API Response
            */
-          journalEntry.update = function (data, callback) {
-            ajax.patch(url, data, callback);
+          book.create = function (data, callback) {
+            ajax.post(url, data, callback);
           };
 
-
-          /**
-           * Activate Subledger Book Journal-Entry by calling "/books/{book_id}/journal_entries/{journal_entry_id}/activate" with POST HTTP method
-           * @summary Activate Subledger Book Journal-Entry
-           * @param {Function} callback
-           * @example
-           * //Activate a book journal-entry
-           * subledger.book('myBookId').journalEntry('myJournalEntryId').activate(function (error,apiRes){...});
-           * @returns {*} Return the API Response
-           */
-          journalEntry.activate = function (callback) {
-            ajax.post(url + '/activate', callback);
-          };
-
-
-          /**
-           * Archive Subledger Book Journal-Entry by calling "/books/{book_id}/journal_entries/{journal_entry_id}/archive" with POST HTTP method
-           * @summary Archive Subledger Book Journal-Entry
-           * @param {Function} callback
-           * @example
-           * //Archive a book journal-entry
-           * subledger.book('myBookId').journalEntry('myJournalEntryId').archive(function (error,apiRes){...});
-           * @returns {*} Return the API Response
-           */
-          journalEntry.archive = function (callback) {
-            ajax.post(url + '/archive', callback);
-          };
-
-
-          /**
-           * Get Subledger Book Journal-Entry Balance by calling "/books/{book_id}/journal_entries/{journal_entry_id}/balance" with GET HTTP method
-           * @summary Get Subledger Book Journal-Entry Balance
-           * @param {Function} callback
-           * @example
-           * //Get a book journal-entry balance
-           * subledger.book('myBookId').journalEntry('myJournalEntryId').balance(function (error,apiRes){...});
-           * @returns {*} Return the API Response
-           */
-          journalEntry.balance = function (callback) {
-            ajax.get(url + '/balance', callback);
-          };
-
-
-          /**
-           * Get Subledger Book Journal-Entry Progress by calling "/books/{book_id}/journal_entries/{journal_entry_id}/progress" with GET HTTP method
-           * @summary Get Subledger Book Journal-Entry Progress
-           * @param {Function} callback
-           * @example
-           * //Get a book journal-entry progress
-           * subledger.book('myBookId').journalEntry('myJournalEntryId').progress(function (error,apiRes){...});
-           * @returns {*} Return the API Response
-           */
-          journalEntry.progress = function (callback) {
-            ajax.get(url + '/progress', callback);
-          };
-
-
-          /**
-           * subledger.book('myBookId').journalEntry('myJournalEntryId').line('myLineId')
-           * @param {String} [line_id]
-           * @returns {Object} Return Subledger Book Journal-Entry Line Methods
-           */
-          journalEntry.line = function (line_id) {
-            var line = {};
+          if (book_id) {
+            url = url + '/' + book_id;
 
 
             /**
-             * Get Subledger Book Journal-Entry Line by calling "/books/{book_id}/journal_entries/{journal_entry_id}/lines/{line_id}" with GET HTTP method or get Subledger Book Journal-Entry Lines by calling "/books/{book_id}/journal_entries/{journal_entry_id}/lines" with GET HTTP method
-             * @summary Get Subledger Book Journal-Entry Line(s)
-             * @param {Object} [param]
-             * @param {Number} [param.starting=0]
-             * @param {String} [param.state=active]
-             * @param {Function} callback
-             * @example
-             * //Get a book journal-entry line
-             * subledger.book('myBookId').journalEntry('myJournalEntryId').line('myLineId').get(function (error,apiRes){...});
-             * //Get book journal-entry lines starting at 0
-             * subledger.book('myBookId').journalEntry('myJournalEntryId').line().get({'starting':0},function (error,apiRes){...});
-             * @returns {*} Return the API Response
-             */
-            line.get = function (param, callback) {
-              if (helpers.isFunction(param)) {
-                callback = param;
-                param = {};
-              }
-
-              if (!line_id) {
-                param.before = param.starting ? param.starting : new Date().toISOString();
-                param.state = param.state ? param.state : 'active';
-
-                url = url + '/lines?' + helpers.encodeQueryObj(param);
-              }
-
-              ajax.get(url, callback);
-            };
-
-
-            /**
-             * Create Subledger Book Journal-Entry Line by calling "/books/{book_id}/journal_entries/{journal_entry_id}/create_line" with POST HTTP method
-             * @summary Create Subledger Book Journal-Entry Line
+             * Update Subledger Book by calling "/orgs/{org_id}/books/{book_id}" with PATCH HTTP method
+             * @summary Update Subledger Book
              * @param {Object} data
              * @param {Function} callback
              * @example
-             * //Create a book journal-entry line
-             * subledger.book('myBookId').journalEntry('myJournalEntryId').line().create({...},function (error,apiRes){...});
+             * //Update a book
+             * subledger.organization('myOrganizationId').book('myBookId').update({...},function (error,apiRes){...});
              * @returns {*} Return the API Response
              */
-            line.create = function (data, callback) {
-              ajax.post(url + '/create_line', data, callback);
+            book.update = function (data, callback) {
+              ajax.patch(url, data, callback);
             };
 
-            if (line_id) {
-              url = url + '/lines/' + line_id;
+
+            /**
+             * Activate Subledger Book by calling "/orgs/{org_id}/books/{book_id}/activate" with POST HTTP method
+             * @summary Activate Subledger Book
+             * @param {Function} callback
+             * @example
+             * //Activate a book
+             * subledger.organization('myOrganizationId').book('myBookId').activate(function (error,apiRes){...});
+             * @returns {*} Return the API Response
+             */
+            book.activate = function (callback) {
+              ajax.post(url + '/activate', callback);
+            };
+
+
+            /**
+             * Archive Subledger Book by calling "/orgs/{org_id}/books/{book_id}/archive" with POST HTTP method
+             * @summary Archive Subledger Book
+             * @param {Function} callback
+             * @example
+             * //Archive a book
+             * subledger.organization('myOrganizationId').book('myBookId').archive(function (error,apiRes){...});
+             * @returns {*} Return the API Response
+             */
+            book.archive = function (callback) {
+              ajax.post(url + '/archive', callback);
+            };
+
+
+            /**
+             * subledger.organization('myOrganizationId').book('myBookId').account('myAccountId')
+             * @param {String} [account_id]
+             * @returns {Object} Return Subledger Book Account Methods
+             */
+            book.account = function (account_id) {
+              var account = {};
+              url = url + '/accounts';
 
 
               /**
-               * Update Subledger Book Journal-Entry Line by calling "/books/{book_id}/journal_entries/{journal_entry_id}/lines/{line_id}" with PATCH HTTP method
-               * @summary Update Subledger Book Journal-Entry Line
+               * Get Subledger Book Account by calling "/orgs/{org_id}/books/{book_id}/accounts/{account_id}" with GET HTTP method or get Subledger Book Accounts by calling "/orgs/{org_id}/books/{book_id}/accounts" with GET HTTP method
+               * @summary Get Subledger Book Account(s)
+               * @param {Object} [param]
+               * @param {String} [param.state=active]
+               * @param {String} [param.action=before]
+               * @param {Function} callback
+               * @example
+               * //Get a book account
+               * subledger.organization('myOrganizationId').book('myBookId').account('myAccountId').get(function (error,apiRes){...});
+               * //Get active book accounts
+               * subledger.organization('myOrganizationId').book('myBookId').account().get({'state':'active'},function (error,apiRes){...});
+               * @returns {*} Return the API Response
+               */
+              account.get = function (param, callback) {
+                if (helpers.isFunction(param)) {
+                  callback = param;
+                  param = {};
+                }
+
+                if (!account_id) {
+                  param.state = param.state ? param.state : 'active';
+                  param.action = param.action ? param.action : 'before';
+
+                  url = url + '?' + helpers.encodeQueryObj(param);
+                }
+
+                ajax.get(url, callback);
+              };
+
+
+              /**
+               * Create Subledger Book Account by calling "/orgs/{org_id}/books/{book_id}/accounts" with POST HTTP method
+               * @summary Create Subledger Book Account
                * @param {Object} data
                * @param {Function} callback
                * @example
-               * //Update a book journal-entry line
-               * subledger.book('myBookId').journalEntry('myJournalEntryId').line('myLineId').update({...},function (error,apiRes){...});
+               * //Create a book account
+               * subledger.organization('myOrganizationId').book('myBookId').account().create({...},function (error,apiRes){...});
                * @returns {*} Return the API Response
                */
-              line.update = function (data, callback) {
-                ajax.patch(url, data, callback);
+              account.create = function (data, callback) {
+                ajax.post(url, data, callback);
+              };
+
+              if (account_id) {
+                url = url + '/' + account_id;
+
+
+                /**
+                 * Update Subledger Book Account by calling "/orgs/{org_id}/books/{book_id}/accounts/{account_id}" with PATCH HTTP method
+                 * @summary Update Subledger Book Account
+                 * @param {Object} data
+                 * @param {Function} callback
+                 * @example
+                 * //Update a book account
+                 * subledger.organization('myOrganizationId').book('myBookId').account('myAccountId').create({...},function (error,apiRes){...});
+                 * @returns {*} Return the API Response
+                 */
+                account.update = function (data, callback) {
+                  ajax.patch(url, data, callback);
+                };
+
+
+                /**
+                 * Activate Subledger Book Account by calling "/orgs/{org_id}/books/{book_id}/accounts/{account_id}/activate" with POST HTTP method
+                 * @summary Activate Subledger Book Account
+                 * @param {Function} callback
+                 * @example
+                 * //Activate a book account
+                 * subledger.organization('myOrganizationId').book('myBookId').account('myAccountId').activate(function (error,apiRes){...});
+                 * @returns {*} Return the API Response
+                 */
+                account.activate = function (callback) {
+                  ajax.post(url + '/activate', callback);
+                };
+
+
+                /**
+                 * Archive Subledger Book Account by calling "/orgs/{org_id}/books/{book_id}/accounts/{account_id}/archive" with POST HTTP method
+                 * @summary Archive Subledger Book Account
+                 * @param {Function} callback
+                 * @example
+                 * //Archive a book account
+                 * subledger.organization('myOrganizationId').book('myBookId').account('myAccountId').archive(function (error,apiRes){...});
+                 * @returns {*} Return the API Response
+                 */
+                account.archive = function (callback) {
+                  ajax.post(url + '/archive', callback);
+                };
+
+
+                /**
+                 * Get Subledger Book Account Balance by calling "/orgs/{org_id}/books/{book_id}/accounts/{account_id}/balance" with GET HTTP method
+                 * @summary Get Subledger Book Account Balance
+                 * @param {Object} [param]
+                 * @param {String} [param.at=new Date().toISOString()]
+                 * @param {Function} callback
+                 * @example
+                 * //Get a book account balance at July 23, 2013, 20:00 (UTC)
+                 * subledger.organization('myOrganizationId').book('myBookId').account('myAccountId').balance({'at':'2013-07-23T22:00:26.111Z'},function (error,apiRes){...});
+                 * @returns {*} Return the API Response
+                 */
+                account.balance = function (param, callback) {
+                  if (helpers.isFunction(param)) {
+                    callback = param;
+                    param = {};
+                  }
+
+                  param.at = param.at ? param.at : new Date().toISOString();
+
+                  ajax.get(url + '/balance?' + helpers.encodeQueryObj(param), callback);
+                };
+
+
+                /**
+                 * subledger.organization('myOrganizationId').book('myBookId').account('myAccountId').line('myLineId')
+                 * @param {String} [line_id]
+                 * @returns {Object} Return Subledger Book Account Line Methods
+                 */
+                account.line = function (line_id) {
+                  var line = {};
+                  url = url + '/lines';
+
+
+                  /**
+                   * Get Subledger Book Account Line or by calling "/orgs/{org_id}/books/{book_id}/accounts/{account_id}/lines/{line_id}" with GET HTTP method get Subledger Book Account Lines by calling "/orgs/{org_id}/books/{book_id}/accounts/{account_id}/lines" with GET HTTP method
+                   * @summary Get Subledger Book Account Line(s)
+                   * @param {Object} [param]
+                   * @param {String} [param.action=before]
+                   * @param {String} [param.effective_at=new Date().toISOString()]
+                   * @param {Function} callback
+                   * @example
+                   * //Get a book account line
+                   * subledger.organization('myOrganizationId').book('myBookId').account('myAccountId').line('myLineId').get(function (error,apiRes){...});
+                   * //Get book account lines starting at 0
+                   * subledger.organization('myOrganizationId').book('myBookId').account('myAccountId').line().get({'starting':0},function (error,apiRes){...});
+                   * @returns {*} Return the API Response
+                   */
+                  line.get = function (param, callback) {
+                    if (helpers.isFunction(param)) {
+                      callback = param;
+                      param = {};
+                    }
+
+                    if (!line_id) {
+                      param.action = param.action ? param.action : 'before';
+                      param.effective_at = param.effective_at ? param.effective_at : new Date().toISOString();
+
+                      url = url + '?' + helpers.encodeQueryObj(param);
+                    }
+
+                    ajax.get(url, callback);
+                  };
+
+                  if (line_id) {
+                    url = url + '/' + line_id;
+                  }
+
+                  return line;
+                };
+              }
+
+              return account;
+            };
+
+
+            /**
+             * subledger.organization('myOrganizationId').book('myBookId').journalEntry('myJournalEntryId')
+             * @param {String} [journal_entry_id]
+             * @returns {Object} Return Subledger Book Journal-Entry Methods
+             */
+            book.journalEntry = function (journal_entry_id) {
+              var journalEntry = {};
+              url = url + '/journal_entries';
+
+
+              /**
+               * Get Subledger Book Journal-Entry by calling "/orgs/{org_id}/books/{book_id}/journal_entries/{journal_entry_id}" with GET HTTP method or get Subledger Book Journal-Entries by calling "/orgs/{org_id}/books/{book_id}/journal_entries" with GET HTTP method
+               * @summary Get Subledger Book Journal-Entry(ies)
+               * @param {Object} [param]
+               * @param {String} [param.state=active]
+               * @param {String} [param.action=before]
+               * @param {String} [param.effective_at=new Date().toISOString()]
+               * @param {Function} callback
+               * @example
+               * //Get a book journal-entry
+               * subledger.organization('myOrganizationId').book('myBookId').journalEntry('myJournalEntryId').get(function (error,apiRes){...});
+               * //Get book journal-entries before July 23, 2013, 20:00 (UTC)
+               * subledger.organization('myOrganizationId').book('myBookId').journalEntry().get({'before':'2013-07-23T22:00:26.111Z'},function (error,apiRes){...});
+               * @returns {*} Return the API Response
+               */
+              journalEntry.get = function (param, callback) {
+                if (helpers.isFunction(param)) {
+                  callback = param;
+                  param = {};
+                }
+
+                if (!journal_entry_id) {
+                  param.state = param.state ? param.state : 'active';
+                  param.action = param.action ? param.action : 'before';
+                  param.effective_at = param.effective_at ? param.effective_at : new Date().toISOString();
+
+                  url = url + '?' + helpers.encodeQueryObj(param);
+                }
+
+                ajax.get(url, callback);
               };
 
 
               /**
-               * Activate Subledger Book Journal-Entry Line by calling "/books/{book_id}/journal_entries/{journal_entry_id}/lines/{line_id}/activate" with POST HTTP method
-               * @summary Activate Subledger Book Journal-Entry Line
+               * Create Subledger Book Journal-Entry by calling "/orgs/{org_id}/books/{book_id}/journal_entries" with POST HTTP method
+               * @summary Create Subledger Book Journal-Entry
+               * @param {Object} data
                * @param {Function} callback
                * @example
-               * //Activate a book journal-entry line
-               * subledger.book('myBookId').journalEntry('myJournalEntryId').line('myLineId').activate(function (error,apiRes){...});
+               * //Create a book journal-entry
+               * subledger.organization('myOrganizationId').book('myBookId').journalEntry().create({...},function (error,apiRes){...});
                * @returns {*} Return the API Response
                */
-              line.activate = function (callback) {
-                ajax.post(url + '/activate', callback);
+              journalEntry.create = function (data, callback) {
+                ajax.post(url, data, callback);
               };
 
 
               /**
-               * Archive Subledger Book Journal-Entry Line by calling "/books/{book_id}/journal_entries/{journal_entry_id}/lines/{line_id}/archive" with POST HTTP method
-               * @summary Archive Subledger Book Journal-Entry Line
+               * Create and Post Subledger Book Journal-Entry by calling "/orgs/{org_id}/books/{book_id}/journal_entries/create_and_post" with POST HTTP method
+               * @summary Create and Post Subledger Book Journal-Entry
+               * @param {Object} data
                * @param {Function} callback
                * @example
-               * //Archive a book journal-entry line
-               * subledger.book('myBookId').journalEntry('myJournalEntryId').line('myLineId').archive(function (error,apiRes){...});
+               * //Create and post a book journal-entry
+               * subledger.organization('myOrganizationId').book('myBookId').journalEntry().createAndPost({...},function (error,apiRes){...});
                * @returns {*} Return the API Response
                */
-              line.archive = function (callback) {
-                ajax.post(url + '/archive', callback);
+              journalEntry.createAndPost = function (data, callback) {
+                ajax.post(url + '/create_and_post', data, callback);
               };
-            }
-            return line;
-          };
-        }
 
-        return journalEntry;
-      };
+
+              if (journal_entry_id) {
+                url = url + '/' + journal_entry_id;
+
+
+                /**
+                 * Post Subledger Book Journal-Entry by calling "/orgs/{org_id}/books/{book_id}/journal_entries/{journal_entry_id}" with POST HTTP method
+                 * @summary Post Subledger Book Journal-Entry
+                 * @param {Function} callback
+                 * @example
+                 * //Post a book journal-entry
+                 * subledger.organization('myOrganizationId').book('myBookId').journalEntry('myJournalEntryId').post(function (error,apiRes){...});
+                 * @returns {*} Return the API Response
+                 */
+                journalEntry.post = function (callback) {
+                  ajax.post(url, callback);
+                };
+
+
+                /**
+                 * Update Subledger Book Journal-Entry by calling "/orgs/{org_id}/books/{book_id}/journal_entries/{journal_entry_id}" with PATCH HTTP method
+                 * @summary Update Subledger Book Journal-Entry
+                 * @param {Object} data
+                 * @param {Function} callback
+                 * @example
+                 * //Update a book journal-entry
+                 * subledger.organization('myOrganizationId').book('myBookId').journalEntry('myJournalEntryId').update({...},function (error,apiRes){...});
+                 * @returns {*} Return the API Response
+                 */
+                journalEntry.update = function (data, callback) {
+                  ajax.patch(url, data, callback);
+                };
+
+
+                /**
+                 * Activate Subledger Book Journal-Entry by calling "/orgs/{org_id}/books/{book_id}/journal_entries/{journal_entry_id}/activate" with POST HTTP method
+                 * @summary Activate Subledger Book Journal-Entry
+                 * @param {Function} callback
+                 * @example
+                 * //Activate a book journal-entry
+                 * subledger.organization('myOrganizationId').book('myBookId').journalEntry('myJournalEntryId').activate(function (error,apiRes){...});
+                 * @returns {*} Return the API Response
+                 */
+                journalEntry.activate = function (callback) {
+                  ajax.post(url + '/activate', callback);
+                };
+
+
+                /**
+                 * Archive Subledger Book Journal-Entry by calling "/orgs/{org_id}/books/{book_id}/journal_entries/{journal_entry_id}/archive" with POST HTTP method
+                 * @summary Archive Subledger Book Journal-Entry
+                 * @param {Function} callback
+                 * @example
+                 * //Archive a book journal-entry
+                 * subledger.organization('myOrganizationId').book('myBookId').journalEntry('myJournalEntryId').archive(function (error,apiRes){...});
+                 * @returns {*} Return the API Response
+                 */
+                journalEntry.archive = function (callback) {
+                  ajax.post(url + '/archive', callback);
+                };
+
+
+                /**
+                 * Get Subledger Book Journal-Entry Balance by calling "/orgs/{org_id}/books/{book_id}/journal_entries/{journal_entry_id}/balance" with GET HTTP method
+                 * @summary Get Subledger Book Journal-Entry Balance
+                 * @param {Function} callback
+                 * @example
+                 * //Get a book journal-entry balance
+                 * subledger.organization('myOrganizationId').book('myBookId').journalEntry('myJournalEntryId').balance(function (error,apiRes){...});
+                 * @returns {*} Return the API Response
+                 */
+                journalEntry.balance = function (callback) {
+                  ajax.get(url + '/balance', callback);
+                };
+
+
+                /**
+                 * Get Subledger Book Journal-Entry Progress by calling "/orgs/{org_id}/books/{book_id}/journal_entries/{journal_entry_id}/progress" with GET HTTP method
+                 * @summary Get Subledger Book Journal-Entry Progress
+                 * @param {Function} callback
+                 * @example
+                 * //Get a book journal-entry progress
+                 * subledger.organization('myOrganizationId').book('myBookId').journalEntry('myJournalEntryId').progress(function (error,apiRes){...});
+                 * @returns {*} Return the API Response
+                 */
+                journalEntry.progress = function (callback) {
+                  ajax.get(url + '/progress', callback);
+                };
+
+
+                /**
+                 * subledger.organization('myOrganizationId').book('myBookId').journalEntry('myJournalEntryId').line('myLineId')
+                 * @param {String} [line_id]
+                 * @returns {Object} Return Subledger Book Journal-Entry Line Methods
+                 */
+                journalEntry.line = function (line_id) {
+                  var line = {};
+
+
+                  /**
+                   * Get Subledger Book Journal-Entry Line by calling "/orgs/{org_id}/books/{book_id}/journal_entries/{journal_entry_id}/lines/{line_id}" with GET HTTP method or get Subledger Book Journal-Entry Lines by calling "/orgs/{org_id}/books/{book_id}/journal_entries/{journal_entry_id}/lines" with GET HTTP method
+                   * @summary Get Subledger Book Journal-Entry Line(s)
+                   * @param {Object} [param]
+                   * @param {String} [param.state=active]
+                   * @param {String} [param.action=before]
+                   * @param {Function} callback
+                   * @example
+                   * //Get a book journal-entry line
+                   * subledger.organization('myOrganizationId').book('myBookId').journalEntry('myJournalEntryId').line('myLineId').get(function (error,apiRes){...});
+                   * //Get book journal-entry lines starting at 0
+                   * subledger.organization('myOrganizationId').book('myBookId').journalEntry('myJournalEntryId').line().get({'starting':0},function (error,apiRes){...});
+                   * @returns {*} Return the API Response
+                   */
+                  line.get = function (param, callback) {
+                    if (helpers.isFunction(param)) {
+                      callback = param;
+                      param = {};
+                    }
+
+                    if (!line_id) {
+                      param.state = param.state ? param.state : 'active';
+                      param.action = param.action ? param.action : 'before';
+
+                      url = url + '/lines?' + helpers.encodeQueryObj(param);
+                    }
+
+                    ajax.get(url, callback);
+                  };
+
+
+                  /**
+                   * Create Subledger Book Journal-Entry Line by calling "/orgs/{org_id}/books/{book_id}/journal_entries/{journal_entry_id}/create_line" with POST HTTP method
+                   * @summary Create Subledger Book Journal-Entry Line
+                   * @param {Object} data
+                   * @param {Function} callback
+                   * @example
+                   * //Create a book journal-entry line
+                   * subledger.organization('myOrganizationId').book('myBookId').journalEntry('myJournalEntryId').line().create({...},function (error,apiRes){...});
+                   * @returns {*} Return the API Response
+                   */
+                  line.create = function (data, callback) {
+                    ajax.post(url + '/create_line', data, callback);
+                  };
+
+                  if (line_id) {
+                    url = url + '/lines/' + line_id;
+
+
+                    /**
+                     * Update Subledger Book Journal-Entry Line by calling "/orgs/{org_id}/books/{book_id}/journal_entries/{journal_entry_id}/lines/{line_id}" with PATCH HTTP method
+                     * @summary Update Subledger Book Journal-Entry Line
+                     * @param {Object} data
+                     * @param {Function} callback
+                     * @example
+                     * //Update a book journal-entry line
+                     * subledger.organization('myOrganizationId').book('myBookId').journalEntry('myJournalEntryId').line('myLineId').update({...},function (error,apiRes){...});
+                     * @returns {*} Return the API Response
+                     */
+                    line.update = function (data, callback) {
+                      ajax.patch(url, data, callback);
+                    };
+
+
+                    /**
+                     * Activate Subledger Book Journal-Entry Line by calling "/orgs/{org_id}/books/{book_id}/journal_entries/{journal_entry_id}/lines/{line_id}/activate" with POST HTTP method
+                     * @summary Activate Subledger Book Journal-Entry Line
+                     * @param {Function} callback
+                     * @example
+                     * //Activate a book journal-entry line
+                     * subledger.organization('myOrganizationId').book('myBookId').journalEntry('myJournalEntryId').line('myLineId').activate(function (error,apiRes){...});
+                     * @returns {*} Return the API Response
+                     */
+                    line.activate = function (callback) {
+                      ajax.post(url + '/activate', callback);
+                    };
+
+
+                    /**
+                     * Archive Subledger Book Journal-Entry Line by calling "/orgs/{org_id}/books/{book_id}/journal_entries/{journal_entry_id}/lines/{line_id}/archive" with POST HTTP method
+                     * @summary Archive Subledger Book Journal-Entry Line
+                     * @param {Function} callback
+                     * @example
+                     * //Archive a book journal-entry line
+                     * subledger.organization('myOrganizationId').book('myBookId').journalEntry('myJournalEntryId').line('myLineId').archive(function (error,apiRes){...});
+                     * @returns {*} Return the API Response
+                     */
+                    line.archive = function (callback) {
+                      ajax.post(url + '/archive', callback);
+                    };
+                  }
+                  return line;
+                };
+              }
+
+              return journalEntry;
+            };
+          }
+
+          return book;
+        };
+      }
     }
-
-    return book;
+    return organization;
   };
 
 
@@ -593,7 +838,12 @@
   /**
    * Ajax
    */
-  var ajax = (function () {
+  var Ajax = function() {
+    var _selfAjax = this;
+
+    _selfAjax.oauth_consumer_key = null;
+    _selfAjax.oauth_consumer_secret = null;
+
     function Promise() {
       this._callbacks = [];
     }
@@ -641,6 +891,11 @@
       return xhr;
     }
 
+    function make_base_auth(key, secret) {
+      var token = key + ':' + secret;
+      var hash  = Base64.encode(token);
+      return "Basic " + hash;
+    }
 
     function ajax(method, url, data, headers) {
       var p = new Promise();
@@ -664,6 +919,10 @@
       xhr.setRequestHeader('Accept', 'application/json');
       xhr.setRequestHeader('Content-type', 'application/json');
       xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+      if(_selfAjax.oauth_consumer_key !== null && _selfAjax.oauth_consumer_secret !== null) {
+        xhr.setRequestHeader("Authorization", make_base_auth(_selfAjax.oauth_consumer_key, _selfAjax.oauth_consumer_secret));
+      }
 
       for (var h in headers) {
         if (headers.hasOwnProperty(h)) {
@@ -722,7 +981,7 @@
 
       return res;
     }
-
+    /*
     var ajaxInterface = {
       get: function (url, callback) {
         promise.get(url).then(function (err, data) {
@@ -769,7 +1028,230 @@
     };
 
     return ajaxInterface;
+    */
+    this.get = function (url, callback) {
+      promise.get(url).then(function (err, data) {
+        data = resHandling(err, data);
+        return (callback(data.err, data.data));
+      });
+    };
+
+    this.post = function (url, data, callback) {
+      if (helpers.isFunction(data)) {
+        callback = data;
+        data = {};
+      }
+      promise.post(url, data).then(function (err, data) {
+        data = resHandling(err, data);
+        return (callback(data.err, data.data));
+      });
+    };
+
+    this.put = function (url, data, callback) {
+      if (helpers.isFunction(data)) {
+        callback = data;
+        data = {};
+      }
+      promise.put(url, data).then(function (err, data) {
+        data = resHandling(err, data);
+        return (callback(data.err, data.data));
+      });
+    };
+
+    this.patch = function (url, data, callback) {
+      if (helpers.isFunction(data)) {
+        callback = data;
+        data = {};
+      }
+      promise.patch(url, data).then(function (err, data) {
+        data = resHandling(err, data);
+        return (callback(data.err, data.data));
+      });
+    };
+
+    this.del = function (url, callback) {
+      promise.del(url).then(function (err, data) {
+        data = resHandling(err, data);
+        return (callback(data.err, data.data));
+      });
+    };
+
+  };
+
+  Ajax.prototype.setCredentials = function(key, secret){
+    var ajax = this;
+
+    ajax.oauth_consumer_key = key;
+    ajax.oauth_consumer_secret = secret;
+  };
+
+
+  /**
+   * Base64 fast encode/decode
+   */
+  var Base64 = (function() {
+
+    function StringBuffer() {
+      this.buffer = [];
+    }
+
+    StringBuffer.prototype.append = function append(string) {
+      this.buffer.push(string);
+      return this;
+    };
+
+    StringBuffer.prototype.toString = function toString() {
+      return this.buffer.join("");
+    };
+
+    var Base64 = {
+      codex : "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",
+      encode : function (input) {
+        var output = new StringBuffer();
+
+        var enumerator = new Utf8EncodeEnumerator(input);
+        while (enumerator.moveNext()) {
+          var chr1 = enumerator.current;
+
+          enumerator.moveNext();
+          var chr2 = enumerator.current;
+
+          enumerator.moveNext();
+          var chr3 = enumerator.current;
+
+          var enc1 = chr1 >> 2;
+          var enc2 = ((chr1 & 3) << 4) | (chr2 >> 4);
+          var enc3 = ((chr2 & 15) << 2) | (chr3 >> 6);
+          var enc4 = chr3 & 63;
+
+          if (isNaN(chr2)) {
+            enc3 = enc4 = 64;
+          }
+          else if (isNaN(chr3)) {
+            enc4 = 64;
+          }
+          output.append(this.codex.charAt(enc1) + this.codex.charAt(enc2) + this.codex.charAt(enc3) + this.codex.charAt(enc4));
+        }
+        return output.toString();
+      },
+      decode : function (input){
+        var output = new StringBuffer();
+        var charCode2 = false;
+
+        var enumerator = new Base64DecodeEnumerator(input);
+        while (enumerator.moveNext()) {
+          var charCode = enumerator.current;
+
+          if (charCode < 128) {
+            output.append(String.fromCharCode(charCode));
+          }
+          else if ((charCode > 191) && (charCode < 224)) {
+            enumerator.moveNext();
+            charCode2 = enumerator.current;
+
+            output.append(String.fromCharCode(((charCode & 31) << 6) | (charCode2 & 63)));
+          }
+          else {
+            enumerator.moveNext();
+            charCode2 = enumerator.current;
+
+            enumerator.moveNext();
+            var charCode3 = enumerator.current;
+
+            output.append(String.fromCharCode(((charCode & 15) << 12) | ((charCode2 & 63) << 6) | (charCode3 & 63)));
+          }
+        }
+        return output.toString();
+      }
+    };
+
+
+    function Utf8EncodeEnumerator(input) {
+      this._input = input;
+      this._index = -1;
+      this._buffer = [];
+    }
+
+    Utf8EncodeEnumerator.prototype = {
+      current: Number.NaN,
+      moveNext: function() {
+        if (this._buffer.length > 0) {
+          this.current = this._buffer.shift();
+          return true;
+        }
+        else if (this._index >= (this._input.length - 1)) {
+          this.current = Number.NaN;
+          return false;
+        }
+        else {
+          var charCode = this._input.charCodeAt(++this._index);
+
+          if ((charCode === 13) && (this._input.charCodeAt(this._index + 1) === 10)) {
+            charCode = 10;
+            this._index += 2;
+          }
+          if (charCode < 128) {
+            this.current = charCode;
+          }
+          else if ((charCode > 127) && (charCode < 2048)) {
+            this.current = (charCode >> 6) | 192;
+            this._buffer.push((charCode & 63) | 128);
+          }
+          else {
+            this.current = (charCode >> 12) | 224;
+            this._buffer.push(((charCode >> 6) & 63) | 128);
+            this._buffer.push((charCode & 63) | 128);
+          }
+          return true;
+        }
+      }
+    };
+
+    function Base64DecodeEnumerator(input) {
+      this._input = input;
+      this._index = -1;
+      this._buffer = [];
+    }
+
+    Base64DecodeEnumerator.prototype = {
+      current: 64,
+      moveNext: function() {
+        if (this._buffer.length > 0) {
+          this.current = this._buffer.shift();
+          return true;
+        }
+        else if (this._index >= (this._input.length - 1)) {
+          this.current = 64;
+          return false;
+        }
+        else {
+          var enc1 = Base64.codex.indexOf(this._input.charAt(++this._index));
+          var enc2 = Base64.codex.indexOf(this._input.charAt(++this._index));
+          var enc3 = Base64.codex.indexOf(this._input.charAt(++this._index));
+          var enc4 = Base64.codex.indexOf(this._input.charAt(++this._index));
+
+          var chr1 = (enc1 << 2) | (enc2 >> 4);
+          var chr2 = ((enc2 & 15) << 4) | (enc3 >> 2);
+          var chr3 = ((enc3 & 3) << 6) | enc4;
+
+          this.current = chr1;
+
+          if (enc3 !== 64) {
+            this._buffer.push(chr2);
+          }
+
+          if (enc4 !== 64) {
+            this._buffer.push(chr3);
+          }
+
+          return true;
+        }
+      }
+    };
+
+    return Base64;
   })();
+
 
   /**
    * Add toISOString() method to Date object if ECMAScript is older than 5.1
