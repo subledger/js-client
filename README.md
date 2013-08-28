@@ -232,7 +232,7 @@ subledger.organization(org_id).book(book_id).get(function (error,apiRes){
 #### Get list
 ```javascript
 /**
- * subledger.organization(org_id).book(book_id).get(param,callback);
+ * subledger.organization(org_id).book().get(param,callback);
  * @param {Object} [param]
  * @param {String} [param.state=active]
  * @param {String} [param.action=before]
@@ -356,7 +356,7 @@ subledger.organization(org_id).book(book_id).account().create({...},function (er
  * @param {Function} callback
  */
 
-subledger.organization(org_id).book(book_id).account(account_id).create({...},function (error,apiRes){
+subledger.organization(org_id).book(book_id).account(account_id).update({...},function (error,apiRes){
   ...
 });
 ```
@@ -504,7 +504,7 @@ subledger.organization(org_id).book(book_id).journalEntry(journal_entry_id).post
 #### Create and post
 ```javascript
 /**
- * subledger.organization(org_id).book(book_id).journalEntry(journal_entry_id).createAndPost(data,callback);
+ * subledger.organization(org_id).book(book_id).journalEntry().createAndPost(data,callback);
  * @param {Object} data
  * @param {Function} callback
  */
