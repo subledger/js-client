@@ -3851,6 +3851,221 @@ exports['subledger.organization().book().journalEntry().line()'] = {
     });
   }
 };
+
+exports['subledger.organization().book().category()'] = {
+  'Get Subledger Book Categories without parameter': function (test) {
+    subledger.organization(organization.active_org.id).book(book.active_book.id).category().get(function(e,d){
+      test.ifError(e);
+      test.ok(d.active_categories !== undefined, '"active_categories" property exist');
+      test.deepEqual(_.isArray(d.active_categories),true,'"active_accounts" property contain array');
+      test.done();
+    });
+  },
+  'Get Subledger Book Categories with parameter' : function (test) {
+    subledger.organization(organization.active_org.id).book(book.active_book.id).category().get({'state':'archived'},function(e,d){
+      test.ifError(e);
+      test.ok(d.archived_categories !== undefined,'"archived_categories" property exist');
+      test.deepEqual(_.isArray(d.archived_categories),true,'"archived_categories" property contain array');
+      test.done();
+    });
+  },
+  'Create Subledger Book Category' : function (test) {
+    subledger.organization(organization.active_org.id).book(book.active_book.id).category().create({'description': 'foo','reference': 'http://www.bar.com','normal_balance':'debit'},function(e,d){
+      test.ifError(e);
+      test.ok(d.active_category !== undefined,'"active_category" property exist');
+      test.ok(d.active_category.id !== undefined,'"active_categoryt.id" property exist');
+      test.deepEqual(d.active_category.description,'foo','"active_category.description" property equal "foo"')
+      category = d;
+      test.done();
+    });
+  },
+  'Get Subledger Book Category' : function (test) {
+    subledger.organization(organization.active_org.id).book(book.active_book.id).category(category.active_category.id).get(function(e,d){
+      test.ifError(e);
+      test.ok(d.active_category !== undefined,'"active_category" property exist');
+      test.deepEqual(d.active_category.id,category.active_category.id,'"active_category.id" property is the same');
+      test.done();
+    });
+  },
+  'Update Subledger Book Category' : function (test) {
+    var update = {
+      "description": "baz",
+      "reference": category.active_category.reference,
+      "normal_balance": category.active_category.normal_balance,
+      "version": category.active_category.version + 1
+    };
+
+    subledger.organization(organization.active_org.id).book(book.active_book.id).category(category.active_category.id).update(update,function(e,d){
+      test.ifError(e);
+      test.ok(d.active_category !== undefined,'"active_category" property exist');
+      test.ok(d.active_category.id !== undefined,'"active_category.id" property exist');
+      test.deepEqual(d.active_category.description,'baz','"active_category.description" property equal "baz"')
+      category = d;
+      test.done();
+    });
+  },
+  'Attach Subledger Book Category to Account' : function (test) {
+    subledger.organization(organization.active_org.id).book(book.active_book.id).category(category.active_category.id).attach({account: account.active_account.id}, function(e,d){
+      test.ifError(e);
+      test.ok(d.active_account !== undefined,'"active_account" property exist');
+      test.deepEqual(d.active_account.id,account.active_account.id,'"active_account.id" property is the same');
+      test.done();
+    });
+  },
+  'Detach Subledger Book Category from Account' : function (test) {
+    subledger.organization(organization.active_org.id).book(book.active_book.id).category(category.active_category.id).detach({account: account.active_account.id}, function(e,d){
+      test.ifError(e);
+      test.ok(d.active_account !== undefined,'"active_account" property exist');
+      test.deepEqual(d.active_account.id,account.active_account.id,'"active_account.id" property is the same');
+      test.done();
+    });
+  },
+  'Archive Subledger Book Category' : function (test) {
+    subledger.organization(organization.active_org.id).book(book.active_book.id).category(category.active_category.id).archive(function(e,d){
+      test.ifError(e);
+      test.ok(d.archived_category !== undefined,'"archived_category" property exist');
+      test.ok(d.archived_category.id !== undefined,'"archived_category.id" property exist');
+      category = d;
+      test.done();
+    });
+  },
+  'Activate Subledger Book Category' : function (test) {
+    subledger.organization(organization.active_org.id).book(book.active_book.id).category(category.archived_category.id).activate(function(e,d){
+      test.ifError(e);
+      test.ok(d.active_category !== undefined,'"active_category" property exist');
+      test.ok(d.active_category.id !== undefined,'"active_category.id" property exist');
+      category = d;
+      test.done();
+    });
+  }
+};
+
+exports['subledger.organization().book().report()'] = {
+  'Get Subledger Book Reports without parameter': function (test) {
+    subledger.organization(organization.active_org.id).book(book.active_book.id).report().get(function(e,d){
+      test.ifError(e);
+      test.ok(d.active_reports !== undefined, '"active_reports" property exist');
+      test.deepEqual(_.isArray(d.active_reports),true,'"active_reports" property contain array');
+      test.done();
+    });
+  },
+  'Get Subledger Book Reports with parameter' : function (test) {
+    subledger.organization(organization.active_org.id).book(book.active_book.id).report().get({'state':'archived'},function(e,d){
+      test.ifError(e);
+      test.ok(d.archived_reports !== undefined,'"archived_reports" property exist');
+      test.deepEqual(_.isArray(d.archived_reports),true,'"archived_reports" property contain array');
+      test.done();
+    });
+  },
+  'Create Subledger Book Report' : function (test) {
+    subledger.organization(organization.active_org.id).book(book.active_book.id).report().create({'description': 'foo','reference': 'http://www.bar.com'},function(e,d){
+      test.ifError(e);
+      test.ok(d.active_report !== undefined,'"active_report" property exist');
+      test.ok(d.active_report.id !== undefined,'"active_report.id" property exist');
+      test.deepEqual(d.active_report.description,'foo','"active_report.description" property equal "foo"')
+      report = d;
+      test.done();
+    });
+  },
+  'Get Subledger Book Report' : function (test) {
+    subledger.organization(organization.active_org.id).book(book.active_book.id).report(report.active_report.id).get(function(e,d){
+      test.ifError(e);
+      test.ok(d.active_report !== undefined,'"active_report" property exist');
+      test.deepEqual(d.active_report.id,report.active_report.id,'"active_report.id" property is the same');
+      test.done();
+    });
+  },
+  'Update Subledger Book Report' : function (test) {
+    var update = {
+      "description": "baz",
+      "reference": report.active_report.reference,
+      "version": report.active_report.version + 1
+    };
+
+    subledger.organization(organization.active_org.id).book(book.active_book.id).report(report.active_report.id).update(update,function(e,d){
+      test.ifError(e);
+      test.ok(d.active_report !== undefined,'"active_report" property exist');
+      test.ok(d.active_report.id !== undefined,'"active_report.id" property exist');
+      test.deepEqual(d.active_report.description,'baz','"active_report.description" property equal "baz"')
+      report = d;
+      test.done();
+    });
+  },
+  'Attach Subledger Book Report to Category' : function (test) {
+    subledger.organization(organization.active_org.id).book(book.active_book.id).report(report.active_report.id).attach({category: category.active_category.id}, function(e,d){
+      test.ifError(e);
+      test.ok(d.active_category !== undefined,'"active_category" property exist');
+      test.deepEqual(d.active_category.id,category.active_category.id,'"active_category.id" property is the same');
+      test.done();
+    });
+  },
+  'Detach Subledger Book Report from Category' : function (test) {
+    subledger.organization(organization.active_org.id).book(book.active_book.id).report(report.active_report.id).detach({category: category.active_category.id}, function(e,d){
+      test.ifError(e);
+      test.ok(d.active_category !== undefined,'"active_category" property exist');
+      test.deepEqual(d.active_category.id,category.active_category.id,'"active_category.id" property is the same');
+      test.done();
+    });
+  },
+  'Archive Subledger Book Report' : function (test) {
+    subledger.organization(organization.active_org.id).book(book.active_book.id).report(report.active_report.id).archive(function(e,d){
+      test.ifError(e);
+      test.ok(d.archived_report !== undefined,'"archived_report" property exist');
+      test.ok(d.archived_report.id !== undefined,'"archived_report.id" property exist');
+      report = d;
+      test.done();
+    });
+  },
+  'Activate Subledger Book Report' : function (test) {
+    subledger.organization(organization.active_org.id).book(book.active_book.id).report(report.archived_report.id).activate(function(e,d){
+      test.ifError(e);
+      test.ok(d.active_report !== undefined,'"active_report" property exist');
+      test.ok(d.active_report.id !== undefined,'"active_report.id" property exist');
+      report = d;
+      test.done();
+    });
+  },
+  'Render Subledger Book Report' : function (test) {
+    subledger.organization(organization.active_org.id).book(book.active_book.id).report(report.active_report.id).render(function(e,d){
+      test.ifError(e);
+      test.ok(d.building_report_rendering !== undefined || d.completed_report_rendering !== undefined,'"building_report_rendering or completed_report_rendering" property exist');
+
+      if (d.building_report_rendering !== undefined) {
+        test.ok(d.building_report_rendering.id !== undefined,'"building_report_rendering.id" property exist');
+        report_rendering = d.building_report_rendering;
+      }
+
+      if (d.completed_report_rendering !== undefined) {
+        test.ok(d.completed_report_rendering.id !== undefined,'"completed_report_rendering.id" property exist');
+        report_rendering = d.completed_report_rendering;
+      }
+
+      test.done();
+    });
+  }
+};
+
+exports['subledger.organization().book().report_rendering()'] = {
+  'Render Subledger Book Report' : function (test) {
+    subledger.organization(organization.active_org.id).book(book.active_book.id).report_rendering(report_rendering.id).get(function(e,d){
+      test.ifError(e);
+      test.ok(d.building_report_rendering !== undefined || d.completed_report_rendering !== undefined,'"building_report_rendering or completed_report_rendering" property exist');
+
+      if (d.building_report_rendering !== undefined) {
+        test.ok(d.building_report_rendering.id !== undefined,'"building_report_rendering.id" property exist');
+        report_rendering = d.building_report_rendering;
+      }
+
+      if (d.completed_report_rendering !== undefined) {
+        test.ok(d.completed_report_rendering.id !== undefined,'"completed_report_rendering.id" property exist');
+        report_rendering = d.completed_report_rendering;
+      }
+
+      test.done();
+    });
+  }
+};
+
 (function(){
 	var banner = $('#nodeunit-banner'),
       tests = $('#nodeunit-tests'),
