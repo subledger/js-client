@@ -660,6 +660,252 @@ subledger.organization(org_id).book(book_id).journalEntry(journal_entry_id).line
 });
 ```
 
+### Category
+
+#### Get one
+```javascript
+/**
+ * subledger.organization(org_id).book(book_id).category(category_id).get(callback);
+ * @param {Function} callback
+ */
+
+subledger.organization(org_id).book(book_id).category(category_id).get(function (error,apiRes){
+  ...
+});
+```
+
+#### Get list
+```javascript
+/**
+ * subledger.organization(org_id).book(book_id).category().get(param,callback);
+ * @param {Object} [param]
+ * @param {String} [param.state=active]
+ * @param {String} [param.action=before]
+ * @param {Function} callback
+ */
+
+//With parameters
+subledger.organization(org_id).book(book_id).category().get({...},function (error,apiRes){
+  ...
+});
+
+//Without parameters
+subledger.organization(org_id).book(book_id).category().get(function (error,apiRes){
+  ...
+});
+```
+
+#### Create
+```javascript
+/**
+ * subledger.organization(org_id).book(book_id).category().create(data,callback);
+ * @param {Object} data
+ * @param {Function} callback
+ */
+
+subledger.organization(org_id).book(book_id).category().create({...},function (error,apiRes){
+  ...
+});
+```
+
+#### Update
+```javascript
+/**
+ * subledger.organization(org_id).book(book_id).category(category_id).update(data,callback);
+ * @param {Object} data
+ * @param {Function} callback
+ */
+
+subledger.organization(org_id).book(book_id).category(category_id).update({...},function (error,apiRes){
+  ...
+});
+```
+
+#### Attach
+```javascript
+/**
+ * subledger.organization(org_id).book(book_id).category(category_id).attach(data,callback);
+ * @param {Function} callback
+ */
+
+subledger.organization(org_id).book(book_id).category(category_id).attach({account: 'accountId'},function (error,apiRes){
+  ...
+});
+```
+
+#### Detach
+```javascript
+/**
+ * subledger.organization(org_id).book(book_id).category(category_id).detach(data,callback);
+ * @param {Function} callback
+ */
+
+subledger.organization(org_id).book(book_id).category(category_id).detach({account: 'accountId'},function (error,apiRes){
+  ...
+});
+```
+
+#### Archive
+```javascript
+/**
+ * subledger.organization(org_id).book(book_id).category(category_id).archive(callback);
+ * @param {Function} callback
+ */
+
+subledger.organization(org_id).book(book_id).category(category_id).archive(function (error,apiRes){
+  ...
+});
+```
+
+#### Activate
+```javascript
+/**
+ * subledger.organization(org_id).book(book_id).category(category_id).activate(callback);
+ * @param {Function} callback
+ */
+
+subledger.organization(org_id).book(book_id).category(category_id).activate(function (error,apiRes){
+  ...
+});
+```
+
+### Report
+
+#### Get one
+```javascript
+/**
+ * subledger.organization(org_id).book(book_id).report(report_id).get(callback);
+ * @param {Function} callback
+ */
+
+subledger.organization(org_id).book(book_id).report(report_id).get(function (error,apiRes){
+  ...
+});
+```
+
+#### Get list
+```javascript
+/**
+ * subledger.organization(org_id).book(book_id).report().get(param,callback);
+ * @param {Object} [param]
+ * @param {String} [param.state=active]
+ * @param {String} [param.action=before]
+ * @param {Function} callback
+ */
+
+//With parameters
+subledger.organization(org_id).book(book_id).report().get({...},function (error,apiRes){
+  ...
+});
+
+//Without parameters
+subledger.organization(org_id).book(book_id).report().get(function (error,apiRes){
+  ...
+});
+```
+
+#### Create
+```javascript
+/**
+ * subledger.organization(org_id).book(book_id).report().create(data,callback);
+ * @param {Object} data
+ * @param {Function} callback
+ */
+
+subledger.organization(org_id).book(book_id).report().create({...},function (error,apiRes){
+  ...
+});
+```
+
+#### Update
+```javascript
+/**
+ * subledger.organization(org_id).book(book_id).report(report_id).update(data,callback);
+ * @param {Object} data
+ * @param {Function} callback
+ */
+
+subledger.organization(org_id).book(book_id).report(report_id).update({...},function (error,apiRes){
+  ...
+});
+```
+
+#### Attach
+```javascript
+/**
+ * subledger.organization(org_id).book(book_id).report(report_id).attach(data,callback);
+ * @param {Function} callback
+ */
+
+subledger.organization(org_id).book(book_id).report(report_id).attach({account: 'accountId'},function (error,apiRes){
+  ...
+});
+```
+
+#### Detach
+```javascript
+/**
+ * subledger.organization(org_id).book(book_id).report(report_id).detach(data,callback);
+ * @param {Function} callback
+ */
+
+subledger.organization(org_id).book(book_id).report(report_id).detach({account: 'accountId'},function (error,apiRes){
+  ...
+});
+```
+
+#### Render
+```javascript
+/**
+ * subledger.organization(org_id).book(book_id).report(report_id).render(param,callback);
+ * @param {Function} callback
+ */
+
+subledger.organization(org_id).book(book_id).report(report_id).render({at: new Date().toISOString()},function (error,apiRes){
+  ...
+});
+```
+
+#### Archive
+```javascript
+/**
+ * subledger.organization(org_id).book(book_id).report(report_id).archive(callback);
+ * @param {Function} callback
+ */
+
+subledger.organization(org_id).book(book_id).report(report_id).archive(function (error,apiRes){
+  ...
+});
+```
+
+#### Activate
+```javascript
+/**
+ * subledger.organization(org_id).book(book_id).report(report_id).activate(callback);
+ * @param {Function} callback
+ */
+
+subledger.organization(org_id).book(book_id).report(report_id).activate(function (error,apiRes){
+  ...
+});
+```
+
+### Report Rendering
+
+#### Get one
+```javascript
+/**
+ * subledger.organization(org_id).book(book_id).report_rendering(report_rendering_id).get(callback);
+ * @param {Function} callback
+ */
+
+subledger.organization(org_id).book(book_id).report_rendering(report_rendering_id).get(function (error,apiRes){
+  ...
+});
+```
+
+
+
 
 ## What you need to build your own Subledger
 

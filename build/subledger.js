@@ -808,12 +808,315 @@
 
               return journalEntry;
             };
+
+            /**
+             * subledger.organization('myOrganizationId').book('myBookId').category('myCategoryId')
+             * @param {String} [category_id]
+             * @returns {Object} Return Subledger Book Category Methods
+             */
+            book.category = function (category_id) {
+              var category = {};
+              url = url + "/categories";
+
+              /**
+               * Get Subledger Book Category by calling "/orgs/{org_id}/books/{book_id}/categories/{category_id}" with GET HTTP method or get Subledger Book Categories by calling "/orgs/{org_id}/books/{book_id}/categories" with GET HTTP method
+               * @summary Get Subledger Book Category(ies)
+               * @param {Object} [param]
+               * @param {String} [param.state=active]
+               * @param {String} [param.action=before]
+               * @param {Function} callback
+               * @example
+               * //Get a category
+               * subledger.organization('myOrganizationId').book('myBookId').category('categoryId').get(function (error,apiRes){...});
+               * //Get active book categories
+               * subledger.organization('myOrganizationId').book('myBookId').category().get({'state':'active'},function (error,apiRes){...});
+               * @returns {*} Return the API Response
+               */
+              category.get = function (param, callback) {
+                if (helpers.isFunction(param)) {
+                  callback = param;
+                  param = {};
+                }
+
+                if (!category_id) {
+                  param.state = param.state ? param.state : 'active';
+                  param.action = param.action ? param.action : 'before';
+
+                  url = url + '?' + helpers.encodeQueryObj(param);
+                }
+
+                ajax.get(url, callback);
+              };
+
+              /**
+               * Create Subledger Book Category by calling "/orgs/{org_id}/books/{book_id}/categories" with POST HTTP method
+               * @summary Create Subledger Book Category
+               * @param {Object} data
+               * @param {Function} callback
+               * @example
+               * //Create a book category
+               * subledger.organization('myOrganizationId').book('myBookId').category().create({...},function (error,apiRes){...});
+               * @returns {*} Return the API Response
+               */
+              category.create = function (data, callback) {
+                ajax.post(url, data, callback);
+              };
+
+              if (category_id) {
+                url = url + '/' + category_id;
+
+                /**
+                 * Update Subledger Book Category by calling "/orgs/{org_id}/books/{book_id}/categories/{category_id}" with PATCH HTTP method
+                 * @summary Update Subledger Book Category
+                 * @param {Object} data
+                 * @param {Function} callback
+                 * @example
+                 * //Update a book category
+                 * subledger.organization('myOrganizationId').book('myBookId').category('categoryId').create({...},function (error,apiRes){...});
+                 * @returns {*} Return the API Response
+                 */
+                category.update = function (data, callback) {
+                  ajax.patch(url, data, callback);
+                };
+
+                /**
+                 * Attach Subledger Book Category to an Account by calling "/orgs/{org_id}/books/{book_id}/categories/{category_id}/attach" with POST HTTP method
+                 * @summary Attach Subledger Book Category to an Account
+                 * @param {Object} data
+                 * @param {Function} callback
+                 * @example
+                 * //Attach a book category to an account
+                 * subledger.organization('myOrganizationId').book('myBookId').category('categoryId').attach({account: 'accountId'},function (error,apiRes){...});
+                 * @returns {*} Return the API Response
+                 */
+                category.attach = function (data, callback) {
+                  ajax.post(url + '/attach', data, callback);
+                };
+
+                /**
+                 * Detach Subledger Book Category from an Account by calling "/orgs/{org_id}/books/{book_id}/categories/{category_id}/detach" with POST HTTP method
+                 * @summary Detach Subledger Book Category from an Account
+                 * @param {Object} data
+                 * @param {Function} callback
+                 * @example
+                 * //Detach a book category from an account
+                 * subledger.organization('myOrganizationId').book('myBookId').category('categoryId').detach({account: 'accountId'},function (error,apiRes){...});
+                 * @returns {*} Return the API Response
+                 */
+                category.detach = function (data, callback) {
+                  ajax.post(url + '/detach', data, callback);
+                };
+
+                /**
+                 * Archive Subledger Book Category by calling "/orgs/{org_id}/books/{book_id}/categories/{category_id}/archive" with POST HTTP method
+                 * @summary Archive Subledger Book Category
+                 * @param {Function} callback
+                 * @example
+                 * //Archive a book category
+                 * subledger.organization('myOrganizationId').book('myBookId').category('categoryId').archive(function (error,apiRes){...});
+                 * @returns {*} Return the API Response
+                 */
+                category.archive = function (callback) {
+                  ajax.post(url + '/archive', callback);
+                };
+
+                /**
+                 * Activate Subledger Book Category by calling "/orgs/{org_id}/books/{book_id}/categories/{category_id}/activate" with POST HTTP method
+                 * @summary Activate Subledger Book Category
+                 * @param {Function} callback
+                 * @example
+                 * //Activate a book category
+                 * subledger.organization('myOrganizationId').book('myBookId').category('categoryId').activate(function (error,apiRes){...});
+                 * @returns {*} Return the API Response
+                 */
+                category.activate = function (callback) {
+                  ajax.post(url + '/activate', callback);
+                };
+              }
+
+              return category;
+            };
+
+            /**
+             * subledger.organization('myOrganizationId').book('myBookId').report('reportId')
+             * @param {String} [report_id]
+             * @returns {Object} Return Subledger Book Report Methods
+             */
+            book.report = function (report_id) {
+              var report = {};
+              url = url + "/reports";
+
+              /**
+               * Get Subledger Book Report by calling "/orgs/{org_id}/books/{book_id}/reports/{report_id}" with GET HTTP method or get Subledger Book Reports by calling "/orgs/{org_id}/books/{book_id}/reports" with GET HTTP method
+               * @summary Get Subledger Book Report(s)
+               * @param {Object} [param]
+               * @param {String} [param.state=active]
+               * @param {String} [param.action=before]
+               * @param {Function} callback
+               * @example
+               * //Get a book report
+               * subledger.organization('myOrganizationId').book('myBookId').report('reportId').get(function (error,apiRes){...});
+               * //Get active book reports
+               * subledger.organization('myOrganizationId').book('myBookId').report().get({'state':'active'},function (error,apiRes){...});
+               * @returns {*} Return the API Response
+               */
+              report.get = function (param, callback) {
+                if (helpers.isFunction(param)) {
+                  callback = param;
+                  param = {};
+                }
+
+                if (!report_id) {
+                  param.state = param.state ? param.state : 'active';
+                  param.action = param.action ? param.action : 'before';
+
+                  url = url + '?' + helpers.encodeQueryObj(param);
+                }
+
+                ajax.get(url, callback);
+              };
+
+              /**
+               * Create Subledger Book Report by calling "/orgs/{org_id}/books/{book_id}/reports" with POST HTTP method
+               * @summary Create Subledger Book Report
+               * @param {Object} data
+               * @param {Function} callback
+               * @example
+               * //Create a book report
+               * subledger.organization('myOrganizationId').book('myBookId').report().create({...},function (error,apiRes){...});
+               * @returns {*} Return the API Response
+               */
+              report.create = function (data, callback) {
+                ajax.post(url, data, callback);
+              };
+
+              if (report_id) {
+                url = url + '/' + report_id;
+
+                /**
+                 * Update Subledger Book Report by calling "/orgs/{org_id}/books/{book_id}/reports/{report_id}" with PATCH HTTP method
+                 * @summary Update Subledger Book Report
+                 * @param {Object} data
+                 * @param {Function} callback
+                 * @example
+                 * //Update a book report
+                 * subledger.organization('myOrganizationId').book('myBookId').report('reportId').create({...},function (error,apiRes){...});
+                 * @returns {*} Return the API Response
+                 */
+                report.update = function (data, callback) {
+                  ajax.patch(url, data, callback);
+                };
+
+                /**
+                 * Attach Subledger Book Report to an Account by calling "/orgs/{org_id}/books/{book_id}/reports/{report_id}/attach" with POST HTTP method
+                 * @summary Attach Subledger Book Report to an Account
+                 * @param {Object} data
+                 * @param {Function} callback
+                 * @example
+                 * //Attach a book report to an account
+                 * subledger.organization('myOrganizationId').book('myBookId').report('reportId').attach({account: 'accountId'},function (error,apiRes){...});
+                 * @returns {*} Return the API Response
+                 */
+                report.attach = function (data, callback) {
+                  ajax.post(url + '/attach', data, callback);
+                };
+
+                /**
+                 * Detach Subledger Book Report from an Account by calling "/orgs/{org_id}/books/{book_id}/reports/{report_id}/detach" with POST HTTP method
+                 * @summary Detach Subledger Book Report from an Account
+                 * @param {Object} data
+                 * @param {Function} callback
+                 * @example
+                 * //Detach a book report from an account
+                 * subledger.organization('myOrganizationId').book('myBookId').report('reportId').detach({account: 'accountId'},function (error,apiRes){...});
+                 * @returns {*} Return the API Response
+                 */
+                report.detach = function (data, callback) {
+                  ajax.post(url + '/detach', data, callback);
+                };
+
+                /**
+                 * Render Subledger Book Report by calling "/orgs/{org_id}/books/{book_id}/reports/{report_id}/render" with POST HTTP method
+                 * @summary Render Subledger Book Report
+                 * @param {Object} param
+                 * @param {String} [param.at=new Date().toISOString()]
+                 * @param {Function} callback
+                 * @example
+                 * //Render a book report
+                 * subledger.organization('myOrganizationId').book('myBookId').report('reportId').render(function (error,apiRes){...});
+                 * @returns {*} Return the API Response
+                 */
+                report.render = function (param, callback) {
+                  if (helpers.isFunction(param)) {
+                    callback = param;
+                    param = {};
+                  }
+
+                  param.at = param.at ? param.at : new Date().toISOString();
+                  ajax.post(url + '/render?' + helpers.encodeQueryObj(param), callback);
+                };
+
+                /**
+                 * Archive Subledger Book Report by calling "/orgs/{org_id}/books/{book_id}/reports/{report_id}/archive" with POST HTTP method
+                 * @summary Archive Subledger Book Report
+                 * @param {Function} callback
+                 * @example
+                 * //Archive a book report
+                 * subledger.organization('myOrganizationId').book('myBookId').report('reportId').archive(function (error,apiRes){...});
+                 * @returns {*} Return the API Response
+                 */
+                report.archive = function (callback) {
+                  ajax.post(url + '/archive', callback);
+                };
+
+                /**
+                 * Activate Subledger Book Report by calling "/orgs/{org_id}/books/{book_id}/reports/{report_id}/activate" with POST HTTP method
+                 * @summary Activate Subledger Book Report
+                 * @param {Function} callback
+                 * @example
+                 * //Activate a book report
+                 * subledger.organization('myOrganizationId').book('myBookId').report('reportId').activate(function (error,apiRes){...});
+                 * @returns {*} Return the API Response
+                 */
+                report.activate = function (callback) {
+                  ajax.post(url + '/activate', callback);
+                };
+              }
+
+              return report;
+            };
+
+            /**
+             * subledger.organization('myOrganizationId').book('myBookId').report_rendering('reportRenderingId')
+             * @param {String} [report_rendering_id]
+             * @returns {Object} Return Subledger Book Report Rendering Methods
+             */
+            book.report_rendering = function (report_rendering_id) {
+              var report_rendering = {};
+              url = url + "/report_renderings";
+
+              /**
+               * Get Subledger Book Report Rendering by calling "/orgs/{org_id}/books/{book_id}/report_rederings/{report_rendering_id}"
+               * @summary Get Subledger Book Report
+               * @param {Function} callback
+               * @example
+               * //Get a book report rendering
+               * subledger.organization('myOrganizationId').book('myBookId').report_rendering('reportRenderingId').get(function (error,apiRes){...});
+               * @returns {*} Return the API Response
+               */
+              report_rendering.get = function (callback) {
+                ajax.get(url + '/' + report_rendering_id, callback);
+              };
+
+              return report_rendering;
+            };
           }
 
           return book;
         };
       }
     }
+
     return organization;
   };
 
