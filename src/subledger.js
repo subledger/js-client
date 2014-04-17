@@ -288,10 +288,10 @@
               param.state = param.state ? param.state : 'active';
               param.action = param.action ? param.action : 'ending';
 
-              if ((param.action === 'ending' || params.action === 'before') && !param.description) {
+              if ((param.action === 'ending' || param.action === 'before') && !param.description) {
                 param.description = 0xFF;
 
-              } else if ((params.action === 'starting' || params.action === 'after') && !param.description) {
+              } else if ((param.action === 'starting' || param.action === 'after') && !param.description) {
                 param.description = 0x00;
               }
 
@@ -398,10 +398,10 @@
                   param.state = param.state ? param.state : 'active';
                   param.action = param.action ? param.action : 'ending';
 
-                  if ((param.action === 'ending' || params.action === 'before') && !param.description) {
+                  if ((param.action === 'ending' || param.action === 'before') && !param.description) {
                     param.description = 0xFF;
 
-                  } else if ((params.action === 'starting' || params.action === 'after') && !param.description) {
+                  } else if ((param.action === 'starting' || param.action === 'after') && !param.description) {
                     param.description = 0x00;
                   }
 
@@ -851,10 +851,10 @@
                   param.state = param.state ? param.state : 'active';
                   param.action = param.action ? param.action : 'ending';
 
-                  if ((param.action === 'ending' || params.action === 'before') && !param.description) {
+                  if ((param.action === 'ending' || param.action === 'before') && !param.description) {
                     param.description = 0xFF;
 
-                  } else if ((params.action === 'starting' || params.action === 'after') && !param.description) {
+                  } else if ((param.action === 'starting' || param.action === 'after') && !param.description) {
                     param.description = 0x00;
                   }
 
@@ -987,10 +987,10 @@
                   param.state = param.state ? param.state : 'active';
                   param.action = param.action ? param.action : 'ending';
 
-                  if ((param.action === 'ending' || params.action === 'before') && !param.description) {
+                  if ((param.action === 'ending' || param.action === 'before') && !param.description) {
                     param.description = 0xFF;
 
-                  } else if ((params.action === 'starting' || params.action === 'after') && !param.description) {
+                  } else if ((param.action === 'starting' || param.action === 'after') && !param.description) {
                     param.description = 0x00;
                   }
 
