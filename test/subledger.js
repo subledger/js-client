@@ -3,7 +3,7 @@ var subledger,identity,identityKey,organization,book,account,journalEntry,journa
 exports['var subledger = new Subledger()'] = {
   'Create Subledger connection' : function (test) {
     subledger = new Subledger();
-    test.equal(subledger.url,'https://api.subledger.com/v1');
+    test.equal(subledger.url,'https://api.subledger.com/v2');
     test.equal(subledger.oauth_consumer_key,null);
     test.equal(subledger.oauth_consumer_secret,null);
     test.done();
@@ -282,7 +282,7 @@ exports['subledger.organization().book().account()'] = {
     });
   },
   'Get Subledger Book Account Balance with parameter' : function (test) {
-    subledger.organization(organization.active_org.id).book(book.active_book.id).account(account.active_account.id).balance({'at':20200101},function(e,d){
+    subledger.organization(organization.active_org.id).book(book.active_book.id).account(account.active_account.id).balance({'at':'2020-01-01T00:00:00.000Z'},function(e,d){
       test.ifError(e);
       test.ok(d.balance !== undefined,'"balance" property exist');
       test.ok(d.balance.debit_value !== undefined,'"balance.debit_value" property exist');
@@ -455,7 +455,7 @@ exports['subledger.organization().book().journalEntry()'] = {
 
 exports['subledger.organization().book().journalEntry().line()'] = {
   'Get Subledger Book Journal Entry Lines without parameter' : function (test) {
-    subledger.organization(organization.active_org.id).book(book.active_book.id).journalEntry(journalEntry.active_journal_entry.id).line().get(function(e,d){
+    subledger.organization(organization.active_org.id).book(book.active_book.id).journalEntry(journalEntry.active_journal_entry.id).line().get({state: 'active'}, function(e,d){
       test.ifError(e);
       test.ok(d.active_lines !== undefined,'"active_lines" property exist');
       test.deepEqual(_.isArray(d.active_lines),true,'"active_lines" property contain array');

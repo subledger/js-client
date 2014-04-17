@@ -17,5 +17,6 @@
 *.idea
 *.project
 *.mobileprovision
+*.swp
 
 node_modules

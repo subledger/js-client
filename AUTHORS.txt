@@ -1,3 +1,4 @@
 Contributors ordered by first contribution.
 
 Marc-André Arseneault <marc-andre@arsnl.ca>
+Alexandre Michetti Manduca <a.michetti@gmail.com>

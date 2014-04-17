@@ -8,7 +8,7 @@
    * @constructor
    */
   var Subledger = function () {
-    this.url = 'https://api.subledger.com/v1';
+    this.url = 'https://api.subledger.com/v2';
     this.oauth_consumer_key = null;
     this.oauth_consumer_secret = null;
     this._ajax = new Ajax();
@@ -268,7 +268,8 @@
            * @summary Get Subledger Book(s)
            * @param {Object} [param]
            * @param {String} [param.state=active]
-           * @param {String} [param.action=before]
+           * @param {String} [param.action=ending]
+           * @param {String} [param.description=0xFF]
            * @param {Function} callback
            * @example
            * //Get a book
@@ -285,7 +286,14 @@
 
             if (!book_id) {
               param.state = param.state ? param.state : 'active';
-              param.action = param.action ? param.action : 'before';
+              param.action = param.action ? param.action : 'ending';
+
+              if ((param.action === 'ending' || params.action === 'before') && !param.description) {
+                param.description = 0xFF;
+
+              } else if ((params.action === 'starting' || params.action === 'after') && !param.description) {
+                param.description = 0x00;
+              }
 
               url = url + '?' + helpers.encodeQueryObj(param);
             }
@@ -370,7 +378,8 @@
                * @summary Get Subledger Book Account(s)
                * @param {Object} [param]
                * @param {String} [param.state=active]
-               * @param {String} [param.action=before]
+               * @param {String} [param.action=ending]
+               * @param {String} [param.description=0xFF]
                * @param {Function} callback
                * @example
                * //Get a book account
@@ -387,7 +396,14 @@
 
                 if (!account_id) {
                   param.state = param.state ? param.state : 'active';
-                  param.action = param.action ? param.action : 'before';
+                  param.action = param.action ? param.action : 'ending';
+
+                  if ((param.action === 'ending' || params.action === 'before') && !param.description) {
+                    param.description = 0xFF;
+
+                  } else if ((params.action === 'starting' || params.action === 'after') && !param.description) {
+                    param.description = 0x00;
+                  }
 
                   url = url + '?' + helpers.encodeQueryObj(param);
                 }
@@ -494,14 +510,14 @@
                    * Get Subledger Book Account Line or by calling "/orgs/{org_id}/books/{book_id}/accounts/{account_id}/lines/{line_id}" with GET HTTP method get Subledger Book Account Lines by calling "/orgs/{org_id}/books/{book_id}/accounts/{account_id}/lines" with GET HTTP method
                    * @summary Get Subledger Book Account Line(s)
                    * @param {Object} [param]
-                   * @param {String} [param.action=before]
+                   * @param {String} [param.action=ending]
                    * @param {String} [param.effective_at=new Date().toISOString()]
                    * @param {Function} callback
                    * @example
                    * //Get a book account line
                    * subledger.organization('myOrganizationId').book('myBookId').account('myAccountId').line('myLineId').get(function (error,apiRes){...});
-                   * //Get book account lines starting at 0
-                   * subledger.organization('myOrganizationId').book('myBookId').account('myAccountId').line().get({'starting':0},function (error,apiRes){...});
+                   * //Get book account lines starting at beginning of time
+                   * subledger.organization('myOrganizationId').book('myBookId').account('myAccountId').line().get({action: 'starting', effective_at: new Date(0).toISOString()},function (error,apiRes){...});
                    * @returns {*} Return the API Response
                    */
                   line.get = function (param, callback) {
@@ -511,7 +527,7 @@
                     }
 
                     if (!line_id) {
-                      param.action = param.action ? param.action : 'before';
+                      param.action = param.action ? param.action : 'ending';
                       param.effective_at = param.effective_at ? param.effective_at : new Date().toISOString();
 
                       url = url + '?' + helpers.encodeQueryObj(param);
@@ -547,14 +563,14 @@
                * @summary Get Subledger Book Journal-Entry(ies)
                * @param {Object} [param]
                * @param {String} [param.state=active]
-               * @param {String} [param.action=before]
+               * @param {String} [param.action=ending]
                * @param {String} [param.effective_at=new Date().toISOString()]
                * @param {Function} callback
                * @example
                * //Get a book journal-entry
                * subledger.organization('myOrganizationId').book('myBookId').journalEntry('myJournalEntryId').get(function (error,apiRes){...});
                * //Get book journal-entries before July 23, 2013, 20:00 (UTC)
-               * subledger.organization('myOrganizationId').book('myBookId').journalEntry().get({'before':'2013-07-23T22:00:26.111Z'},function (error,apiRes){...});
+               * subledger.organization('myOrganizationId').book('myBookId').journalEntry().get({action: 'before', effective_at: '2013-07-23T22:00:26.111Z'},function (error,apiRes){...});
                * @returns {*} Return the API Response
                */
               journalEntry.get = function (param, callback) {
@@ -565,7 +581,7 @@
 
                 if (!journal_entry_id) {
                   param.state = param.state ? param.state : 'active';
-                  param.action = param.action ? param.action : 'before';
+                  param.action = param.action ? param.action : 'ending';
                   param.effective_at = param.effective_at ? param.effective_at : new Date().toISOString();
 
                   url = url + '?' + helpers.encodeQueryObj(param);
@@ -707,14 +723,14 @@
                    * Get Subledger Book Journal-Entry Line by calling "/orgs/{org_id}/books/{book_id}/journal_entries/{journal_entry_id}/lines/{line_id}" with GET HTTP method or get Subledger Book Journal-Entry Lines by calling "/orgs/{org_id}/books/{book_id}/journal_entries/{journal_entry_id}/lines" with GET HTTP method
                    * @summary Get Subledger Book Journal-Entry Line(s)
                    * @param {Object} [param]
-                   * @param {String} [param.state=active]
-                   * @param {String} [param.action=before]
+                   * @param {String} [param.state=posted]
+                   * @param {String} [param.action=starting]
                    * @param {Function} callback
                    * @example
                    * //Get a book journal-entry line
                    * subledger.organization('myOrganizationId').book('myBookId').journalEntry('myJournalEntryId').line('myLineId').get(function (error,apiRes){...});
-                   * //Get book journal-entry lines starting at 0
-                   * subledger.organization('myOrganizationId').book('myBookId').journalEntry('myJournalEntryId').line().get({'starting':0},function (error,apiRes){...});
+                   * //Get book journal-entry lines in the order they were inserted
+                   * subledger.organization('myOrganizationId').book('myBookId').journalEntry('myJournalEntryId').line().get({function (error,apiRes){...});
                    * @returns {*} Return the API Response
                    */
                   line.get = function (param, callback) {
@@ -724,8 +740,8 @@
                     }
 
                     if (!line_id) {
-                      param.state = param.state ? param.state : 'active';
-                      param.action = param.action ? param.action : 'before';
+                      param.state = param.state ? param.state : 'posted';
+                      param.action = param.action ? param.action : 'starting';
 
                       url = url + '/lines?' + helpers.encodeQueryObj(param);
                     }
@@ -815,7 +831,8 @@
                * @summary Get Subledger Book Category(ies)
                * @param {Object} [param]
                * @param {String} [param.state=active]
-               * @param {String} [param.action=before]
+               * @param {String} [param.action=ending]
+               * @param {String} [param.description=0xFF]
                * @param {Function} callback
                * @example
                * //Get a category
@@ -832,7 +849,14 @@
 
                 if (!category_id) {
                   param.state = param.state ? param.state : 'active';
-                  param.action = param.action ? param.action : 'before';
+                  param.action = param.action ? param.action : 'ending';
+
+                  if ((param.action === 'ending' || params.action === 'before') && !param.description) {
+                    param.description = 0xFF;
+
+                  } else if ((params.action === 'starting' || params.action === 'after') && !param.description) {
+                    param.description = 0x00;
+                  }
 
                   url = url + '?' + helpers.encodeQueryObj(param);
                 }
@@ -943,7 +967,8 @@
                * @summary Get Subledger Book Report(s)
                * @param {Object} [param]
                * @param {String} [param.state=active]
-               * @param {String} [param.action=before]
+               * @param {String} [param.action=ending]
+               * @param {String} [param.description=0xFF]
                * @param {Function} callback
                * @example
                * //Get a book report
@@ -960,7 +985,14 @@
 
                 if (!report_id) {
                   param.state = param.state ? param.state : 'active';
-                  param.action = param.action ? param.action : 'before';
+                  param.action = param.action ? param.action : 'ending';
+
+                  if ((param.action === 'ending' || params.action === 'before') && !param.description) {
+                    param.description = 0xFF;
+
+                  } else if ((params.action === 'starting' || params.action === 'after') && !param.description) {
+                    param.description = 0x00;
+                  }
 
                   url = url + '?' + helpers.encodeQueryObj(param);
                 }
@@ -1279,7 +1311,7 @@
     function resHandling(err, data) {
       var res = {};
 
-      res.data = JSON.parse(data);
+      res.data = data !== '' ? JSON.parse(data) : {};
       res.err = err ? new Error(res.data.exception || '') : null;
 
       return res;

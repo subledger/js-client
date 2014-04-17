@@ -1032,11 +1032,12 @@ Nodeunit also provides the following functions within tests:
 Contributors ordered by first contribution.
 
 Marc-André Arseneault <marc-andre@arsnl.ca>
+Alexandre Michetti Manduca <a.michetti@gmail.com>
 
 
 ##License
 
-Copyright 2013 Subledger
+Copyright 2014 Subledger
 http://subledger.com
 
 Permission is hereby granted, free of charge, to any person obtaining
