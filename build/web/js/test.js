@@ -3615,6 +3615,17 @@ exports['subledger.organization().book().account().line()'] = {
   }
 };
 
+exports['subledger.organization().book().account().firstAndLastLine()'] = {
+  'Get Subledger Book Account First and Last Lines' : function (test) {
+    subledger.organization(organization.active_org.id).book(book.active_book.id).account(account.active_account.id).firstAndLastLine(function(e,d){
+      test.ifError(e);
+      test.ok(d.posted_lines !== undefined,'"posted_lines" property exist');
+      test.deepEqual(_.isArray(d.posted_lines),true,'"posted_lines" property contain array');
+      test.done();
+    });    
+  }
+}
+
 exports['subledger.organization().book().journalEntry()'] = {
   'Get Subledger Book Journal Entries without parameter' : function (test) {
     subledger.organization(organization.active_org.id).book(book.active_book.id).journalEntry().get(function(e,d){

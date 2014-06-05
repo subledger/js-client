@@ -503,7 +503,6 @@
                   ajax.get(url + '/balance?' + helpers.encodeQueryObj(param), callback);
                 };
 
-
                 /**
                  * subledger.organization('myOrganizationId').book('myBookId').account('myAccountId').line('myLineId')
                  * @param {String} [line_id]
@@ -549,6 +548,19 @@
                   }
 
                   return line;
+                };
+
+                /**
+                 * Get Subledger Book Account First and Last Lines by calling "/orgs/{org_id}/books/{book_id}/accounts/{account_id}/first_and_last_line" with GET HTTP method
+                 * @summary Get Subledger Book Account First and Last Journal Entry Lines
+                 * @param {Function} callback
+                 * @example
+                 * // Get a book account first and last journal entry lines
+                 * subledger.organization('myOrganizationId').book('myBookId').account('myAccountId').firstAndLastLine(function (error,apiRes){...});
+                 * @returns {*} Return the API Response
+                 */
+                account.firstAndLastLine = function(callback) {
+                  ajax.get(url + '/first_and_last_line', callback);
                 };
               }
 
