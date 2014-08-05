@@ -3,6 +3,7 @@
   "title": "Subledger",
   "description": "JavaScript library for Subledger",
   "version": "1.1.0",
+  "main": "./build/subledger.js",
   "homepage": "http://subledger.com",
   "author": {
     "name": "Subledger",

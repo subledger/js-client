@@ -26,15 +26,20 @@ When asked by the method, **Data** (`data`) and **Parameters** (`param`) refer t
 ### Node.JS Support
 To work on Node environment, this lib depends on [xmlhttprequest](https://github.com/driverdan/node-XMLHttpRequest) module.
 
-It can be installed with the following command:
+This dependency can be installed with the following command:
 ```
 npm install xmlhttprequest
 ```
 
-Then you can require and use Subledger on your Node.JS environment like following:
+Then you need to install Subledger module itself:
+```
+npm install git+https://github.com/subledger/js-client.git
+```
+
+Lastly, you can require and use Subledger on your Node.JS environment like following:
 ```
 // require Subledger module
-var Subledger = require('./subledger').Subledger;
+var Subledger = require('subledger').Subledger;
 
 // instantiate it
 var subledger = new Subledger();
