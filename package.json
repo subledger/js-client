@@ -2,7 +2,7 @@
   "name": "subledger",
   "title": "Subledger",
   "description": "JavaScript library for Subledger",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "homepage": "http://subledger.com",
   "author": {
     "name": "Subledger",
@@ -11,20 +11,20 @@
   "contributors": [
     {
       "name": "Subledger and contributors",
-      "url": "https://github.com/boocx2/Subledger_JS_Library/blob/master/AUTHORS.txt"
+      "url": "https://github.com/subledger/js-client/blob/master/AUTHORS.txt"
     }
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/boocx2/Subledger_JS_Library.git"
+    "url": "https://github.com/subledger/js-client.git"
   },
   "bugs": {
-    "url": "https://github.com/boocx2/Subledger_JS_Library/issues"
+    "url": "https://github.com/subledger/js-client/issues"
   },
   "licenses": [
     {
       "type": "MIT",
-      "url": "https://github.com/boocx2/Subledger_JS_Library/blob/master/LICENSE.txt"
+      "url": "https://github.com/subledger/js-client/blob/master/LICENSE.txt"
     }
   ],
   "dependencies": {},

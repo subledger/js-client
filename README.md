@@ -935,7 +935,7 @@ if you swing that way. Easy-peasy.
 First, clone a copy of the main Subledger git repo by running:
 
 ```bash
-git clone https://github.com/boocx2/Subledger_JS_Library.git
+git clone https://github.com/subledger/js-client.git
 ```
 
 Install the [grunt-cli](http://gruntjs.com/getting-started#installing-the-cli) package if you haven't before. It should be done as global install:

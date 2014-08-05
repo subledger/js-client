@@ -1,10 +1,10 @@
 /*!
- * Subledger v1.0.0 - JavaScript library for Subledger
+ * Subledger v1.1.0 - JavaScript library for Subledger
  * http://subledger.com
  *
  * Copyright (c) 2014 Subledger
  * Released under MIT license
- * https://github.com/boocx2/Subledger_JS_Library/blob/master/LICENSE.txt
+ * https://github.com/subledger/js-client/blob/master/LICENSE.txt
  */ 
 (function (exports) {
 
