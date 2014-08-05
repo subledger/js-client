@@ -1226,15 +1226,23 @@
 
     function new_xhr() {
       var xhr;
-      if (window.XMLHttpRequest) {
-        xhr = new XMLHttpRequest();
-      } else if (window.ActiveXObject) {
-        try {
-          xhr = new ActiveXObject("Msxml2.XMLHTTP");
-        } catch (e) {
-          xhr = new ActiveXObject("Microsoft.XMLHTTP");
+
+      if (typeof window === 'undefined') {
+          var NodeXMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
+          xhr = new NodeXMLHttpRequest();
+
+      } else {
+        if (window.XMLHttpRequest) {
+          xhr = new XMLHttpRequest();
+        } else if (window.ActiveXObject) {
+          try {
+            xhr = new ActiveXObject("Msxml2.XMLHTTP");
+          } catch (e) {
+            xhr = new ActiveXObject("Microsoft.XMLHTTP");
+          }
         }
       }
+
       return xhr;
     }
 
