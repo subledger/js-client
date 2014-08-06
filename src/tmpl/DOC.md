@@ -851,7 +851,7 @@ subledger.organization(org_id).book(book_id).report(report_id).update({...},func
  * @param {Function} callback
  */
 
-subledger.organization(org_id).book(book_id).report(report_id).attach({account: 'accountId'},function (error,apiRes){
+subledger.organization(org_id).book(book_id).report(report_id).attach({category: 'categoryId'},function (error,apiRes){
   ...
 });
 ```
@@ -863,7 +863,7 @@ subledger.organization(org_id).book(book_id).report(report_id).attach({account: 
  * @param {Function} callback
  */
 
-subledger.organization(org_id).book(book_id).report(report_id).detach({account: 'accountId'},function (error,apiRes){
+subledger.organization(org_id).book(book_id).report(report_id).detach({category: 'categoryId'},function (error,apiRes){
   ...
 });
 ```

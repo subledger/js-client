@@ -1044,13 +1044,13 @@
                 };
 
                 /**
-                 * Attach Subledger Book Report to an Account by calling "/orgs/{org_id}/books/{book_id}/reports/{report_id}/attach" with POST HTTP method
-                 * @summary Attach Subledger Book Report to an Account
+                 * Attach Subledger Book Report to a Category by calling "/orgs/{org_id}/books/{book_id}/reports/{report_id}/attach" with POST HTTP method
+                 * @summary Attach Subledger Book Report to a Category
                  * @param {Object} data
                  * @param {Function} callback
                  * @example
-                 * //Attach a book report to an account
-                 * subledger.organization('myOrganizationId').book('myBookId').report('reportId').attach({account: 'accountId'},function (error,apiRes){...});
+                 * //Attach a book report to a category
+                 * subledger.organization('myOrganizationId').book('myBookId').report('reportId').attach({category: 'categoryId'},function (error,apiRes){...});
                  * @returns {*} Return the API Response
                  */
                 report.attach = function (data, callback) {
@@ -1058,13 +1058,13 @@
                 };
 
                 /**
-                 * Detach Subledger Book Report from an Account by calling "/orgs/{org_id}/books/{book_id}/reports/{report_id}/detach" with POST HTTP method
-                 * @summary Detach Subledger Book Report from an Account
+                 * Detach Subledger Book Report from a Category by calling "/orgs/{org_id}/books/{book_id}/reports/{report_id}/detach" with POST HTTP method
+                 * @summary Detach Subledger Book Report from a Category
                  * @param {Object} data
                  * @param {Function} callback
                  * @example
-                 * //Detach a book report from an account
-                 * subledger.organization('myOrganizationId').book('myBookId').report('reportId').detach({account: 'accountId'},function (error,apiRes){...});
+                 * //Detach a book report from a category
+                 * subledger.organization('myOrganizationId').book('myBookId').report('reportId').detach({category: 'categoryId'},function (error,apiRes){...});
                  * @returns {*} Return the API Response
                  */
                 report.detach = function (data, callback) {
