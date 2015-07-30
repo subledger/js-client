@@ -28,7 +28,9 @@
       "url": "https://github.com/subledger/js-client/blob/master/LICENSE.txt"
     }
   ],
-  "dependencies": {},
+  "dependencies": {
+    "xmlhttprequest": "~1.7.0"
+  },
   "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-contrib-uglify": "~0.2.2",
