@@ -151,19 +151,11 @@ subledger.organization(org_id).book(book_id).account(account_id).firstAndLastLin
 // *** NOTE: If body is not provided, all active journal entries before now will be returned ***
 subledger.organization(org_id).book(book_id).journalEntry().get({body}, function (error, response) { ... });
 
-// ***** WARNING - DEPRECATED ******
-// Create a journal entry without posting (POST /orgs/{org_id}/books/{book_id}/journal_entries)
-subledger.organization(org_id).book(book_id).journalEntry().create({body}, function (error, response) { ... });
-
 // Create and post a journal entry (POST /orgs/{org_id}/books/{book_id}/journal_entries/create_and_post)
 subledger.organization(org_id).book(book_id).journalEntry().createAndPost({body}, function (error, response) { ... });
 
 // Accounting post a journal entry (POST /orgs/{org_id}/books/{book_id}/journal_entries/{journal_entry_id})
 subledger.organization(org_id).book(book_id).journalEntry(journal_entry_id).post(function (error, response) { ... });
-
-// ***** WARNING - DEPRECATED ******
-// Update a journal entry (PATCH /orgs/{org_id}/books/{book_id}/journal_entries/{journal_entry_id})
-subledger.organization(org_id).book(book_id).journalEntry(journal_entry_id).update({book}, function (error, response) { ... });
 
 // Get a journal entry (GET /orgs/{org_id}/books/{book_id}/journal_entries/{journal_entry_id})
 subledger.organization(org_id).book(book_id).journalEntry(journal_entry_id).get(function (error, response) { ... });
@@ -178,31 +170,11 @@ subledger.organization(org_id).book(book_id).journalEntry(journal_entry_id).arch
 // Activate a journal entry (POST /orgs/{org_id}/books/{book_id}/journal_entries/{journal_entry_id}/activate)
 subledger.organization(org_id).book(book_id).journalEntry(journal_entry_id).activate(function (error, response) { ... });
 
-// ***** WARNING - DEPRECATED ******
-// Get a journal's entry balance  (GET /orgs/{org_id}/books/{book_id}/journal_entries/{journal_entry_id}/balance)
-subledger.organization(org_id).book(book_id).journalEntry(journal_entry_id).balance(function (error, response) { ... });
-
 // Get a journal entry's posting progress (GET /orgs/{org_id}/books/{book_id}/journal_entries/{journal_entry_id}/progress)
 subledger.organization(org_id).book(book_id).journalEntry(journal_entry_id).progress(function (error, response) { ... });
 
 // Get a journal entry's line (GET /orgs/{org_id}/books/{book_id}/journal_entries/{journal_entry_id}/lines/{line_id})
 subledger.organization(org_id).book(book_id).journalEntry(journal_entry_id).line(line_id).get(function (error, response) { ... });
-
-// ***** WARNING - DEPRECATED ******
-// Create a journal entry line (POST /orgs/{org_id}/books/{book_id}/journal_entries/{journal_entry_id}/create_line)
-subledger.organization(org_id).book(book_id).journalEntry(journal_entry_id).line().create({body}, function (error, response) { ... });
-
-// ***** WARNING - DEPRECATED ******
-// Update a journal entry line (PATCH /orgs/{org_id}/books/{book_id}/journal_entries/{journal_entry_id}/lines/{line_id})
-subledger.organization(org_id).book(book_id).journalEntry(journal_entry_id).line(line_id).update({body}, function (error, response) { ... });
-
-// ***** WARNING - DEPRECATED ******
-// Archive a journal entry line (POST /orgs/{org_id}/books/{book_id}/journal_entries/{journal_entry_id}/lines/{line_id}/archive)
-subledger.organization(org_id).book(book_id).journalEntry(journal_entry_id).line(line_id).archive(function (error, response) { ... });
-
-// ***** WARNING - DEPRECATED ******
-// Activate a journal entry line (POST /orgs/{org_id}/books/{book_id}/journal_entries/{journal_entry_id}/lines/{line_id}/activate)
-subledger.organization(org_id).book(book_id).journalEntry(journal_entry_id).line(line_id).activate(function (error, response) { ... });
 ```
 
 ### Category
@@ -274,14 +246,14 @@ subledger.organization(org_id).book(book_id).report_rendering(report_rendering_i
 
 Contributors ordered by first contribution.
 
-Marc-André Arseneault <marc-andre@arsnl.ca>
-Alexandre Michetti Manduca <a.michetti@gmail.com>
-Philip Paquette <pcpaquette@gmail.com>
+- Marc-André Arseneault <marc-andre@arsnl.ca>
+- Alexandre Michetti Manduca <a.michetti@gmail.com>
+- Philip Paquette <pcpaquette@gmail.com>
 
 
 ##License
 
-Copyright 2014 Subledger
+Copyright 2015 Subledger
 http://subledger.com
 
 Permission is hereby granted, free of charge, to any person obtaining

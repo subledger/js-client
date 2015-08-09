@@ -620,6 +620,9 @@
                * subledger.organization('myOrganizationId').book('myBookId').journalEntry().create({...},function (error, response) {...});
                * @returns {*} Return the API Response
                */
+              // *********************************************
+              // **** DEPRECATED as of v1.1.1 - 2015-08-09 ***
+              // *********************************************
               journalEntry.create = function (data, callback) {
                 console.warn('journalEntry().create() is deprecated and should be replaced with journalEntry().createAndPost().');
                 ajax.post(url, data, callback);
@@ -669,6 +672,9 @@
                  * subledger.organization('myOrganizationId').book('myBookId').journalEntry('myJournalEntryId').update({...},function (error, response) {...});
                  * @returns {*} Return the API Response
                  */
+                // *********************************************
+                // **** DEPRECATED as of v1.1.1 - 2015-08-09 ***
+                // *********************************************
                 journalEntry.update = function (data, callback) {
                   console.warn('journalEntry().update() is deprecated and should not be used.');
                   ajax.patch(url, data, callback);
@@ -712,6 +718,9 @@
                  * subledger.organization('myOrganizationId').book('myBookId').journalEntry('myJournalEntryId').balance(function (error, response) {...});
                  * @returns {*} Return the API Response
                  */
+                // *********************************************
+                // **** DEPRECATED as of v1.1.1 - 2015-08-09 ***
+                // *********************************************
                 journalEntry.balance = function (callback) {
                   console.warn('journalEntry().balance() is deprecated and should not be used.');
                   ajax.get(url + '/balance', callback);
@@ -782,6 +791,9 @@
                    * subledger.organization('myOrganizationId').book('myBookId').journalEntry('myJournalEntryId').line().create({...},function (error, response) {...});
                    * @returns {*} Return the API Response
                    */
+                  // *********************************************
+                  // **** DEPRECATED as of v1.1.1 - 2015-08-09 ***
+                  // *********************************************
                   line.create = function (data, callback) {
                     console.warn('journalEntry().line().create() is deprecated and should not be used.');
                     ajax.post(url + '/create_line', data, callback);
@@ -801,6 +813,9 @@
                      * subledger.organization('myOrganizationId').book('myBookId').journalEntry('myJournalEntryId').line('myLineId').update({...},function (error, response) {...});
                      * @returns {*} Return the API Response
                      */
+                    // *********************************************
+                    // **** DEPRECATED as of v1.1.1 - 2015-08-09 ***
+                    // *********************************************
                     line.update = function (data, callback) {
                       console.warn('journalEntry().line().update() is deprecated and should not be used.');
                       ajax.patch(url, data, callback);
@@ -816,6 +831,9 @@
                      * subledger.organization('myOrganizationId').book('myBookId').journalEntry('myJournalEntryId').line('myLineId').activate(function (error, response) {...});
                      * @returns {*} Return the API Response
                      */
+                    // *********************************************
+                    // **** DEPRECATED as of v1.1.1 - 2015-08-09 ***
+                    // *********************************************
                     line.activate = function (callback) {
                       console.warn('journalEntry().line().activate() is deprecated and should not be used.');
                       ajax.post(url + '/activate', callback);
@@ -831,6 +849,9 @@
                      * subledger.organization('myOrganizationId').book('myBookId').journalEntry('myJournalEntryId').line('myLineId').archive(function (error, response) {...});
                      * @returns {*} Return the API Response
                      */
+                    // *********************************************
+                    // **** DEPRECATED as of v1.1.1 - 2015-08-09 ***
+                    // *********************************************
                     line.archive = function (callback) {
                       console.warn('journalEntry().line().archive() is deprecated and should not be used.');
                       ajax.post(url + '/archive', callback);
