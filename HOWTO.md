@@ -1,17 +1,7 @@
-# [<%= title %>](<%= homepage %>) - <%= description %>
+## What you need to build your own Subledger
 
 
-<%= title %> is a JavaScript library that allows you to quickly build a front-end application using the <%= title %> powerful APIs.
-
-## JavaScript Documentation
-
-<%= doc %>
-
-
-## What you need to build your own <%= title %>
-
-
-In order to build <%= title %>, you need to have Node.js/npm latest and git 1.7 or later.
+In order to build Subledger, you need to have Node.js/npm latest and git 1.7 or later.
 (Earlier versions might work OK, but are not tested.)
 
 **Windows users** have two options:
@@ -31,12 +21,12 @@ and `brew install node` to install Node.js.
 if you swing that way. Easy-peasy.
 
 
-## How to build your own <%= title %>
+## How to build your own Subledger
 
-First, clone a copy of the main <%= title %> git repo by running:
+First, clone a copy of the main Subledger git repo by running:
 
 ```bash
-git clone <%= repository %>
+git clone https://github.com/subledger/js-client.git
 ```
 
 Install the [grunt-cli](http://gruntjs.com/getting-started#installing-the-cli) package if you haven't before. It should be done as global install:
@@ -51,45 +41,45 @@ Make sure you have `grunt` installed by testing:
 grunt -version
 ```
 
-Enter the <%= title %> directory and install the Node dependencies, this time *without* specifying a global(-g) install:
+Enter the Subledger directory and install the Node dependencies, this time *without* specifying a global(-g) install:
 
 ```bash
-cd <%= title %> && npm install
+cd Subledger && npm install
 ```
 
 ###Regular Build
-To get a minified (w/ Uglify.js), linted (w/ JSHint) version of <%= title %>, type the following:
+To get a minified (w/ Uglify.js), linted (w/ JSHint) version of Subledger, type the following:
 
 ```bash
 grunt
 ```
 
-The built version of <%= title %> will be put in the `build/` subdirectory.
+The built version of Subledger will be put in the `build/` subdirectory.
 
 ###Complete Build
-To get a complete, minified (w/ Uglify.js), linted (w/ JSHint) version of <%= title %> with updated root files (`AUTHORS.txt`,`LICENSE.txt`,`README.txt`) and Web files (`build/web`), type the following:
+To get a complete, minified (w/ Uglify.js), linted (w/ JSHint) version of Subledger with updated root files (`AUTHORS.txt`,`LICENSE.txt`,`README.txt`) and Web files (`build/web`), type the following:
 
 ```bash
 grunt build
 ```
 
 ###Regular Auto-Build
-Then, to get a auto-build <%= title %> as you work, start `grunt watch` :
+Then, to get a auto-build Subledger as you work, start `grunt watch` :
 
 ```bash
-cd <%= title %> && grunt watch
+cd Subledger && grunt watch
 ```
 
 ##Running tests in the browser
 
-<%= title %> has been successfully tested in the following browsers : **IE6+**, **Chrome PC/Mac**, **Safari PC/Mac**, **Opera PC/Mac** and **Firefox PC/Mac**.
+Subledger has been successfully tested in the following browsers : **IE6+**, **Chrome PC/Mac**, **Safari PC/Mac**, **Opera PC/Mac** and **Firefox PC/Mac**.
 
 To running tests in the browser, open `build/web/test.html` into the browser you want to test. That's it!
 
 
 ##[NodeUnit](https://github.com/caolan/nodeunit) Reference
 
-The <%= title %> JavaScript library use [NodeUnit](https://github.com/caolan/nodeunit) as unit testing tool.
+The Subledger JavaScript library use [NodeUnit](https://github.com/caolan/nodeunit) as unit testing tool.
 
 ###Usage
 
@@ -126,15 +116,3 @@ Nodeunit also provides the following functions within tests:
 
 * __expect(amount)__ - Specify how many assertions are expected to run within a test. Very useful for ensuring that all your callbacks and assertions are run.
 * __done()__ - Finish the current test function, and move on to the next. ALL tests should call this!
-
-
-##Contributors
-
-Contributors ordered by first contribution.
-
-<%= contributors %>
-
-
-##License
-
-<%= license %>

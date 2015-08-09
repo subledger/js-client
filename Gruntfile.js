@@ -2,7 +2,6 @@ module.exports = function (grunt) {
 
   grunt.initConfig({
     'pkg': grunt.file.readJSON('package.json'),
-    'doc': grunt.file.read('src/tmpl/DOC.md'),
     'banner': {
       'compact': '/*! <%= pkg.title %> <%= pkg.version %> | (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %> | <%= pkg.licenses[0].url %> */\n',
       'full': '/*!\n' +
@@ -83,22 +82,6 @@ module.exports = function (grunt) {
         },
         'files': {
           'LICENSE.txt': ['src/tmpl/LICENSE.txt']
-        }
-      },
-      'readme': {
-        'options': {
-          'data': {
-            'title': '<%= pkg.title %>',
-            'description': '<%= pkg.description %>',
-            'homepage': '<%= pkg.homepage %>',
-            'repository': '<%= pkg.repository.url %>',
-            'doc': '<%= doc %>',
-            'license': '<%= grunt.template.process(grunt.file.read("LICENSE.txt")) %>',
-            'contributors': '<%= grunt.option("contributors") %>'
-          }
-        },
-        'files': {
-          'README.md': ['src/tmpl/README.md']
         }
       },
       'contributors': {
