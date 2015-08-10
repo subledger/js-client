@@ -5,1053 +5,255 @@ Subledger is a JavaScript library that allows you to quickly build a front-end a
 
 ## JavaScript Documentation
 
-The use of the Subledger JavaScript library is pretty easy! You just have to create an Subledger connector, use it to communicate with the API with easy chaining operations and then retrieve the callback results. Voilà!
+The callback always return **Error** (`error`) as first parameter and **API Response** (`response`) as second parameter.
 
-### Callback result
-The callback always return **Error** (`error`) as first parameter and **API Response** (`apiRes`) as second parameter.
+If there is an error, `error` will be the returned exception message, and `response` will be the complete response sent by the API.
+If there is no error, `error` will be null, and `response` will be the response sent by the API.
 
-#### Error
- * Error : `Error` object with the returned exception message
- * No error : `null`
-
-#### API Response
- * Error : Complete Error object sent by the API
- * No error : Response sent by the API
+When asked by the method, **body** (`body`) refers to a well-formed object compliant with the API. Please, refer to the complete [API documentation](https://api.subledger.com) to know more about the compliant data and parameters for your API request.
 
 Note than the Subledger JavaScript library doesn't manipulate the API Response and return it as received. Please, refer to the complete [API documentation](https://api.subledger.com) to know more about the returned API responses.
 
-### Data and Parameters
-When asked by the method, **Data** (`data`) and **Parameters** (`param`) refer to a well-formed object compliant with the API. Please, refer to the complete [API documentation](https://api.subledger.com) to know more about the compliant data and parameters for your API request.
-
 ### Node.JS Support
+
 To install subledger, run the following command:
+
 ```
 npm install subledger
 ```
 
 Lastly, you can require and use Subledger on your Node.JS environment like following:
+
 ```
 // require Subledger module
 var Subledger = require('subledger').Subledger;
 
 // instantiate it
 var subledger = new Subledger();
+subledger.setCredentials('yourOAuthKey','yourOAuthSecret');
 ```
 
 ### Create a new Subledger connector
 
 ```javascript
-/**
- * Create a new Subledger connector
- * Subledger();
- */
-
 var subledger = new Subledger();
-```
-
-### Set Subledger credentials
-
-```javascript
-/**
- * Set Subledger credentials
- * Subledger().setCredentials(OAuthKey, OAuthSecret);
- */
-
 subledger.setCredentials('yourOAuthKey','yourOAuthSecret');
 ```
 
 ### Identity
 
-#### Create
 ```javascript
-/**
- * subledger.identity().create(data, callback);
- * @param {Object} data
- * @param {Function} callback
- */
+// Create an identity and key (POST /identities)
+subledger.identity().create({body}, function (error, response) { ... });
 
-subledger.identity().create({...},function (error,apiRes){
-  ...
-});
-```
+// Get an identity (GET /identities/{identity_id})
+subledger.identity(identity_id).get(function (error, response) { ... });
 
-#### Get one
-```javascript
-/**
- * subledger.identity(identity_id).get(callback);
- * @param {Function} callback
- */
+// Update an identity (PATCH /identities/{identity_id})
+subledger.identity(identity_id).update({body}, function (error, response) { ... });
 
-subledger.identity(identity_id).get(function (error,apiRes){
-  ...
-});
-```
+// Create an identity key (POST /identities/{identity_id}/keys)
+subledger.identity(identity_id).key().create(function (error, response) { ... });
 
-#### Update
-```javascript
-/**
- * subledger.identity(identity_id).update(data, callback);
- * @param {Object} data
- * @param {Function} callback
- */
+// Get a key (GET /identities/{identity_id}/keys/{key_id})
+subledger.identity(identity_id).key(key_id).get(function (error, response) { ... });
 
-subledger.identity(identity_id).update({...}, function (error,apiRes){
-  ...
-});
-```
+// Archive a key (POST /identities/{identity_id}/keys/{key_id}/archive)
+subledger.identity(identity_id).key(key_id).archive(function (error, response) { ... });
 
-### Identity Key
-
-#### Create
-```javascript
-/**
- * subledger.identity(identity_id).key().create(data, callback);
- * @param {Object} data
- * @param {Function} callback
- */
-
-subledger.identity(identity_id).key().create({...},function (error,apiRes){
-  ...
-});
-```
-
-#### Get one
-```javascript
-/**
- * subledger.identity(identity_id).key(key_id).get(callback);
- * @param {Function} callback
- */
-
-subledger.identity(identity_id).key(key_id).get(function (error,apiRes){
-  ...
-});
-```
-
-#### Update
-```javascript
-/**
- * subledger.identity(identity_id).key(key_id).update(data, callback);
- * @param {Object} data
- * @param {Function} callback
- */
-
-subledger.identity(identity_id).key(key_id).update({...}, function (error,apiRes){
-  ...
-});
-```
-
-#### Activate
-```javascript
-/**
- * subledger.identity(identity_id).key(key_id).activate(callback);
- * @param {Function} callback
- */
-
-subledger.identity(identity_id).key(key_id).activate(function (error,apiRes){
-  ...
-});
-```
-
-#### Archive
-```javascript
-/**
- * subledger.identity(identity_id).key(key_id).archive(callback);
- * @param {Function} callback
- */
-
-subledger.identity(identity_id).key(key_id).archive(function (error,apiRes){
-  ...
-});
+// Activate a key (POST /identities/{identity_id}/keys/{key_id}/activate)
+subledger.identity(identity_id).key(key_id).activate(function (error, response) { ... });
 ```
 
 ### Organization
 
-#### Create
 ```javascript
-/**
- * subledger.organization().create(data, callback);
- * @param {Object} data
- * @param {Function} callback
- */
+// Create an org (POST /orgs)
+subledger.organization().create({body},function (error, response) { ... });
 
-subledger.organization().create({...},function (error,apiRes){
-  ...
-});
+// Get an org (GET /orgs/{org_id})
+subledger.organization(org_id).get(function (error, response) { ... });
+
+// Update an org (PATCH /orgs/{org_id})
+subledger.organization(org_id).update({body}, function (error, response) { ... });
+
+// Archive an org (POST /orgs/{org_id}/archive)
+subledger.organization(org_id).archive(function (error, response) { ... });
+
+// Activate an org (POST /orgs/{org_id}/activate)
+subledger.organization(org_id).activate(function (error, response) { ... });
 ```
-
-#### Get one
-```javascript
-/**
- * subledger.organization(org_id).get(callback);
- * @param {Function} callback
- */
-
-subledger.organization(org_id).get(function (error,apiRes){
-  ...
-});
-```
-
-#### Update
-```javascript
-/**
- * subledger.organization(org_id).update(data, callback);
- * @param {Object} data
- * @param {Function} callback
- */
-
-subledger.organization(org_id).update({...}, function (error,apiRes){
-  ...
-});
-```
-
-#### Activate
-```javascript
-/**
- * subledger.organization(org_id).activate(callback);
- * @param {Function} callback
- */
-
-subledger.organization(org_id).activate(function (error,apiRes){
-  ...
-});
-```
-
-#### Archive
-```javascript
-/**
- * subledger.organization(org_id).archive(callback);
- * @param {Function} callback
- */
-
-subledger.organization(org_id).archive(function (error,apiRes){
-  ...
-});
-```
-
 
 ### Book
 
-#### Get one
 ```javascript
-/**
- * subledger.organization(org_id).book(book_id).get(callback);
- * @param {Function} callback
- */
+// Create a book (POST /orgs/{org_id}/books)
+subledger.organization(org_id).book().create({body}, function (error, response) { ... });
 
-subledger.organization(org_id).book(book_id).get(function (error,apiRes){
- ...
-});
-```
+// Get a collection of books
+// *** NOTE: If body is not provided, all active books will be returned ***
+subledger.organization(org_id).book().get([{body},] function (error, response) { ... });
 
-#### Get list
-```javascript
-/**
- * subledger.organization(org_id).book().get(param,callback);
- * @param {Object} [param]
- * @param {String} [param.state=active]
- * @param {String} [param.action=before]
- * @param {Function} callback
- */
+// Get a book (GET /org/{org_id}/books/{book_id})
+subledger.organization(org_id).book(book_id).get(function (error, response) { ... });
 
-//With parameters
-subledger.organization(org_id).book().get({...},function (error,apiRes){
- ...
-});
+// Update a book (PATCH /orgs/{org_id}/books/{book_id})
+subledger.organization(org_id).book(book_id).update({body}, function (error, response) { ... });
 
-//Without parameters
-subledger.organization(org_id).book().get(function (error,apiRes){
- ...
-});
-```
+// Archive a book (POST /orgs/{org_id}/books/{book_id}/archive)
+subledger.organization(org_id).book(book_id).archive(function (error, response){ ... });
 
-#### Create
-```javascript
-/**
- * subledger.organization(org_id).book().create(data,callback);
- * @param {Object} data
- * @param {Function} callback
- */
-
-subledger.organization(org_id).book().create({...},function (error,apiRes){
-  ...
-});
-```
-
-#### Update
-```javascript
-/**
- * subledger.organization(org_id).book(book_id).update(data,callback);
- * @param {Object} data
- * @param {Function} callback
- */
-
-subledger.organization(org_id).book(book_id).update({...},function (error,apiRes){
-  ...
-});
-```
-
-#### Activate
-```javascript
-/**
- * subledger.organization(org_id).book(book_id).activate(callback);
- * @param {Function} callback
- */
-
-subledger.organization(org_id).book(book_id).activate(function (error,apiRes){
-  ...
-});
-```
-
-#### Archive
-```javascript
-/**
- * subledger.organization(org_id).book(book_id).archive(callback);
- * @param {Function} callback
- */
-
-subledger.organization(org_id).book(book_id).archive(function (error,apiRes){
-  ...
-});
+// Activate a book (POST /orgs/{org_id}/books/{book_id}/activate)
+subledger.organization(org_id).book(book_id).activate(function (error, response) { ... });
 ```
 
 ### Account
 
-#### Get one
 ```javascript
-/**
- * subledger.organization(org_id).book(book_id).account(account_id).get(callback);
- * @param {Function} callback
- */
+// Create an account (POST /orgs/{org_id}/books/{book_id}/accounts)
+subledger.organization(org_id).book(book_id).account().create({book},function (error, response) { ... });
 
-subledger.organization(org_id).book(book_id).account(account_id).get(function (error,apiRes){
-  ...
-});
-```
+// Get a collection of accounts (GET /orgs/{org_id}/books/{book_id}/accounts)
+// *** NOTE: If body is not provided, all active accounts will be returned ***
+subledger.organization(org_id).book(book_id).account().get([{body},] function (error, response) { ... });
 
-#### Get list
-```javascript
-/**
- * subledger.organization(org_id).book(book_id).account().get(param,callback);
- * @param {Object} [param]
- * @param {String} [param.state=active]
- * @param {String} [param.action=before]
- * @param {Function} callback
- */
+// Get an account (GET /orgs/{org_id}/books/{book_id}/accounts/{account_id})
+subledger.organization(org_id).book(book_id).account(account_id).get(function (error, response) { ... });
 
-//With parameters
-subledger.organization(org_id).book(book_id).account().get({...},function (error,apiRes){
-  ...
-});
+// Update an account (PATCH /orgs/{org_id}/books/{book_id}/accounts/{account_id})
+subledger.organization(org_id).book(book_id).account(account_id).update({body}, function (error, response) { ... });
 
-//Without parameters
-subledger.organization(org_id).book(book_id).account().get(function (error,apiRes){
-  ...
-});
-```
+// Get an account's collection of lines (GET /orgs/{org_id}/books/{book_id}/accounts/{account_id}/lines)
+// *** NOTE: If body is not provided, all posted lines in account before now will be returned ***
+subledger.organization(org_id).book(book_id).account(account_id).line().get([{body},] function (error, response) { ... });
 
-#### Create
-```javascript
-/**
- * subledger.organization(org_id).book(book_id).account().create(data,callback);
- * @param {Object} data
- * @param {Function} callback
- */
+// Archive an account (POST /orgs/{org_id}/books/{book_id}/accounts/{account_id}/archive)
+subledger.organization(org_id).book(book_id).account(account_id).archive(function (error, response) { ... });
 
-subledger.organization(org_id).book(book_id).account().create({...},function (error,apiRes){
-  ...
-});
-```
+// Activate an account (POST /orgs/{org_id}/books/{book_id}/accounts/{account_id}/activate)
+subledger.organization(org_id).book(book_id).account(account_id).activate(function (error, response) { ... });
 
-#### Update
-```javascript
-/**
- * subledger.organization(org_id).book(book_id).account(account_id).update(data,callback);
- * @param {Object} data
- * @param {Function} callback
- */
+// Get an account's balance (GET /orgs/{org_id}/books/{book_id}/accounts/{account_id}/balance)
+// *** NOTE: If body is not provided, current balance will be returned ***
+subledger.organization(org_id).book(book_id).account(account_id).balance([{body},] function (error, response) { ... });
 
-subledger.organization(org_id).book(book_id).account(account_id).update({...},function (error,apiRes){
-  ...
-});
-```
+// Get an account's line (GET /orgs/{org_id}/books/{book_id}/accounts/{account_id}/lines/{line_id})
+subledger.organization(org_id).book(book_id).account(account_id).line(line_id).get(function (error, response) { ... });
 
-#### Activate
-```javascript
-/**
- * subledger.organization(org_id).book(book_id).account(account_id).activate(callback);
- * @param {Function} callback
- */
-
-subledger.organization(org_id).book(book_id).account(account_id).activate(function (error,apiRes){
-  ...
-});
-```
-
-#### Archive
-```javascript
-/**
- * subledger.organization(org_id).book(book_id).account(account_id).archive(callback);
- * @param {Function} callback
- */
-
-subledger.organization(org_id).book(book_id).account(account_id).archive(function (error,apiRes){
-  ...
-});
-```
-
-#### Balance
-```javascript
-/**
- * subledger.organization(org_id).book(book_id).account(account_id).balance(param,callback);
- * @param {Object} [param]
- * @param {String} [param.at=new Date().toISOString()]
- * @param {Function} callback
- */
-
-//With parameters
-subledger.organization(org_id).book(book_id).account(account_id).balance({...},function (error,apiRes){
-  ...
-});
-
-//Without parameters
-subledger.organization(org_id).book(book_id).account(account_id).balance(function (error,apiRes){
-  ...
-});
-```
-
-### Account Line
-
-#### Get one
-```javascript
-/**
- * subledger.organization(org_id).book(book_id).account(account_id).line(line_id).get(callback);
- * @param {Function} callback
- */
-
-subledger.organization(org_id).book(book_id).account(account_id).line(line_id).get(function (error,apiRes){
-  ...
-});
-```
-
-#### Get list
-```javascript
-/**
- * subledger.organization(org_id).book(book_id).account(account_id).line().get(param,callback);
- * @param {Object} [param]
- * @param {String} [param.action=before]
- * @param {String} [param.effective_at=new Date().toISOString()]
- * @param {Function} callback
- */
-
-//With parameters
-subledger.organization(org_id).book(book_id).account(account_id).line().get({...},function (error,apiRes){
-  ...
-});
-
-//Without parameters
-subledger.organization(org_id).book(book_id).account(account_id).line().get(function (error,apiRes){
-  ...
-});
+// Get the first and last posted lines in an account (GET /orgs/{org_id}/books/{book_id}/accounts/{account_id}/first_and_last_line)
+subledger.organization(org_id).book(book_id).account(account_id).firstAndLastLine(function (error, response) { ... });
 ```
 
 ### Journal-Entry
 
-#### Get one
 ```javascript
-/**
- * subledger.organization(org_id).book(book_id).journalEntry(journal_entry_id).get(callback);
- * @param {Function} callback
- */
+// Get a collection of journal entries (GET /orgs/{org_id}/books/{book_id}/journal_entries)
+// *** NOTE: If body is not provided, all active journal entries before now will be returned ***
+subledger.organization(org_id).book(book_id).journalEntry().get({body}, function (error, response) { ... });
 
-subledger.organization(org_id).book(book_id).journalEntry(journal_entry_id).get(function (error,apiRes){
-  ...
-});
-```
+// Create and post a journal entry (POST /orgs/{org_id}/books/{book_id}/journal_entries/create_and_post)
+subledger.organization(org_id).book(book_id).journalEntry().createAndPost({body}, function (error, response) { ... });
 
-#### Get list
-```javascript
-/**
- * subledger.organization(org_id).book(book_id).journalEntry().get(param,callback);
- * @param {Object} [param]
- * @param {String} [param.state=active]
- * @param {String} [param.action=before]
- * @param {String} [param.effective_at=new Date().toISOString()]
- * @param {Function} callback
- */
+// Accounting post a journal entry (POST /orgs/{org_id}/books/{book_id}/journal_entries/{journal_entry_id})
+subledger.organization(org_id).book(book_id).journalEntry(journal_entry_id).post(function (error, response) { ... });
 
-//With parameters
-subledger.organization(org_id).book(book_id).journalEntry().get({...},function (error,apiRes){
-  ...
-});
+// Get a journal entry (GET /orgs/{org_id}/books/{book_id}/journal_entries/{journal_entry_id})
+subledger.organization(org_id).book(book_id).journalEntry(journal_entry_id).get(function (error, response) { ... });
 
-//Without parameters
-subledger.organization(org_id).book(book_id).journalEntry().get(function (error,apiRes){
-  ...
-});
-```
+// Get a journal entry's collection of lines (GET /orgs/{org_id}/books/{book_id}/journal_entries/{journal_entry_id}/lines)
+// *** NOTE: If body is not provided, all 'posted' from the journal entry will be returned ***
+subledger.organization(org_id).book(book_id).journalEntry(journal_entry_id).line().get([{body},] function (error, response) { ... });
 
-#### Create
-```javascript
-/**
- * subledger.organization(org_id).book(book_id).journalEntry().create(data,callback);
- * @param {Object} data
- * @param {Function} callback
- */
+// Archive a journal entry (POST /orgs/{org_id}/books/{book_id}/journal_entries/{journal_entry_id}/archive)
+subledger.organization(org_id).book(book_id).journalEntry(journal_entry_id).archive(function (error, response) { ... });
 
-subledger.organization(org_id).book(book_id).journalEntry().create({...},function (error,apiRes){
-  ...
-});
-```
+// Activate a journal entry (POST /orgs/{org_id}/books/{book_id}/journal_entries/{journal_entry_id}/activate)
+subledger.organization(org_id).book(book_id).journalEntry(journal_entry_id).activate(function (error, response) { ... });
 
-#### Post
-```javascript
-/**
- * subledger.organization(org_id).book(book_id).journalEntry(journal_entry_id).post(callback);
- * @param {Function} callback
- */
+// Get a journal entry's posting progress (GET /orgs/{org_id}/books/{book_id}/journal_entries/{journal_entry_id}/progress)
+subledger.organization(org_id).book(book_id).journalEntry(journal_entry_id).progress(function (error, response) { ... });
 
-subledger.organization(org_id).book(book_id).journalEntry(journal_entry_id).post(function (error,apiRes){
-  ...
-});
-```
-
-#### Create and post
-```javascript
-/**
- * subledger.organization(org_id).book(book_id).journalEntry().createAndPost(data,callback);
- * @param {Object} data
- * @param {Function} callback
- */
-
-subledger.organization(org_id).book(book_id).journalEntry().createAndPost({...},function (error,apiRes){
-  ...
-});
-```
-
-#### Update
-```javascript
-/**
- * subledger.organization(org_id).book(book_id).journalEntry(journal_entry_id).update(data,callback);
- * @param {Object} data
- * @param {Function} callback
- */
-
-subledger.organization(org_id).book(book_id).journalEntry(journal_entry_id).update(...},function (error,apiRes){
-  ...
-});
-```
-
-#### Archive
-```javascript
-/**
- * subledger.organization(org_id).book(book_id).journalEntry(journal_entry_id).archive(callback);
- * @param {Function} callback
- */
-
-subledger.organization(org_id).book(book_id).journalEntry(journal_entry_id).archive(function (error,apiRes){
-  ...
-});
-```
-
-#### Activate
-```javascript
-/**
- * subledger.organization(org_id).book(book_id).journalEntry(journal_entry_id).activate(callback);
- * @param {Function} callback
- */
-
-subledger.organization(org_id).book(book_id).journalEntry(journal_entry_id).activate(function (error,apiRes){
-  ...
-});
-```
-
-#### Balance
-```javascript
-/**
- * subledger.organization(org_id).book(book_id).journalEntry(journal_entry_id).balance(callback);
- * @param {Function} callback
- */
-
-subledger.organization(org_id).book(book_id).journalEntry(journal_entry_id).balance(function (error,apiRes){
-  ...
-});
-```
-
-#### Progress
-```javascript
-/**
- * subledger.organization(org_id).book(book_id).journalEntry(journal_entry_id).progress(callback);
- * @param {Function} callback
- */
-
-subledger.organization(org_id).book(book_id).journalEntry(journal_entry_id).progress(function (error,apiRes){
-  ...
-});
-```
-
-### Journal-Entry Line
-
-#### Get one
-```javascript
-/**
- * subledger.organization(org_id).book(book_id).journalEntry(journal_entry_id).line(line_id).get(callback);
- * @param {Function} callback
- */
-
-subledger.organization(org_id).book(book_id).journalEntry(journal_entry_id).line(line_id).get(function (error,apiRes){
-  ...
-});
-```
-
-#### Get list
-```javascript
-/**
- * subledger.organization(org_id).book(book_id).journalEntry(journal_entry_id).line().get(param,callback);
- * @param {Object} [param]
- * @param {String} [param.state=active]
- * @param {String} [param.action=before]
- * @param {Function} callback
- */
-
-//With parameters
-subledger.organization(org_id).book(book_id).journalEntry(journal_entry_id).line().get({...},function (error,apiRes){
-  ...
-});
-
-//Without parameters
-subledger.organization(org_id).book(book_id).journalEntry(journal_entry_id).line().get(function (error,apiRes){
-  ...
-});
-```
-
-#### Create
-```javascript
-/**
- * subledger.organization(org_id).book(book_id).journalEntry(journal_entry_id).line().create(data,callback);
- * @param {Object} data
- * @param {Function} callback
- */
-
-subledger.organization(org_id).book(book_id).journalEntry(journal_entry_id).line().create({...},function (error,apiRes){
-  ...
-});
-```
-
-#### Update
-```javascript
-/**
- * subledger.organization(org_id).book(book_id).journalEntry(journal_entry_id).line(line_id).update(data,callback);
- * @param {Object} data
- * @param {Function} callback
- */
-
-subledger.organization(org_id).book(book_id).journalEntry(journal_entry_id).line(line_id).update({...},function (error,apiRes){
-  ...
-});
-```
-
-#### Activate
-```javascript
-/**
- * subledger.organization(org_id).book(book_id).journalEntry(journal_entry_id).line(line_id).activate(callback);
- * @param {Function} callback
- */
-
-subledger.organization(org_id).book(book_id).journalEntry(journal_entry_id).line(line_id).activate(function (error,apiRes){
-  ...
-});
-```
-
-#### Archive
-```javascript
-/**
- * subledger.organization(org_id).book(book_id).journalEntry(journal_entry_id).line(line_id).archive(callback);
- * @param {Function} callback
- */
-
-subledger.organization(org_id).book(book_id).journalEntry(journal_entry_id).line(line_id).archive(function (error,apiRes){
-  ...
-});
+// Get a journal entry's line (GET /orgs/{org_id}/books/{book_id}/journal_entries/{journal_entry_id}/lines/{line_id})
+subledger.organization(org_id).book(book_id).journalEntry(journal_entry_id).line(line_id).get(function (error, response) { ... });
 ```
 
 ### Category
-
-#### Get one
 ```javascript
-/**
- * subledger.organization(org_id).book(book_id).category(category_id).get(callback);
- * @param {Function} callback
- */
+// Create a category (POST /orgs/{org_id}/books/{book_id}/categories)
+subledger.organization(org_id).book(book_id).category().create({body}, function (error, response) { ... });
 
-subledger.organization(org_id).book(book_id).category(category_id).get(function (error,apiRes){
-  ...
-});
-```
+// Get a collection of categories (GET /orgs/{org_id}/books/{book_id}/categories)
+// *** NOTE: If body is not provided, all active categories will be returned ***
+subledger.organization(org_id).book(book_id).category().get([{body},] function (error, response) { ... });
 
-#### Get list
-```javascript
-/**
- * subledger.organization(org_id).book(book_id).category().get(param,callback);
- * @param {Object} [param]
- * @param {String} [param.state=active]
- * @param {String} [param.action=before]
- * @param {Function} callback
- */
+// Get a category (GET /orgs/{org_id}/books/{book_id}/categories/{category_id})
+subledger.organization(org_id).book(book_id).category(category_id).get(function (error, response) { ... });
 
-//With parameters
-subledger.organization(org_id).book(book_id).category().get({...},function (error,apiRes){
-  ...
-});
+// Update a category (PATCH /orgs/{org_id}/books/{book_id}/categories/{category_id})
+subledger.organization(org_id).book(book_id).category(category_id).update({body}, function (error, response) { ... });
 
-//Without parameters
-subledger.organization(org_id).book(book_id).category().get(function (error,apiRes){
-  ...
-});
-```
+// Attach an account to a category (POST /orgs/{org_id}/books/{book_id}/categories/{category_id}/attach)
+subledger.organization(org_id).book(book_id).category(category_id).attach({account: 'accountId'}, function (error, response) { ... });
 
-#### Create
-```javascript
-/**
- * subledger.organization(org_id).book(book_id).category().create(data,callback);
- * @param {Object} data
- * @param {Function} callback
- */
+// Detach an account from a category (POST /orgs/{org_id}/books/{book_id}/categories/{category_id}/detach)
+subledger.organization(org_id).book(book_id).category(category_id).detach({account: 'accountId'}, function (error, response) { ... });
 
-subledger.organization(org_id).book(book_id).category().create({...},function (error,apiRes){
-  ...
-});
-```
+// Archive a category (POST /orgs/{org_id}/books/{book_id}/categories/{category_id}/archive)
+subledger.organization(org_id).book(book_id).category(category_id).archive(function (error, response) { ... });
 
-#### Update
-```javascript
-/**
- * subledger.organization(org_id).book(book_id).category(category_id).update(data,callback);
- * @param {Object} data
- * @param {Function} callback
- */
-
-subledger.organization(org_id).book(book_id).category(category_id).update({...},function (error,apiRes){
-  ...
-});
-```
-
-#### Attach
-```javascript
-/**
- * subledger.organization(org_id).book(book_id).category(category_id).attach(data,callback);
- * @param {Function} callback
- */
-
-subledger.organization(org_id).book(book_id).category(category_id).attach({account: 'accountId'},function (error,apiRes){
-  ...
-});
-```
-
-#### Detach
-```javascript
-/**
- * subledger.organization(org_id).book(book_id).category(category_id).detach(data,callback);
- * @param {Function} callback
- */
-
-subledger.organization(org_id).book(book_id).category(category_id).detach({account: 'accountId'},function (error,apiRes){
-  ...
-});
-```
-
-#### Archive
-```javascript
-/**
- * subledger.organization(org_id).book(book_id).category(category_id).archive(callback);
- * @param {Function} callback
- */
-
-subledger.organization(org_id).book(book_id).category(category_id).archive(function (error,apiRes){
-  ...
-});
-```
-
-#### Activate
-```javascript
-/**
- * subledger.organization(org_id).book(book_id).category(category_id).activate(callback);
- * @param {Function} callback
- */
-
-subledger.organization(org_id).book(book_id).category(category_id).activate(function (error,apiRes){
-  ...
-});
+// Activate a category (POST /orgs/{org_id}/books/{book_id}/categories/{category_id}/activate)
+subledger.organization(org_id).book(book_id).category(category_id).activate(function (error, response) { ... });
 ```
 
 ### Report
-
-#### Get one
 ```javascript
-/**
- * subledger.organization(org_id).book(book_id).report(report_id).get(callback);
- * @param {Function} callback
- */
+// Create a report (GET /orgs/{org_id}/books/{book_id}/reports)
+subledger.organization(org_id).book(book_id).report().create({body}, function (error, response) { ... });
 
-subledger.organization(org_id).book(book_id).report(report_id).get(function (error,apiRes){
-  ...
-});
-```
+// Get a collection of reports (GET /orgs/{org_id}/books/{book_id}/reports)
+// *** NOTE: If body is not provided, all active reports will be returned ***
+subledger.organization(org_id).book(book_id).report().get([{body},] function (error, response) { ... });
 
-#### Get list
-```javascript
-/**
- * subledger.organization(org_id).book(book_id).report().get(param,callback);
- * @param {Object} [param]
- * @param {String} [param.state=active]
- * @param {String} [param.action=before]
- * @param {Function} callback
- */
+// Get a report (GET /orgs/{org_id}/books/{book_id}/reports/{report_id})
+subledger.organization(org_id).book(book_id).report(report_id).get(function (error, response) { ... });
 
-//With parameters
-subledger.organization(org_id).book(book_id).report().get({...},function (error,apiRes){
-  ...
-});
+// Update a report (PATCH /orgs/{org_id}/books/{book_id}/reports/{report_id})
+subledger.organization(org_id).book(book_id).report(report_id).update({body}, function (error, response) { ... });
 
-//Without parameters
-subledger.organization(org_id).book(book_id).report().get(function (error,apiRes){
-  ...
-});
-```
+// Attach a category to a report (POST /orgs/{org_id}/books/{book_id}/reports/{report_id}/attach)
+subledger.organization(org_id).book(book_id).report(report_id).attach({category: 'categoryId'},function (error, response) { ... });
 
-#### Create
-```javascript
-/**
- * subledger.organization(org_id).book(book_id).report().create(data,callback);
- * @param {Object} data
- * @param {Function} callback
- */
+// Detach a category from a report (POST /orgs/{org_id}/books/{book_id}/reports/{report_id}/detach)
+subledger.organization(org_id).book(book_id).report(report_id).detach({category: 'categoryId'},function (error, response) { ... });
 
-subledger.organization(org_id).book(book_id).report().create({...},function (error,apiRes){
-  ...
-});
-```
+// Render a report (POST /orgs/{org_id}/books/{book_id}/reports/{report_id}/render)
+subledger.organization(org_id).book(book_id).report(report_id).render({at: new Date().toISOString()},function (error, response) { ... });
 
-#### Update
-```javascript
-/**
- * subledger.organization(org_id).book(book_id).report(report_id).update(data,callback);
- * @param {Object} data
- * @param {Function} callback
- */
+// Archive a report (POST /orgs/{org_id}/books/{book_id}/reports/{report_id}/archive)
+subledger.organization(org_id).book(book_id).report(report_id).archive(function (error, response) { ... });
 
-subledger.organization(org_id).book(book_id).report(report_id).update({...},function (error,apiRes){
-  ...
-});
-```
-
-#### Attach
-```javascript
-/**
- * subledger.organization(org_id).book(book_id).report(report_id).attach(data,callback);
- * @param {Function} callback
- */
-
-subledger.organization(org_id).book(book_id).report(report_id).attach({category: 'categoryId'},function (error,apiRes){
-  ...
-});
-```
-
-#### Detach
-```javascript
-/**
- * subledger.organization(org_id).book(book_id).report(report_id).detach(data,callback);
- * @param {Function} callback
- */
-
-subledger.organization(org_id).book(book_id).report(report_id).detach({category: 'categoryId'},function (error,apiRes){
-  ...
-});
-```
-
-#### Render
-```javascript
-/**
- * subledger.organization(org_id).book(book_id).report(report_id).render(param,callback);
- * @param {Function} callback
- */
-
-subledger.organization(org_id).book(book_id).report(report_id).render({at: new Date().toISOString()},function (error,apiRes){
-  ...
-});
-```
-
-#### Archive
-```javascript
-/**
- * subledger.organization(org_id).book(book_id).report(report_id).archive(callback);
- * @param {Function} callback
- */
-
-subledger.organization(org_id).book(book_id).report(report_id).archive(function (error,apiRes){
-  ...
-});
-```
-
-#### Activate
-```javascript
-/**
- * subledger.organization(org_id).book(book_id).report(report_id).activate(callback);
- * @param {Function} callback
- */
-
-subledger.organization(org_id).book(book_id).report(report_id).activate(function (error,apiRes){
-  ...
-});
+// Activate a report (POST /orgs/{org_id}/books/{book_id}/reports/{report_id}/activate)
+subledger.organization(org_id).book(book_id).report(report_id).activate(function (error, response) { ... });
 ```
 
 ### Report Rendering
-
-#### Get one
 ```javascript
-/**
- * subledger.organization(org_id).book(book_id).report_rendering(report_rendering_id).get(callback);
- * @param {Function} callback
- */
-
-subledger.organization(org_id).book(book_id).report_rendering(report_rendering_id).get(function (error,apiRes){
-  ...
-});
+// Get a report rendering (GET orgs/{org_id}/books/{book_id}/report_renderings/{report_rendering_id})
+subledger.organization(org_id).book(book_id).report_rendering(report_rendering_id).get(function (error, response) { ... });
 ```
-
-
-
-
-## What you need to build your own Subledger
-
-
-In order to build Subledger, you need to have Node.js/npm latest and git 1.7 or later.
-(Earlier versions might work OK, but are not tested.)
-
-**Windows users** have two options:
-
-1. Install [msysgit](https://code.google.com/p/msysgit/) (Full installer for official Git) and a
-   [binary version of Node.js](http://nodejs.org). Make sure all two packages are installed to the same
-   location (by default, this is C:\Program Files\Git).
-2. Install [Cygwin](http://cygwin.com/) (make sure you install the git and which packages), and
-   a [binary version of Node.js](http://nodejs.org/).
-
-**Mac OS users** should install Xcode (comes on your Mac OS install DVD, or downloadable from
-[Apple's Xcode site](http://developer.apple.com/technologies/xcode.html)) and
-[Homebrew](http://mxcl.github.com/homebrew/). Once Homebrew is installed, run `brew install git` to install git,
-and `brew install node` to install Node.js.
-
-**Linux/BSD users** should use their appropriate package managers to install git and Node.js, or build from source
-if you swing that way. Easy-peasy.
-
-
-## How to build your own Subledger
-
-First, clone a copy of the main Subledger git repo by running:
-
-```bash
-git clone https://github.com/subledger/js-client.git
-```
-
-Install the [grunt-cli](http://gruntjs.com/getting-started#installing-the-cli) package if you haven't before. It should be done as global install:
-
-```bash
-npm install -g grunt-cli
-```
-
-Make sure you have `grunt` installed by testing:
-
-```bash
-grunt -version
-```
-
-Enter the Subledger directory and install the Node dependencies, this time *without* specifying a global(-g) install:
-
-```bash
-cd Subledger && npm install
-```
-
-###Regular Build
-To get a minified (w/ Uglify.js), linted (w/ JSHint) version of Subledger, type the following:
-
-```bash
-grunt
-```
-
-The built version of Subledger will be put in the `build/` subdirectory.
-
-###Complete Build
-To get a complete, minified (w/ Uglify.js), linted (w/ JSHint) version of Subledger with updated root files (`AUTHORS.txt`,`LICENSE.txt`,`README.txt`) and Web files (`build/web`), type the following:
-
-```bash
-grunt build
-```
-
-###Regular Auto-Build
-Then, to get a auto-build Subledger as you work, start `grunt watch` :
-
-```bash
-cd Subledger && grunt watch
-```
-
-##Running tests in the browser
-
-Subledger has been successfully tested in the following browsers : **IE6+**, **Chrome PC/Mac**, **Safari PC/Mac**, **Opera PC/Mac** and **Firefox PC/Mac**.
-
-To running tests in the browser, open `build/web/test.html` into the browser you want to test. That's it!
-
-
-##[NodeUnit](https://github.com/caolan/nodeunit) Reference
-
-The Subledger JavaScript library use [NodeUnit](https://github.com/caolan/nodeunit) as unit testing tool.
-
-###Usage
-
-Here is an example unit test module:
-
-    exports.testSomething = function(test){
-        test.expect(1);
-        test.ok(true, "this assertion should pass");
-        test.done();
-    };
-
-    exports.testSomethingElse = function(test){
-        test.ok(false, "this assertion should fail");
-        test.done();
-    };
-
-###API Documentation
-
-
-Nodeunit uses the functions available in the node.js [assert module](http://nodejs.org/docs/v0.4.2/api/assert.html):
-
-* __ok(value, [message])__ - Tests if value is a true value.
-* __equal(actual, expected, [message])__ - Tests shallow, coercive equality with the equal comparison operator ( == ).
-* __notEqual(actual, expected, [message])__ - Tests shallow, coercive non-equality with the not equal comparison operator ( != ).
-* __deepEqual(actual, expected, [message])__ - Tests for deep equality.
-* __notDeepEqual(actual, expected, [message])__ - Tests for any deep inequality.
-* __strictEqual(actual, expected, [message])__ - Tests strict equality, as determined by the strict equality operator ( === )
-* __notStrictEqual(actual, expected, [message])__ - Tests strict non-equality, as determined by the strict not equal operator ( !== )
-* __throws(block, [error], [message])__ - Expects block to throw an error.
-* __doesNotThrow(block, [error], [message])__ - Expects block not to throw an error.
-* __ifError(value)__ - Tests if value is not a false value, throws if it is a true value. Useful when testing the first argument, error in callbacks.
-
-Nodeunit also provides the following functions within tests:
-
-* __expect(amount)__ - Specify how many assertions are expected to run within a test. Very useful for ensuring that all your callbacks and assertions are run.
-* __done()__ - Finish the current test function, and move on to the next. ALL tests should call this!
-
 
 ##Contributors
 
 Contributors ordered by first contribution.
 
-Marc-André Arseneault <marc-andre@arsnl.ca>
-Alexandre Michetti Manduca <a.michetti@gmail.com>
+- Marc-André Arseneault <marc-andre@arsnl.ca>
+- Alexandre Michetti Manduca <a.michetti@gmail.com>
+- Philip Paquette <pcpaquette@gmail.com>
 
 
 ##License
 
-Copyright 2014 Subledger
+Copyright 2015 Subledger
 http://subledger.com
 
 Permission is hereby granted, free of charge, to any person obtaining

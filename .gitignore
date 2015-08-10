@@ -1,5 +1,6 @@
 .project
 .settings
+.vagrant
 .DS_Store
 *~
 *.diff
