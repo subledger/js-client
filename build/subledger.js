@@ -265,7 +265,7 @@
           book.url = org.url + '/' + org.org_id + '/books';
 
           /**
-           * Get Subledger Book by calling "/books" with GET HTTP method
+           * Get Subledger Book by calling "/orgs/{org_id}/books/{book_id}" with GET HTTP method or get Subledger Books by calling "/books" with GET HTTP method
            * @summary Get Subledger Book(s)
            * @param {Object} [param]
            * @param {String} [param.state=active]
@@ -288,13 +288,13 @@
             if (!book.book_id) {
               // Getting all books
               param.state = (param.state || 'active');
-              param.action = (param.action || 'ending');
+              param.action = (param.action || 'starting');
 
               if ((param.action === 'ending' || param.action === 'before') && !param.description) {
-                param.description = 0xFF;
+                param.description = String.fromCharCode(255);
 
               } else if ((param.action === 'starting' || param.action === 'after') && !param.description) {
-                param.description = 0x00;
+                param.description = String.fromCharCode(0);
               }
               ajax.get(book.url + '?' + helpers.encodeQueryObj(param), callback);
             } else {
@@ -393,13 +393,13 @@
                 if (!account.account_id) {
                   // Getting all accounts
                   param.state = (param.state || 'active');
-                  param.action = (param.action || 'ending');
+                  param.action = (param.action || 'starting');
 
                   if ((param.action === 'ending' || param.action === 'before') && !param.description) {
-                    param.description = 0xFF;
+                    param.description = String.fromCharCode(255);
 
                   } else if ((param.action === 'starting' || param.action === 'after') && !param.description) {
-                    param.description = 0x00;
+                    param.description = String.fromCharCode(0);
                   }
                   ajax.get(account.url + '?' + helpers.encodeQueryObj(param), callback);
                 } else {
@@ -866,13 +866,13 @@
                 if (!category.category_id) {
                   // Getting all categories
                   param.state = (param.state || 'active');
-                  param.action = (param.action || 'ending');
+                  param.action = (param.action || 'starting');
 
                   if ((param.action === 'ending' || param.action === 'before') && !param.description) {
-                    param.description = 0xFF;
+                    param.description = String.fromCharCode(255);
 
                   } else if ((param.action === 'starting' || param.action === 'after') && !param.description) {
-                    param.description = 0x00;
+                    param.description = String.fromCharCode(0);
                   }
                   ajax.get(category.url + '?' + helpers.encodeQueryObj(param), callback);
                 } else {
@@ -1003,13 +1003,13 @@
                 if (!report.report_id) {
                   // Getting all reports
                   param.state = (param.state || 'active');
-                  param.action = (param.action || 'ending');
+                  param.action = (param.action || 'starting');
 
                   if ((param.action === 'ending' || param.action === 'before') && !param.description) {
-                    param.description = 0xFF;
+                    param.description = String.fromCharCode(255);
 
                   } else if ((param.action === 'starting' || param.action === 'after') && !param.description) {
-                    param.description = 0x00;
+                    param.description = String.fromCharCode(0);
                   }
                   ajax.get(report.url + '?' + helpers.encodeQueryObj(param), callback);
                 } else {
