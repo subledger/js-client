@@ -72,7 +72,7 @@
 
         toStr = '<pre>' + [
           "Please submit an issue to " +
-            "<a href='https://github.com/boocx2/Subledger_JS_Library/issues'>https://github.com/boocx2/Subledger_JS_Library/issues</a> " +
+            "<a href='https://github.com/subledger/js_client/issues'>https://github.com/subledger/js_client/issues</a> " +
             "with the information below and the failing tests.",
           "",
           "Date.prototype.toString = " + (new Date()).toString(),

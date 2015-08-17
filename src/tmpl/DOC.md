@@ -169,12 +169,12 @@ subledger.identity(identity_id).key(key_id).archive(function (error,apiRes){
 #### Create
 ```javascript
 /**
- * subledger.organization().create(data, callback);
+ * subledger.org().create(data, callback);
  * @param {Object} data
  * @param {Function} callback
  */
 
-subledger.organization().create({...},function (error,apiRes){
+subledger.org().create({...},function (error,apiRes){
   ...
 });
 ```
@@ -182,11 +182,11 @@ subledger.organization().create({...},function (error,apiRes){
 #### Get one
 ```javascript
 /**
- * subledger.organization(org_id).get(callback);
+ * subledger.org(org_id).get(callback);
  * @param {Function} callback
  */
 
-subledger.organization(org_id).get(function (error,apiRes){
+subledger.org(org_id).get(function (error,apiRes){
   ...
 });
 ```
@@ -194,12 +194,12 @@ subledger.organization(org_id).get(function (error,apiRes){
 #### Update
 ```javascript
 /**
- * subledger.organization(org_id).update(data, callback);
+ * subledger.org(org_id).update(data, callback);
  * @param {Object} data
  * @param {Function} callback
  */
 
-subledger.organization(org_id).update({...}, function (error,apiRes){
+subledger.org(org_id).update({...}, function (error,apiRes){
   ...
 });
 ```
@@ -207,11 +207,11 @@ subledger.organization(org_id).update({...}, function (error,apiRes){
 #### Activate
 ```javascript
 /**
- * subledger.organization(org_id).activate(callback);
+ * subledger.org(org_id).activate(callback);
  * @param {Function} callback
  */
 
-subledger.organization(org_id).activate(function (error,apiRes){
+subledger.org(org_id).activate(function (error,apiRes){
   ...
 });
 ```
@@ -219,11 +219,11 @@ subledger.organization(org_id).activate(function (error,apiRes){
 #### Archive
 ```javascript
 /**
- * subledger.organization(org_id).archive(callback);
+ * subledger.org(org_id).archive(callback);
  * @param {Function} callback
  */
 
-subledger.organization(org_id).archive(function (error,apiRes){
+subledger.org(org_id).archive(function (error,apiRes){
   ...
 });
 ```
@@ -234,11 +234,11 @@ subledger.organization(org_id).archive(function (error,apiRes){
 #### Get one
 ```javascript
 /**
- * subledger.organization(org_id).book(book_id).get(callback);
+ * subledger.org(org_id).book(book_id).get(callback);
  * @param {Function} callback
  */
 
-subledger.organization(org_id).book(book_id).get(function (error,apiRes){
+subledger.org(org_id).book(book_id).get(function (error,apiRes){
  ...
 });
 ```
@@ -246,7 +246,7 @@ subledger.organization(org_id).book(book_id).get(function (error,apiRes){
 #### Get list
 ```javascript
 /**
- * subledger.organization(org_id).book().get(param,callback);
+ * subledger.org(org_id).book().get(param,callback);
  * @param {Object} [param]
  * @param {String} [param.state=active]
  * @param {String} [param.action=before]
@@ -254,12 +254,12 @@ subledger.organization(org_id).book(book_id).get(function (error,apiRes){
  */
 
 //With parameters
-subledger.organization(org_id).book().get({...},function (error,apiRes){
+subledger.org(org_id).book().get({...},function (error,apiRes){
  ...
 });
 
 //Without parameters
-subledger.organization(org_id).book().get(function (error,apiRes){
+subledger.org(org_id).book().get(function (error,apiRes){
  ...
 });
 ```
@@ -267,12 +267,12 @@ subledger.organization(org_id).book().get(function (error,apiRes){
 #### Create
 ```javascript
 /**
- * subledger.organization(org_id).book().create(data,callback);
+ * subledger.org(org_id).book().create(data,callback);
  * @param {Object} data
  * @param {Function} callback
  */
 
-subledger.organization(org_id).book().create({...},function (error,apiRes){
+subledger.org(org_id).book().create({...},function (error,apiRes){
   ...
 });
 ```
@@ -280,12 +280,12 @@ subledger.organization(org_id).book().create({...},function (error,apiRes){
 #### Update
 ```javascript
 /**
- * subledger.organization(org_id).book(book_id).update(data,callback);
+ * subledger.org(org_id).book(book_id).update(data,callback);
  * @param {Object} data
  * @param {Function} callback
  */
 
-subledger.organization(org_id).book(book_id).update({...},function (error,apiRes){
+subledger.org(org_id).book(book_id).update({...},function (error,apiRes){
   ...
 });
 ```
@@ -293,11 +293,11 @@ subledger.organization(org_id).book(book_id).update({...},function (error,apiRes
 #### Activate
 ```javascript
 /**
- * subledger.organization(org_id).book(book_id).activate(callback);
+ * subledger.org(org_id).book(book_id).activate(callback);
  * @param {Function} callback
  */
 
-subledger.organization(org_id).book(book_id).activate(function (error,apiRes){
+subledger.org(org_id).book(book_id).activate(function (error,apiRes){
   ...
 });
 ```
@@ -305,11 +305,11 @@ subledger.organization(org_id).book(book_id).activate(function (error,apiRes){
 #### Archive
 ```javascript
 /**
- * subledger.organization(org_id).book(book_id).archive(callback);
+ * subledger.org(org_id).book(book_id).archive(callback);
  * @param {Function} callback
  */
 
-subledger.organization(org_id).book(book_id).archive(function (error,apiRes){
+subledger.org(org_id).book(book_id).archive(function (error,apiRes){
   ...
 });
 ```
@@ -319,11 +319,11 @@ subledger.organization(org_id).book(book_id).archive(function (error,apiRes){
 #### Get one
 ```javascript
 /**
- * subledger.organization(org_id).book(book_id).account(account_id).get(callback);
+ * subledger.org(org_id).book(book_id).account(account_id).get(callback);
  * @param {Function} callback
  */
 
-subledger.organization(org_id).book(book_id).account(account_id).get(function (error,apiRes){
+subledger.org(org_id).book(book_id).account(account_id).get(function (error,apiRes){
   ...
 });
 ```
@@ -331,7 +331,7 @@ subledger.organization(org_id).book(book_id).account(account_id).get(function (e
 #### Get list
 ```javascript
 /**
- * subledger.organization(org_id).book(book_id).account().get(param,callback);
+ * subledger.org(org_id).book(book_id).account().get(param,callback);
  * @param {Object} [param]
  * @param {String} [param.state=active]
  * @param {String} [param.action=before]
@@ -339,12 +339,12 @@ subledger.organization(org_id).book(book_id).account(account_id).get(function (e
  */
 
 //With parameters
-subledger.organization(org_id).book(book_id).account().get({...},function (error,apiRes){
+subledger.org(org_id).book(book_id).account().get({...},function (error,apiRes){
   ...
 });
 
 //Without parameters
-subledger.organization(org_id).book(book_id).account().get(function (error,apiRes){
+subledger.org(org_id).book(book_id).account().get(function (error,apiRes){
   ...
 });
 ```
@@ -352,12 +352,12 @@ subledger.organization(org_id).book(book_id).account().get(function (error,apiRe
 #### Create
 ```javascript
 /**
- * subledger.organization(org_id).book(book_id).account().create(data,callback);
+ * subledger.org(org_id).book(book_id).account().create(data,callback);
  * @param {Object} data
  * @param {Function} callback
  */
 
-subledger.organization(org_id).book(book_id).account().create({...},function (error,apiRes){
+subledger.org(org_id).book(book_id).account().create({...},function (error,apiRes){
   ...
 });
 ```
@@ -365,12 +365,12 @@ subledger.organization(org_id).book(book_id).account().create({...},function (er
 #### Update
 ```javascript
 /**
- * subledger.organization(org_id).book(book_id).account(account_id).update(data,callback);
+ * subledger.org(org_id).book(book_id).account(account_id).update(data,callback);
  * @param {Object} data
  * @param {Function} callback
  */
 
-subledger.organization(org_id).book(book_id).account(account_id).update({...},function (error,apiRes){
+subledger.org(org_id).book(book_id).account(account_id).update({...},function (error,apiRes){
   ...
 });
 ```
@@ -378,11 +378,11 @@ subledger.organization(org_id).book(book_id).account(account_id).update({...},fu
 #### Activate
 ```javascript
 /**
- * subledger.organization(org_id).book(book_id).account(account_id).activate(callback);
+ * subledger.org(org_id).book(book_id).account(account_id).activate(callback);
  * @param {Function} callback
  */
 
-subledger.organization(org_id).book(book_id).account(account_id).activate(function (error,apiRes){
+subledger.org(org_id).book(book_id).account(account_id).activate(function (error,apiRes){
   ...
 });
 ```
@@ -390,11 +390,11 @@ subledger.organization(org_id).book(book_id).account(account_id).activate(functi
 #### Archive
 ```javascript
 /**
- * subledger.organization(org_id).book(book_id).account(account_id).archive(callback);
+ * subledger.org(org_id).book(book_id).account(account_id).archive(callback);
  * @param {Function} callback
  */
 
-subledger.organization(org_id).book(book_id).account(account_id).archive(function (error,apiRes){
+subledger.org(org_id).book(book_id).account(account_id).archive(function (error,apiRes){
   ...
 });
 ```
@@ -402,19 +402,19 @@ subledger.organization(org_id).book(book_id).account(account_id).archive(functio
 #### Balance
 ```javascript
 /**
- * subledger.organization(org_id).book(book_id).account(account_id).balance(param,callback);
+ * subledger.org(org_id).book(book_id).account(account_id).balance(param,callback);
  * @param {Object} [param]
  * @param {String} [param.at=new Date().toISOString()]
  * @param {Function} callback
  */
 
 //With parameters
-subledger.organization(org_id).book(book_id).account(account_id).balance({...},function (error,apiRes){
+subledger.org(org_id).book(book_id).account(account_id).balance({...},function (error,apiRes){
   ...
 });
 
 //Without parameters
-subledger.organization(org_id).book(book_id).account(account_id).balance(function (error,apiRes){
+subledger.org(org_id).book(book_id).account(account_id).balance(function (error,apiRes){
   ...
 });
 ```
@@ -424,11 +424,11 @@ subledger.organization(org_id).book(book_id).account(account_id).balance(functio
 #### Get one
 ```javascript
 /**
- * subledger.organization(org_id).book(book_id).account(account_id).line(line_id).get(callback);
+ * subledger.org(org_id).book(book_id).account(account_id).line(line_id).get(callback);
  * @param {Function} callback
  */
 
-subledger.organization(org_id).book(book_id).account(account_id).line(line_id).get(function (error,apiRes){
+subledger.org(org_id).book(book_id).account(account_id).line(line_id).get(function (error,apiRes){
   ...
 });
 ```
@@ -436,7 +436,7 @@ subledger.organization(org_id).book(book_id).account(account_id).line(line_id).g
 #### Get list
 ```javascript
 /**
- * subledger.organization(org_id).book(book_id).account(account_id).line().get(param,callback);
+ * subledger.org(org_id).book(book_id).account(account_id).line().get(param,callback);
  * @param {Object} [param]
  * @param {String} [param.action=before]
  * @param {String} [param.effective_at=new Date().toISOString()]
@@ -444,12 +444,12 @@ subledger.organization(org_id).book(book_id).account(account_id).line(line_id).g
  */
 
 //With parameters
-subledger.organization(org_id).book(book_id).account(account_id).line().get({...},function (error,apiRes){
+subledger.org(org_id).book(book_id).account(account_id).line().get({...},function (error,apiRes){
   ...
 });
 
 //Without parameters
-subledger.organization(org_id).book(book_id).account(account_id).line().get(function (error,apiRes){
+subledger.org(org_id).book(book_id).account(account_id).line().get(function (error,apiRes){
   ...
 });
 ```
@@ -459,11 +459,11 @@ subledger.organization(org_id).book(book_id).account(account_id).line().get(func
 #### Get one
 ```javascript
 /**
- * subledger.organization(org_id).book(book_id).journalEntry(journal_entry_id).get(callback);
+ * subledger.org(org_id).book(book_id).journalEntry(journal_entry_id).get(callback);
  * @param {Function} callback
  */
 
-subledger.organization(org_id).book(book_id).journalEntry(journal_entry_id).get(function (error,apiRes){
+subledger.org(org_id).book(book_id).journalEntry(journal_entry_id).get(function (error,apiRes){
   ...
 });
 ```
@@ -471,7 +471,7 @@ subledger.organization(org_id).book(book_id).journalEntry(journal_entry_id).get(
 #### Get list
 ```javascript
 /**
- * subledger.organization(org_id).book(book_id).journalEntry().get(param,callback);
+ * subledger.org(org_id).book(book_id).journalEntry().get(param,callback);
  * @param {Object} [param]
  * @param {String} [param.state=active]
  * @param {String} [param.action=before]
@@ -480,12 +480,12 @@ subledger.organization(org_id).book(book_id).journalEntry(journal_entry_id).get(
  */
 
 //With parameters
-subledger.organization(org_id).book(book_id).journalEntry().get({...},function (error,apiRes){
+subledger.org(org_id).book(book_id).journalEntry().get({...},function (error,apiRes){
   ...
 });
 
 //Without parameters
-subledger.organization(org_id).book(book_id).journalEntry().get(function (error,apiRes){
+subledger.org(org_id).book(book_id).journalEntry().get(function (error,apiRes){
   ...
 });
 ```
@@ -493,12 +493,12 @@ subledger.organization(org_id).book(book_id).journalEntry().get(function (error,
 #### Create
 ```javascript
 /**
- * subledger.organization(org_id).book(book_id).journalEntry().create(data,callback);
+ * subledger.org(org_id).book(book_id).journalEntry().create(data,callback);
  * @param {Object} data
  * @param {Function} callback
  */
 
-subledger.organization(org_id).book(book_id).journalEntry().create({...},function (error,apiRes){
+subledger.org(org_id).book(book_id).journalEntry().create({...},function (error,apiRes){
   ...
 });
 ```
@@ -506,11 +506,11 @@ subledger.organization(org_id).book(book_id).journalEntry().create({...},functio
 #### Post
 ```javascript
 /**
- * subledger.organization(org_id).book(book_id).journalEntry(journal_entry_id).post(callback);
+ * subledger.org(org_id).book(book_id).journalEntry(journal_entry_id).post(callback);
  * @param {Function} callback
  */
 
-subledger.organization(org_id).book(book_id).journalEntry(journal_entry_id).post(function (error,apiRes){
+subledger.org(org_id).book(book_id).journalEntry(journal_entry_id).post(function (error,apiRes){
   ...
 });
 ```
@@ -518,12 +518,12 @@ subledger.organization(org_id).book(book_id).journalEntry(journal_entry_id).post
 #### Create and post
 ```javascript
 /**
- * subledger.organization(org_id).book(book_id).journalEntry().createAndPost(data,callback);
+ * subledger.org(org_id).book(book_id).journalEntry().createAndPost(data,callback);
  * @param {Object} data
  * @param {Function} callback
  */
 
-subledger.organization(org_id).book(book_id).journalEntry().createAndPost({...},function (error,apiRes){
+subledger.org(org_id).book(book_id).journalEntry().createAndPost({...},function (error,apiRes){
   ...
 });
 ```
@@ -531,12 +531,12 @@ subledger.organization(org_id).book(book_id).journalEntry().createAndPost({...},
 #### Update
 ```javascript
 /**
- * subledger.organization(org_id).book(book_id).journalEntry(journal_entry_id).update(data,callback);
+ * subledger.org(org_id).book(book_id).journalEntry(journal_entry_id).update(data,callback);
  * @param {Object} data
  * @param {Function} callback
  */
 
-subledger.organization(org_id).book(book_id).journalEntry(journal_entry_id).update(...},function (error,apiRes){
+subledger.org(org_id).book(book_id).journalEntry(journal_entry_id).update(...},function (error,apiRes){
   ...
 });
 ```
@@ -544,11 +544,11 @@ subledger.organization(org_id).book(book_id).journalEntry(journal_entry_id).upda
 #### Archive
 ```javascript
 /**
- * subledger.organization(org_id).book(book_id).journalEntry(journal_entry_id).archive(callback);
+ * subledger.org(org_id).book(book_id).journalEntry(journal_entry_id).archive(callback);
  * @param {Function} callback
  */
 
-subledger.organization(org_id).book(book_id).journalEntry(journal_entry_id).archive(function (error,apiRes){
+subledger.org(org_id).book(book_id).journalEntry(journal_entry_id).archive(function (error,apiRes){
   ...
 });
 ```
@@ -556,11 +556,11 @@ subledger.organization(org_id).book(book_id).journalEntry(journal_entry_id).arch
 #### Activate
 ```javascript
 /**
- * subledger.organization(org_id).book(book_id).journalEntry(journal_entry_id).activate(callback);
+ * subledger.org(org_id).book(book_id).journalEntry(journal_entry_id).activate(callback);
  * @param {Function} callback
  */
 
-subledger.organization(org_id).book(book_id).journalEntry(journal_entry_id).activate(function (error,apiRes){
+subledger.org(org_id).book(book_id).journalEntry(journal_entry_id).activate(function (error,apiRes){
   ...
 });
 ```
@@ -568,11 +568,11 @@ subledger.organization(org_id).book(book_id).journalEntry(journal_entry_id).acti
 #### Balance
 ```javascript
 /**
- * subledger.organization(org_id).book(book_id).journalEntry(journal_entry_id).balance(callback);
+ * subledger.org(org_id).book(book_id).journalEntry(journal_entry_id).balance(callback);
  * @param {Function} callback
  */
 
-subledger.organization(org_id).book(book_id).journalEntry(journal_entry_id).balance(function (error,apiRes){
+subledger.org(org_id).book(book_id).journalEntry(journal_entry_id).balance(function (error,apiRes){
   ...
 });
 ```
@@ -580,11 +580,11 @@ subledger.organization(org_id).book(book_id).journalEntry(journal_entry_id).bala
 #### Progress
 ```javascript
 /**
- * subledger.organization(org_id).book(book_id).journalEntry(journal_entry_id).progress(callback);
+ * subledger.org(org_id).book(book_id).journalEntry(journal_entry_id).progress(callback);
  * @param {Function} callback
  */
 
-subledger.organization(org_id).book(book_id).journalEntry(journal_entry_id).progress(function (error,apiRes){
+subledger.org(org_id).book(book_id).journalEntry(journal_entry_id).progress(function (error,apiRes){
   ...
 });
 ```
@@ -594,11 +594,11 @@ subledger.organization(org_id).book(book_id).journalEntry(journal_entry_id).prog
 #### Get one
 ```javascript
 /**
- * subledger.organization(org_id).book(book_id).journalEntry(journal_entry_id).line(line_id).get(callback);
+ * subledger.org(org_id).book(book_id).journalEntry(journal_entry_id).line(line_id).get(callback);
  * @param {Function} callback
  */
 
-subledger.organization(org_id).book(book_id).journalEntry(journal_entry_id).line(line_id).get(function (error,apiRes){
+subledger.org(org_id).book(book_id).journalEntry(journal_entry_id).line(line_id).get(function (error,apiRes){
   ...
 });
 ```
@@ -606,7 +606,7 @@ subledger.organization(org_id).book(book_id).journalEntry(journal_entry_id).line
 #### Get list
 ```javascript
 /**
- * subledger.organization(org_id).book(book_id).journalEntry(journal_entry_id).line().get(param,callback);
+ * subledger.org(org_id).book(book_id).journalEntry(journal_entry_id).line().get(param,callback);
  * @param {Object} [param]
  * @param {String} [param.state=active]
  * @param {String} [param.action=before]
@@ -614,12 +614,12 @@ subledger.organization(org_id).book(book_id).journalEntry(journal_entry_id).line
  */
 
 //With parameters
-subledger.organization(org_id).book(book_id).journalEntry(journal_entry_id).line().get({...},function (error,apiRes){
+subledger.org(org_id).book(book_id).journalEntry(journal_entry_id).line().get({...},function (error,apiRes){
   ...
 });
 
 //Without parameters
-subledger.organization(org_id).book(book_id).journalEntry(journal_entry_id).line().get(function (error,apiRes){
+subledger.org(org_id).book(book_id).journalEntry(journal_entry_id).line().get(function (error,apiRes){
   ...
 });
 ```
@@ -627,12 +627,12 @@ subledger.organization(org_id).book(book_id).journalEntry(journal_entry_id).line
 #### Create
 ```javascript
 /**
- * subledger.organization(org_id).book(book_id).journalEntry(journal_entry_id).line().create(data,callback);
+ * subledger.org(org_id).book(book_id).journalEntry(journal_entry_id).line().create(data,callback);
  * @param {Object} data
  * @param {Function} callback
  */
 
-subledger.organization(org_id).book(book_id).journalEntry(journal_entry_id).line().create({...},function (error,apiRes){
+subledger.org(org_id).book(book_id).journalEntry(journal_entry_id).line().create({...},function (error,apiRes){
   ...
 });
 ```
@@ -640,12 +640,12 @@ subledger.organization(org_id).book(book_id).journalEntry(journal_entry_id).line
 #### Update
 ```javascript
 /**
- * subledger.organization(org_id).book(book_id).journalEntry(journal_entry_id).line(line_id).update(data,callback);
+ * subledger.org(org_id).book(book_id).journalEntry(journal_entry_id).line(line_id).update(data,callback);
  * @param {Object} data
  * @param {Function} callback
  */
 
-subledger.organization(org_id).book(book_id).journalEntry(journal_entry_id).line(line_id).update({...},function (error,apiRes){
+subledger.org(org_id).book(book_id).journalEntry(journal_entry_id).line(line_id).update({...},function (error,apiRes){
   ...
 });
 ```
@@ -653,11 +653,11 @@ subledger.organization(org_id).book(book_id).journalEntry(journal_entry_id).line
 #### Activate
 ```javascript
 /**
- * subledger.organization(org_id).book(book_id).journalEntry(journal_entry_id).line(line_id).activate(callback);
+ * subledger.org(org_id).book(book_id).journalEntry(journal_entry_id).line(line_id).activate(callback);
  * @param {Function} callback
  */
 
-subledger.organization(org_id).book(book_id).journalEntry(journal_entry_id).line(line_id).activate(function (error,apiRes){
+subledger.org(org_id).book(book_id).journalEntry(journal_entry_id).line(line_id).activate(function (error,apiRes){
   ...
 });
 ```
@@ -665,11 +665,11 @@ subledger.organization(org_id).book(book_id).journalEntry(journal_entry_id).line
 #### Archive
 ```javascript
 /**
- * subledger.organization(org_id).book(book_id).journalEntry(journal_entry_id).line(line_id).archive(callback);
+ * subledger.org(org_id).book(book_id).journalEntry(journal_entry_id).line(line_id).archive(callback);
  * @param {Function} callback
  */
 
-subledger.organization(org_id).book(book_id).journalEntry(journal_entry_id).line(line_id).archive(function (error,apiRes){
+subledger.org(org_id).book(book_id).journalEntry(journal_entry_id).line(line_id).archive(function (error,apiRes){
   ...
 });
 ```
@@ -679,11 +679,11 @@ subledger.organization(org_id).book(book_id).journalEntry(journal_entry_id).line
 #### Get one
 ```javascript
 /**
- * subledger.organization(org_id).book(book_id).category(category_id).get(callback);
+ * subledger.org(org_id).book(book_id).category(category_id).get(callback);
  * @param {Function} callback
  */
 
-subledger.organization(org_id).book(book_id).category(category_id).get(function (error,apiRes){
+subledger.org(org_id).book(book_id).category(category_id).get(function (error,apiRes){
   ...
 });
 ```
@@ -691,7 +691,7 @@ subledger.organization(org_id).book(book_id).category(category_id).get(function 
 #### Get list
 ```javascript
 /**
- * subledger.organization(org_id).book(book_id).category().get(param,callback);
+ * subledger.org(org_id).book(book_id).category().get(param,callback);
  * @param {Object} [param]
  * @param {String} [param.state=active]
  * @param {String} [param.action=before]
@@ -699,12 +699,12 @@ subledger.organization(org_id).book(book_id).category(category_id).get(function 
  */
 
 //With parameters
-subledger.organization(org_id).book(book_id).category().get({...},function (error,apiRes){
+subledger.org(org_id).book(book_id).category().get({...},function (error,apiRes){
   ...
 });
 
 //Without parameters
-subledger.organization(org_id).book(book_id).category().get(function (error,apiRes){
+subledger.org(org_id).book(book_id).category().get(function (error,apiRes){
   ...
 });
 ```
@@ -712,12 +712,12 @@ subledger.organization(org_id).book(book_id).category().get(function (error,apiR
 #### Create
 ```javascript
 /**
- * subledger.organization(org_id).book(book_id).category().create(data,callback);
+ * subledger.org(org_id).book(book_id).category().create(data,callback);
  * @param {Object} data
  * @param {Function} callback
  */
 
-subledger.organization(org_id).book(book_id).category().create({...},function (error,apiRes){
+subledger.org(org_id).book(book_id).category().create({...},function (error,apiRes){
   ...
 });
 ```
@@ -725,12 +725,12 @@ subledger.organization(org_id).book(book_id).category().create({...},function (e
 #### Update
 ```javascript
 /**
- * subledger.organization(org_id).book(book_id).category(category_id).update(data,callback);
+ * subledger.org(org_id).book(book_id).category(category_id).update(data,callback);
  * @param {Object} data
  * @param {Function} callback
  */
 
-subledger.organization(org_id).book(book_id).category(category_id).update({...},function (error,apiRes){
+subledger.org(org_id).book(book_id).category(category_id).update({...},function (error,apiRes){
   ...
 });
 ```
@@ -738,11 +738,11 @@ subledger.organization(org_id).book(book_id).category(category_id).update({...},
 #### Attach
 ```javascript
 /**
- * subledger.organization(org_id).book(book_id).category(category_id).attach(data,callback);
+ * subledger.org(org_id).book(book_id).category(category_id).attach(data,callback);
  * @param {Function} callback
  */
 
-subledger.organization(org_id).book(book_id).category(category_id).attach({account: 'accountId'},function (error,apiRes){
+subledger.org(org_id).book(book_id).category(category_id).attach({account: 'accountId'},function (error,apiRes){
   ...
 });
 ```
@@ -750,11 +750,11 @@ subledger.organization(org_id).book(book_id).category(category_id).attach({accou
 #### Detach
 ```javascript
 /**
- * subledger.organization(org_id).book(book_id).category(category_id).detach(data,callback);
+ * subledger.org(org_id).book(book_id).category(category_id).detach(data,callback);
  * @param {Function} callback
  */
 
-subledger.organization(org_id).book(book_id).category(category_id).detach({account: 'accountId'},function (error,apiRes){
+subledger.org(org_id).book(book_id).category(category_id).detach({account: 'accountId'},function (error,apiRes){
   ...
 });
 ```
@@ -762,11 +762,11 @@ subledger.organization(org_id).book(book_id).category(category_id).detach({accou
 #### Archive
 ```javascript
 /**
- * subledger.organization(org_id).book(book_id).category(category_id).archive(callback);
+ * subledger.org(org_id).book(book_id).category(category_id).archive(callback);
  * @param {Function} callback
  */
 
-subledger.organization(org_id).book(book_id).category(category_id).archive(function (error,apiRes){
+subledger.org(org_id).book(book_id).category(category_id).archive(function (error,apiRes){
   ...
 });
 ```
@@ -774,11 +774,11 @@ subledger.organization(org_id).book(book_id).category(category_id).archive(funct
 #### Activate
 ```javascript
 /**
- * subledger.organization(org_id).book(book_id).category(category_id).activate(callback);
+ * subledger.org(org_id).book(book_id).category(category_id).activate(callback);
  * @param {Function} callback
  */
 
-subledger.organization(org_id).book(book_id).category(category_id).activate(function (error,apiRes){
+subledger.org(org_id).book(book_id).category(category_id).activate(function (error,apiRes){
   ...
 });
 ```
@@ -788,11 +788,11 @@ subledger.organization(org_id).book(book_id).category(category_id).activate(func
 #### Get one
 ```javascript
 /**
- * subledger.organization(org_id).book(book_id).report(report_id).get(callback);
+ * subledger.org(org_id).book(book_id).report(report_id).get(callback);
  * @param {Function} callback
  */
 
-subledger.organization(org_id).book(book_id).report(report_id).get(function (error,apiRes){
+subledger.org(org_id).book(book_id).report(report_id).get(function (error,apiRes){
   ...
 });
 ```
@@ -800,7 +800,7 @@ subledger.organization(org_id).book(book_id).report(report_id).get(function (err
 #### Get list
 ```javascript
 /**
- * subledger.organization(org_id).book(book_id).report().get(param,callback);
+ * subledger.org(org_id).book(book_id).report().get(param,callback);
  * @param {Object} [param]
  * @param {String} [param.state=active]
  * @param {String} [param.action=before]
@@ -808,12 +808,12 @@ subledger.organization(org_id).book(book_id).report(report_id).get(function (err
  */
 
 //With parameters
-subledger.organization(org_id).book(book_id).report().get({...},function (error,apiRes){
+subledger.org(org_id).book(book_id).report().get({...},function (error,apiRes){
   ...
 });
 
 //Without parameters
-subledger.organization(org_id).book(book_id).report().get(function (error,apiRes){
+subledger.org(org_id).book(book_id).report().get(function (error,apiRes){
   ...
 });
 ```
@@ -821,12 +821,12 @@ subledger.organization(org_id).book(book_id).report().get(function (error,apiRes
 #### Create
 ```javascript
 /**
- * subledger.organization(org_id).book(book_id).report().create(data,callback);
+ * subledger.org(org_id).book(book_id).report().create(data,callback);
  * @param {Object} data
  * @param {Function} callback
  */
 
-subledger.organization(org_id).book(book_id).report().create({...},function (error,apiRes){
+subledger.org(org_id).book(book_id).report().create({...},function (error,apiRes){
   ...
 });
 ```
@@ -834,12 +834,12 @@ subledger.organization(org_id).book(book_id).report().create({...},function (err
 #### Update
 ```javascript
 /**
- * subledger.organization(org_id).book(book_id).report(report_id).update(data,callback);
+ * subledger.org(org_id).book(book_id).report(report_id).update(data,callback);
  * @param {Object} data
  * @param {Function} callback
  */
 
-subledger.organization(org_id).book(book_id).report(report_id).update({...},function (error,apiRes){
+subledger.org(org_id).book(book_id).report(report_id).update({...},function (error,apiRes){
   ...
 });
 ```
@@ -847,11 +847,11 @@ subledger.organization(org_id).book(book_id).report(report_id).update({...},func
 #### Attach
 ```javascript
 /**
- * subledger.organization(org_id).book(book_id).report(report_id).attach(data,callback);
+ * subledger.org(org_id).book(book_id).report(report_id).attach(data,callback);
  * @param {Function} callback
  */
 
-subledger.organization(org_id).book(book_id).report(report_id).attach({category: 'categoryId'},function (error,apiRes){
+subledger.org(org_id).book(book_id).report(report_id).attach({category: 'categoryId'},function (error,apiRes){
   ...
 });
 ```
@@ -859,11 +859,11 @@ subledger.organization(org_id).book(book_id).report(report_id).attach({category:
 #### Detach
 ```javascript
 /**
- * subledger.organization(org_id).book(book_id).report(report_id).detach(data,callback);
+ * subledger.org(org_id).book(book_id).report(report_id).detach(data,callback);
  * @param {Function} callback
  */
 
-subledger.organization(org_id).book(book_id).report(report_id).detach({category: 'categoryId'},function (error,apiRes){
+subledger.org(org_id).book(book_id).report(report_id).detach({category: 'categoryId'},function (error,apiRes){
   ...
 });
 ```
@@ -871,11 +871,11 @@ subledger.organization(org_id).book(book_id).report(report_id).detach({category:
 #### Render
 ```javascript
 /**
- * subledger.organization(org_id).book(book_id).report(report_id).render(param,callback);
+ * subledger.org(org_id).book(book_id).report(report_id).render(param,callback);
  * @param {Function} callback
  */
 
-subledger.organization(org_id).book(book_id).report(report_id).render({at: new Date().toISOString()},function (error,apiRes){
+subledger.org(org_id).book(book_id).report(report_id).render({at: new Date().toISOString()},function (error,apiRes){
   ...
 });
 ```
@@ -883,11 +883,11 @@ subledger.organization(org_id).book(book_id).report(report_id).render({at: new D
 #### Archive
 ```javascript
 /**
- * subledger.organization(org_id).book(book_id).report(report_id).archive(callback);
+ * subledger.org(org_id).book(book_id).report(report_id).archive(callback);
  * @param {Function} callback
  */
 
-subledger.organization(org_id).book(book_id).report(report_id).archive(function (error,apiRes){
+subledger.org(org_id).book(book_id).report(report_id).archive(function (error,apiRes){
   ...
 });
 ```
@@ -895,11 +895,11 @@ subledger.organization(org_id).book(book_id).report(report_id).archive(function 
 #### Activate
 ```javascript
 /**
- * subledger.organization(org_id).book(book_id).report(report_id).activate(callback);
+ * subledger.org(org_id).book(book_id).report(report_id).activate(callback);
  * @param {Function} callback
  */
 
-subledger.organization(org_id).book(book_id).report(report_id).activate(function (error,apiRes){
+subledger.org(org_id).book(book_id).report(report_id).activate(function (error,apiRes){
   ...
 });
 ```
@@ -909,11 +909,11 @@ subledger.organization(org_id).book(book_id).report(report_id).activate(function
 #### Get one
 ```javascript
 /**
- * subledger.organization(org_id).book(book_id).report_rendering(report_rendering_id).get(callback);
+ * subledger.org(org_id).book(book_id).report_rendering(report_rendering_id).get(callback);
  * @param {Function} callback
  */
 
-subledger.organization(org_id).book(book_id).report_rendering(report_rendering_id).get(function (error,apiRes){
+subledger.org(org_id).book(book_id).report_rendering(report_rendering_id).get(function (error,apiRes){
   ...
 });
 ```
